@@ -2,9 +2,9 @@
 
 .. include:: ../_include/head.rst
 
-====================
-Virtualization Intro
-====================
+========================
+1 - Virtualization Intro
+========================
 
 .. include:: ../_include/wip.rst
 

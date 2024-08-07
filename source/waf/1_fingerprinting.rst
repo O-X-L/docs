@@ -2,9 +2,9 @@
 
 .. include:: ../_include/head.rst
 
-=====================
-Client Fingerprinting
-=====================
+=========================
+1 - Client Fingerprinting
+=========================
 
 .. include:: ../_include/wip.rst
 

@@ -2,8 +2,8 @@
 
 .. include:: ../_include/head.rst
 
-==============
-Firewall Intro
-==============
+==================
+1 - Firewall Intro
+==================
 
 .. include:: ../_include/wip.rst
