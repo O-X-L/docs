@@ -19,8 +19,8 @@ source_suffix = {
     '.rst': 'restructuredtext',
 }
 html_theme_options = {
-    'banner_text': 'Check out <a href="https://github.com/ansibleguy/collection_systemd">the repository on GitHub</a> | '
-                   'Report <a href="https://github.com/ansibleguy/collection_systemd/issues/new/choose">missing/incorrect information or broken links</a>'
+    'banner_text': '<a href="https://www.global.oxl.at">About OXL</a> | '
+                   '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a>'
 }
 html_short_title = 'OXL Docs'
 html_js_files = ['js/main.js']
