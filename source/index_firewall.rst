@@ -1,9 +1,9 @@
-#######
-Network
-#######
+########
+Firewall
+########
 
 .. toctree::
     :glob:
     :maxdepth: 1
 
-    network/*
+    firewall/*

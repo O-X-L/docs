@@ -1,17 +1,14 @@
-.. include:: _inc/head.rst
-
-
 *****************
 OXL Documentation
 *****************
 
-IT-Infrastructure
-#################
+IT Automation
+#############
 
 .. toctree::
    :maxdepth: 2
 
-   index_infra
+   index_automation
 
 Network
 #######
@@ -20,3 +17,37 @@ Network
    :maxdepth: 2
 
    index_network
+
+Firewall
+########
+
+.. toctree::
+   :maxdepth: 2
+
+   index_firewall
+
+Web Application Firewall
+########################
+
+.. toctree::
+   :maxdepth: 2
+
+   index_waf
+
+Mail Systems
+############
+
+.. toctree::
+   :maxdepth: 2
+
+   index_mail
+
+Virtualization & Containerization
+#################################
+
+.. toctree::
+   :maxdepth: 2
+
+   index_virt
+
+

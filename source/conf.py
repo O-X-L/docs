@@ -5,15 +5,23 @@ from datetime import datetime
 project = 'OXL - Documentation'
 copyright = f'{datetime.now().year}, OXL'
 author = 'OXL'
-extensions = ['sphinx_rtd_theme']
+extensions = ['piccolo_theme']
 templates_path = ['_templates']
 exclude_patterns = []
-html_theme = 'sphinx_rtd_theme'
-html_theme_options = {}
+html_theme = 'piccolo_theme'
 html_static_path = ['_static']
-html_css_files = ['css/wiki.css']
 master_doc = 'index'
 display_version = True
 sticky_navigation = True
-# html_logo = '_static/img/logo.svg'
-# html_favicon = 'img/favicon.ico'
+html_logo = '_static/img/oxl.svg'
+html_favicon = 'img/oxl.svg'
+source_suffix = {
+    '.rst': 'restructuredtext',
+}
+html_theme_options = {
+    'banner_text': 'Check out <a href="https://github.com/ansibleguy/collection_systemd">the repository on GitHub</a> | '
+                   'Report <a href="https://github.com/ansibleguy/collection_systemd/issues/new/choose">missing/incorrect information or broken links</a>'
+}
+html_short_title = 'OXL Docs'
+html_js_files = ['js/main.js']
+html_css_files = ['css/main.css']
