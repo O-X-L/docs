@@ -2,8 +2,8 @@
 
 .. include:: ../_include/head.rst
 
-====================
-1 - Automation Intro
-====================
+=========
+1 - Intro
+=========
 
 .. include:: ../_include/wip.rst

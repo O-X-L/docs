@@ -2,9 +2,9 @@
 
 .. include:: ../_include/head.rst
 
-========================
-1 - E-Mail Systems Intro
-========================
+=========
+1 - Intro
+=========
 
 .. include:: ../_include/wip.rst
 
