@@ -20,7 +20,8 @@ source_suffix = {
 }
 html_theme_options = {
     'banner_text': '<a href="https://www.o-x-l.com">About OXL</a> | '
-                   '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a>'
+                   '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a> | '
+                   '<a href="https://docs.oxl.at">🇩🇪 Zu Deutsch wechseln</a>'
 }
 html_short_title = 'OXL Docs'
 html_js_files = ['js/main.js']

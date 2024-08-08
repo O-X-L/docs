@@ -2,7 +2,7 @@ from datetime import datetime
 
 # pylint: disable=W0622
 
-project = 'OXL - Documentation'
+project = 'OXL - Dokumentation'
 copyright = f'{datetime.now().year}, OXL'
 author = 'OXL'
 extensions = ['piccolo_theme']
@@ -19,8 +19,9 @@ source_suffix = {
     '.rst': 'restructuredtext',
 }
 html_theme_options = {
-    'banner_text': '<a href="https://www.oxl.at">About OXL</a> | '
-                   '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a>'
+    'banner_text': '<a href="https://www.oxl.at">Über OXL</a> | '
+                   '<a href="https://github.com/O-X-L/docs/issues/new">Melde Fehler</a> | '
+                   '<a href="https://docs.o-x-l.com">🇬🇧 Switch to English</a>'
 }
 html_short_title = 'OXL Docs'
 html_js_files = ['js/main.js']
