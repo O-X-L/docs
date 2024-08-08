@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+   <url><loc>https://docs.o-x-l.com</loc></url>
+   <url><loc>https://docs.o-x-l.com/automation/ansible.html</loc></url>
+
+   <url><loc>https://docs.o-x-l.com/firewall/nftables.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/firewall/opnsense.html</loc></url>
+
+   <url><loc>https://docs.o-x-l.com/waf/haproxy.html</loc></url>
+</urlset>

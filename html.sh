@@ -9,7 +9,16 @@ fi
 
 set -euo pipefail
 
+function log() {
+  msg="$1"
+  echo ''
+  echo "### ${msg} ###"
+  echo ''
+}
+
 cd "$(dirname "$0")"
+
+SRC_DIR="$(pwd)"
 
 TS="$(date +%s)"
 TMP_DIR="/tmp/${TS}"
@@ -22,9 +31,39 @@ then
   source "$VENV_BIN"
 fi
 
+log 'BUILDING DOCS'
 sphinx-build -b html en/ "${TMP_DIR}/en/"
 sphinx-build -b html de/ "${TMP_DIR}/de/"
 
+log 'PATCHING METADATA'
+cp "${SRC_DIR}/meta/"* "${TMP_DIR}/en/"
+cp "${SRC_DIR}/meta/"* "${TMP_DIR}/de/"
+cp "${SRC_DIR}/en/_meta/"* "${TMP_DIR}/en/"
+cp "${SRC_DIR}/de/_meta/"* "${TMP_DIR}/de/"
+
+cd "${TMP_DIR}/en/"
+HTML_META_SRC="<meta charset=\"utf-8\" />"
+HTML_META="${HTML_META_SRC}<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; img-src https://files.oxl.at\">"
+HTML_META="${HTML_META}<link rel=\"icon\" type=\"image/svg\" href=\"https://files.oxl.at/img/oxl.svg\">"
+HTML_META_EN="${HTML_META}<link rel=\"alternate\" href=\"https://docs.oxl.at\" hreflang=\"de\">"
+HTML_META_DE="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.com\" hreflang=\"en\">"
+
+sed -i "s|$HTML_META_SRC|$HTML_META_EN|g" *.html
+sed -i "s|$HTML_META_SRC|$HTML_META_EN|g" */*.html
+
+cd "${TMP_DIR}/de/"
+
+sed -i "s|$HTML_META_SRC|$HTML_META_DE|g" *.html
+sed -i "s|$HTML_META_SRC|$HTML_META_DE|g" */*.html
+
+HTML_LANG_EN='html lang="en"'
+HTML_LANG_DE='html lang="de"'
+
+sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" *.html
+sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" */*.html
+
+log 'ACTIVATING'
+cd "$SRC_DIR"
 if [ -d "$DEST_DIR" ]
 then
   rm -r "$DEST_DIR"
@@ -34,5 +73,8 @@ mkdir -p "${DEST_DIR}/de/"
 
 mv "${TMP_DIR}/en/"* "${DEST_DIR}/en/"
 mv "${TMP_DIR}/de/"* "${DEST_DIR}/de/"
+
 touch "${DEST_DIR}/en/${TS}"
 touch "${DEST_DIR}/de/${TS}"
+
+log 'FINISHED'
