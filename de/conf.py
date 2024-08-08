@@ -19,7 +19,7 @@ source_suffix = {
     '.rst': 'restructuredtext',
 }
 html_theme_options = {
-    'banner_text': '<a href="https://www.global.oxl.at">About OXL</a> | '
+    'banner_text': '<a href="https://www.oxl.at">About OXL</a> | '
                    '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a>'
 }
 html_short_title = 'OXL Docs'
