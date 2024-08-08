@@ -16,6 +16,12 @@ TMP_DIR="/tmp/${TS}"
 mkdir -p "${TMP_DIR}/en"
 mkdir -p "${TMP_DIR}/de"
 
+VENV_BIN='/tmp/.oxl-docs-venv/bin/activate'
+if [ -f "$VENV_BIN" ]
+then
+  source "$VENV_BIN"
+fi
+
 sphinx-build -b html en/ "${TMP_DIR}/en/"
 sphinx-build -b html de/ "${TMP_DIR}/de/"
 

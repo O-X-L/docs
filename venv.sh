@@ -9,4 +9,4 @@ VENV_PATH='/tmp/.oxl-docs-venv'
 python3 -m virtualenv "$VENV_PATH"
 source "${VENV_PATH}/bin/activate"
 
-pip install -r requirements.txt
+pip install -r requirements.txt >/dev/null
