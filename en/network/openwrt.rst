@@ -15,14 +15,10 @@ Intro
 
 
 
-----
-
 Central Management - Wifi Love
 ******************************
 
 
-
-----
 
 Flashing
 ********
@@ -39,7 +35,6 @@ UniFi AP
 ========
 
 
-----
 
 Configuration
 *************
@@ -50,8 +45,4 @@ Network
 
 Wireless
 ========
-
-
-----
-
 
