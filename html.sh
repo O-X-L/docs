@@ -43,7 +43,7 @@ cp "${SRC_DIR}/de/_meta/"* "${TMP_DIR}/de/"
 
 cd "${TMP_DIR}/en/"
 HTML_META_SRC="<meta charset=\"utf-8\" />"
-HTML_META="${HTML_META_SRC}<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; img-src https://files.oxl.at\">"
+HTML_META="${HTML_META_SRC}<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; img-src 'self' https://files.oxl.at; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline';\">"
 HTML_META="${HTML_META}<link rel=\"icon\" type=\"image/svg\" href=\"https://files.oxl.at/img/oxl.svg\">"
 HTML_META_EN="${HTML_META}<link rel=\"alternate\" href=\"https://docs.oxl.at\" hreflang=\"de\">"
 HTML_META_DE="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.com\" hreflang=\"en\">"

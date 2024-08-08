@@ -13,8 +13,8 @@ html_static_path = ['_static']
 master_doc = 'index'
 display_version = True
 sticky_navigation = True
-html_logo = '_static/img/oxl.svg'
-html_favicon = 'img/oxl.svg'
+html_logo = 'https://files.oxl.at/img/oxl.svg'
+html_favicon = 'https://files.oxl.at/img/oxl.svg'
 source_suffix = {
     '.rst': 'restructuredtext',
 }
