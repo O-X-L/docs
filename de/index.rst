@@ -1,5 +1,5 @@
 *****************
-OXL Documentation
+OXL Dokumentation
 *****************
 
 Grundlegendes

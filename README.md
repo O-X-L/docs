@@ -1,6 +1,6 @@
 # OXL Documentation
 
-DE: [docs.oxl.at](https://docs.oxl.at)
+DE 🇩🇪: [docs.o-x-l.at](https://docs.o-x-l.at)
 
 EN 🇬🇧: [docs.o-x-l.com](https://docs.o-x-l.com)
 
