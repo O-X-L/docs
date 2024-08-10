@@ -1,7 +1,7 @@
 ----
 
-Credits
-*******
+Author
+******
 
 .. note::
     We hope you enjoyed this article!
