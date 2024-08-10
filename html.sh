@@ -25,7 +25,7 @@ TMP_DIR="/tmp/${TS}"
 mkdir -p "${TMP_DIR}/en"
 mkdir -p "${TMP_DIR}/de"
 
-VENV_BIN='/tmp/.oxl-docs-venv/bin/activate'
+VENV_BIN='/tmp/.oxl-sphinx-venv/bin/activate'
 if [ -f "$VENV_BIN" ]
 then
   source "$VENV_BIN"
