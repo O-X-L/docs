@@ -2,6 +2,15 @@
 OXL Documentation
 *****************
 
+Base
+####
+
+.. toctree::
+    :glob:
+    :maxdepth: 1
+
+    base/*
+
 IT Automation
 #############
 

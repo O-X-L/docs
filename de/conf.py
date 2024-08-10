@@ -4,7 +4,7 @@ from datetime import datetime
 
 project = 'OXL - Dokumentation'
 copyright = f'{datetime.now().year}, OXL'
-author = 'OXL'
+author = 'OXL (Lizenz: CC BY-NC-ND 4.0)'
 extensions = ['piccolo_theme']
 templates_path = ['_templates']
 exclude_patterns = []
