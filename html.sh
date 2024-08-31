@@ -62,6 +62,10 @@ HTML_LANG_DE='html lang="de"'
 sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" *.html
 sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" */*.html
 
+log 'COPYING STATICS'
+cp -r "${SRC_DIR}/static/"* "${TMP_DIR}/en/_static/"
+cp -r "${SRC_DIR}/static/"* "${TMP_DIR}/de/_static/"
+
 log 'ACTIVATING'
 cd "$SRC_DIR"
 if [ -d "$DEST_DIR" ]
