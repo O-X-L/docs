@@ -3,10 +3,10 @@
 .. include:: ../_include/head.rst
 
 .. |proxy_reverse| image:: ../_static/img/proxy_reverse.svg
-   :class: wiki-img
+   :class: wiki-img-sm
 
 .. |proxy_forward| image:: ../_static/img/proxy_forward.svg
-   :class: wiki-img
+   :class: wiki-img-sm
 
 =========
 1 - Intro
