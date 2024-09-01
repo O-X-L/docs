@@ -13,9 +13,9 @@ Reverse Proxy - HAProxy
 Intro
 #####
 
-If you are configuring HAProxy - have the `configuration manual <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/>`_ ready/open! You will need it!
+Wenn Sie HAProxy konfigurieren - halten Sie das `Konfigurationshandbuch <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/>`_ bereit/offen! Sie werden es brauchen!
 
-Check if your configuration is valid:
+Prüfen Sie, ob Ihre Konfiguration gültig ist:
 
 .. code-block:: bash
 
@@ -30,23 +30,22 @@ Check if your configuration is valid:
 Rate Limits
 ###########
 
-Configuring rate limits can be a little confusing.
+Die Konfiguration von Ratenbegrenzungen kann ein wenig verwirrend sein.
 
-Rate limits basically consist of two components: **tables** and **trackers**
+Ratenbegrenzungen bestehen im Wesentlichen aus zwei Komponenten: **tables** und **trackers**
 
 ----
 
 Trackers
 ********
 
-These track your client connections.
+Diese verfolgen Ihre Client-Verbindungen.
 
-By default you have 3 of them available when using the community edition. In the enterprise edition you have 12.
+Bei der Community-Edition stehen Ihnen standardmäßig 3 davon zur Verfügung. In der Enterprise-Edition stehen Ihnen 12 zur Verfügung.
 
-You can increase them using the `tune.stick-counters <https://docs.haproxy.org/2.8/configuration.html#3.2-tune.stick-counters>`_ setting.
+Sie können sie mit der Einstellung `tune.stick-counters <https://docs.haproxy.org/2.8/configuration.html#3.2-tune.stick-counters>`_ erhöhen.
 
-
-You can track clients like so:
+Sie können Clients wie folgt verfolgen:
 
 .. code-block:: bash
 
@@ -67,16 +66,16 @@ You can track clients like so:
     # track by user-agent
     http-request track-sc1 req.fhdr(User-Agent) be_limiter_ua
 
-You can use a single :code:`track-scN` to track a client in multiple tables.
+Sie können einen einzigen :code:`track-scN` verwenden, um einen Client in mehreren Tabellen zu verfolgen.
 
 ----
 
 Tables
 ******
 
-Each table is able to track multiple stats.
+In jeder Tabelle können mehrere Stats erfasst werden.
 
-Available ones are:
+Die verfügbaren sind:
 
 * :code:`gpc` (*general purpose counter*)
 * :code:`gpc_rate`
@@ -94,14 +93,14 @@ Available ones are:
 * :code:`sess_cnt`
 * :code:`sess_rate`
 
-See the `HAProxy configuration manual <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#7-sc0_bytes_in_rate>`_ for more details.
+Für Details siehe: `HAProxy configuration manual <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#7-sc0_bytes_in_rate>`_
 
 ----
 
-Examples
-********
+Beispiele
+*********
 
-For allowing you to analyze the current status of the configured rates - I would recommend to always use **named stick-tables**.
+Damit Sie den aktuellen Stand der konfigurierten Rates analysieren können, empfehlen wir Ihnen, immer **named stick-tables** zu verwenden.
 
 .. code-block:: bash
 
@@ -129,7 +128,7 @@ For allowing you to analyze the current status of the configured rates - I would
 Named stick-table
 =================
 
-These are added as backends:
+Diese werden als Backends hinzugefügt:
 
 .. code-block:: bash
 
@@ -141,7 +140,7 @@ These are added as backends:
     backend be_limiter_xyz  # <= name
         stick-table type ipv6 size 10k expire 24h store http_req_cnt
 
-You are able to read the current state using the admin socket
+Sie können den aktuellen Status über den Admin-Socket auslesen:
 
 .. code-block:: bash
 
@@ -153,20 +152,20 @@ You are able to read the current state using the admin socket
     # clear stats
     echo "clear table be_limiter_xyz" | socat stdio /run/haproxy/admin.sock
 
-See `HAProxy runtime API <https://www.haproxy.com/documentation/haproxy-runtime-api/installation/>`_ for more commands.
+Für mehr Kommandos siehe: `HAProxy runtime API <https://www.haproxy.com/documentation/haproxy-runtime-api/installation/>`_
 
 ----
 
 Basic
 =====
 
-We will:
+Wir werden:
 
-* Set log-level to warning if denied
+* Log-Level auf Warnung setzen, wenn verweigert
 
-* Deny if 10min request limit is exceeded
+* Verweigern, wenn das 10-Minuten-Limit für Anfragen überschritten wird
 
-* Keep request-count, request-error & -fail counter for diagnostics
+* Behält Request-Count, Request-Error & -Fail-Zähler für Diagnosezwecke
 
 
 .. code-block:: bash
@@ -184,26 +183,26 @@ We will:
 
 ----
 
-Multiple
-========
+Mehrere
+=======
 
-We will:
+Wir werden:
 
-* Set log-level to warning if denied
+* Log-Level auf Warnung setzen, wenn verweigert
 
-* Keep request-count, request-error & -fail counter for diagnostics
+* Request-count, Request-error & -fail counter für Diagnosezwecke behalten
 
-* Track TCP connections
+* TCP-Verbindungen verfolgen
 
-  * Drop if TCP connection-rate is too high
+  * Verwerfen, wenn die TCP-Verbindungsrate zu hoch ist
 
-* Track HTTP connections in two tables
+* HTTP-Verbindungen in zwei Tabellen verfolgen
 
-  * Deny if 10min request limit is exceeded
+  * Verweigern, wenn 10min Anfrage-Limit überschritten wird
 
-  * Deny if 1h requests limit is exceeded
+  * Verweigern, wenn das Limit für 1h-Anfragen überschritten wird
 
-  * Deny if API and daily requests exceed a limit
+  * Verweigern, wenn API und tägliche Anfragen ein Limit überschreiten
 
 .. code-block:: bash
 
@@ -253,18 +252,18 @@ We will:
 
 ----
 
-Counter per Client
+Counter pro Client
 ==================
 
-You can utilize general purpose counters for custom use-cases.
+Sie können 'general purpose counters' für spezielle Verwendungszwecke einsetzen.
 
-We will:
+Wir werden:
 
-* Set log-level to warning if denied
+* Log-Level auf Warnung setzen, wenn verweigert
 
-* Count up if we find a script-kiddy request
+* Hochzählen, wenn wir eine Script-Kiddy-Anfrage finden
 
-* Deny if count is higher than 5
+* Verweigern, wenn die Anzahl höher als 5 ist
 
 .. code-block:: bash
 
@@ -286,7 +285,7 @@ We will:
 Preserve on Reload
 ==================
 
-As seen in `this blog post <https://www.haproxy.com/blog/preserve-stick-table-data-when-reloading-haproxy>`_ we can configure a dummy-peer to make HAProxy keep the sticky-table entries when reloading the service.
+Wie in `diesem Blogbeitrag <https://www.haproxy.com/blog/preserve-stick-table-data-when-reloading-haproxy>`_ beschrieben, können wir einen Dummy-Peer konfigurieren, damit HAProxy die Sticky-Table-Einträge beim erneuten Laden des Dienstes beibehält.
 
 .. code-block:: bash
 
