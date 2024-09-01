@@ -19,9 +19,13 @@ Most of the time the attacker wants to impersonate someone to gain the trust of 
 
 **Tricks of attackers** also include:
 
-* Using the :code:`display name` of emails to hide illegitimate email senders as this Display-Name is the primary one shown to receivers. Example: :code:`Your Boss <xyz@gmail.com>`
+* Using the :code:`display name` of emails to hide illegitimate email senders as this Display-Name is the primary one shown to receivers.
 
-* Using `look-alike domains <https://en.wikipedia.org/wiki/IDN_homograph_attack>`_  to trick receivers. Example: :code:`yahoo.com (correct) VS yаhoo.com (fake)`
+  Example: :code:`Your Boss <xyz@gmail.com>`
+
+* Using `look-alike domains <https://en.wikipedia.org/wiki/IDN_homograph_attack>`_  to trick receivers.
+
+  Example: :code:`yahoo.com (correct) VS yаhoo.com (fake)`
 
 See also: `Cloudflare Blog - Email spoofing <https://www.cloudflare.com/learning/email-security/what-is-email-spoofing/>`_
 
@@ -54,39 +58,39 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
 * Allowing only E-Mails from you mail server, deny all others.
 
-   ```
-   Record: o-x-l.com
-   Type:   TXT
-   Value:  v=spf1 mx -all
-   ```
+  ```
+  Record: o-x-l.com
+  Type:   TXT
+  Value:  v=spf1 mx -all
+  ```
 
 * Allowing E-Mails from your mail server and a Cloud service, deny all others.
 
-   ```
-   Record: o-x-l.com
-   Type:   TXT
-   Value:  v=spf1 mx include:amazonses.com -all
-   ```
+  ```
+  Record: o-x-l.com
+  Type:   TXT
+  Value:  v=spf1 mx include:amazonses.com -all
+  ```
 
 * For DNS records that are not used to send mails, you should always deny any! Else someone could exploit those to send spoofing mails.
 
-   ```
-   Record: *.o-x-l.com
-   Type:   TXT
-   Value:  v=spf1 -all
-   ```
+  ```
+  Record: *.o-x-l.com
+  Type:   TXT
+  Value:  v=spf1 -all
+  ```
 
-   We've also seen spoofing attempts that use records that are used for non-mailing services. You may also want to deny mails from these.
+  We've also seen spoofing attempts that use records that are used for non-mailing services. You may also want to deny mails from these.
 
-   ```
-   Record: www.o-x-l.com
-   Type:   A
-   Value:  <IP OF WEB SERVICE>
+  ```
+  Record: www.o-x-l.com
+  Type:   A
+  Value:  <IP OF WEB SERVICE>
 
-   Record: www.o-x-l.com
-   Type:   TXT
-   Value:  v=spf1 -all
-   ```
+  Record: www.o-x-l.com
+  Type:   TXT
+  Value:  v=spf1 -all
+  ```
 
 Limits
 ======
@@ -115,11 +119,11 @@ DKIM Examples
 
 * The key-pair selector is :code:`mail123`
 
-   ```
-   Record: mail123._domainkey.o-x-l.com
-   Type:   TXT
-   Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
-   ```
+  ```
+  Record: mail123._domainkey.o-x-l.com
+  Type:   TXT
+  Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
+  ```
 
 ----
 
@@ -151,32 +155,32 @@ Possible **policies**: :code:`none` (reporting/warning), :code:`quarantine`, :co
 
 * Initially add a DMARC record in reporting-only mode.
 
-   ```
-   Record: _dmarc.o-x-l.com
-   Type:   TXT
-   Value:  v=DMARC1; p=none; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
-   ```
+  ```
+  Record: _dmarc.o-x-l.com
+  Type:   TXT
+  Value:  v=DMARC1; p=none; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
+  ```
 
 * Enforce DMARC alignment and move all other messages from this domain into the receivers quarantine.
 
-   ```
-   Record: _dmarc.o-x-l.com
-   Type:   TXT
-   Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
-   ```
+  ```
+  Record: _dmarc.o-x-l.com
+  Type:   TXT
+  Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
+  ```
 
 * Set SPF & DKIM matching to be strict.
 
-   ```
-   Record: _dmarc.o-x-l.com
-   Type:   TXT
-   Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s;
-   ```
+  ```
+  Record: _dmarc.o-x-l.com
+  Type:   TXT
+  Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s;
+  ```
 
 * Add a subdomain-policy.
 
-   ```
-   Record: _dmarc.o-x-l.com
-   Type:   TXT
-   Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;
-   ```
+  ```
+  Record: _dmarc.o-x-l.com
+  Type:   TXT
+  Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;
+  ```
