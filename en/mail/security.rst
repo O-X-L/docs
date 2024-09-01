@@ -1,9 +1,9 @@
-.. _mail_spoofing:
+.. _mail_security:
 
 .. include:: ../_include/head.rst
 
 ===================
-Spoofing & Security
+Security & Spoofing
 ===================
 
 .. include:: ../_include/wip.rst
@@ -31,8 +31,10 @@ See also: `Cloudflare Blog - Email spoofing <https://www.cloudflare.com/learning
 
 ----
 
-SPF - Sender Policy Framework
-#############################
+SPF
+###
+
+**Sender Policy Framework**
 
 * E-Mail **senders** have to configure it in their DNS records
 * E-Mail **receivers** have to enable SPF checking on their E-Mail servers
@@ -96,8 +98,10 @@ SPF records are invalid if there are more than 10 :code:`include` (recursively)!
 
 ----
 
-DKIM - DomainKeys Identified Mail
-#################################
+DKIM
+####
+
+**DomainKeys Identified Mail**
 
 * The **sender** needs to create a DKIM public-private key-pair that is identified using a :code:`selector`
 * The **sender** needs to configure the sending service to sign the emails with its private key
@@ -127,10 +131,12 @@ DKIM Examples
 DMARC
 #####
 
+**Domain-based Message Authentication, Reporting and Conformance**
+
 * The **sender** needs to publish a DMARC DNS record
 * E-Mail **receivers** have to enable DMARC checking on their E-Mail servers
 
-Domain-based Message Authentication, Reporting and Conformance is defined in `RFC 7489 <https://www.rfc-editor.org/rfc/rfc7489>`_.
+It is defined in `RFC 7489 <https://www.rfc-editor.org/rfc/rfc7489>`_.
 
 DMARC ensures that the SPF and DKIM authentication mechanisms actually authenticate against the same base domain that the end user sees.
 
