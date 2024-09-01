@@ -1,3 +1,12 @@
+.wiki-img-lg {
+    width: 100%;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #343a40;
+    border-width: 3px;
+}
+
 .wiki-img {
     width: 90%;
     margin: 5px 0px;

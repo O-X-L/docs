@@ -3,11 +3,11 @@
 .. include:: ../_include/head.rst
 
 .. |nft_flow| image:: ../_static/img/network_nftables_flow.png
-   :class: wiki-img
+   :class: wiki-img-lg
    :alt: OXL Docs - NFTables Packet Flow
 
 .. |nft_hooks| image:: ../_static/img/network_nftables_hooks.png
-   :class: wiki-img
+   :class: wiki-img-lg
    :alt: OXL Docs - NFTables Chains & Hooks
 
 .. |nft_tproxy| image:: ../_static/img/network_nftables_tproxy.png
