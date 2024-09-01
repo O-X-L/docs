@@ -25,6 +25,13 @@ NFTables
 Intro
 #####
 
+NFTables is the `successor of IPTables <https://netfilter.org/projects/nftables/>`_ and a widely used Linux firewall.
+
+It can be used as host-firewall or even network-firewall.
+
+It's the `default firewall in Debian 10+ <https://wiki.debian.org/nftables>`_.
+
+**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/watch?v=dnkuDjblI-k&t=41s>`_
 
 
 Chain hooks/Table families
