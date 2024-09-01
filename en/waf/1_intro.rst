@@ -1,6 +1,6 @@
 .. _waf_intro:
 
-.. |waf_dev_flow| image:: ../_static/img/waf_intro.png
+.. |waf_dev_flow| image:: ../_static/img/waf_intro.svg
    :class: wiki-img
    :alt: OXL Docs - WAF Development Flow
 
