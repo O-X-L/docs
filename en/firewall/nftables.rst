@@ -256,7 +256,7 @@ In some Distributions the default IPTables backend is already migrated to NFTabl
 
 There are 1000x more resources related to IPTables out there that might help you get things working.
 
-**I would recommend:**
+**Recommended way:**
 
 * having a blank VM to test IPTables ruleset
 * save the working minimal-ruleset :code:`iptables-save > /etc/iptables/rules.ipt`
@@ -400,7 +400,7 @@ NOTE: This image shows the problem we are facing in a very abstract way. It migh
 
 **REMOTE PROXY CHALLENGE:**
 
-You might want to target a remote proxy server. This does not work with this operation on its own.
+You might want to target a remote proxy server. This does not work with this operation on its own as most proxies do not support DNAT forwarding.
 
 One would need to use a proxy-forwarder tool that can handle this for you.
 

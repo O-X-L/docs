@@ -25,11 +25,11 @@ NFTables
 Intro
 #####
 
-NFTables is the `successor of IPTables <https://netfilter.org/projects/nftables/>`_ and a widely used Linux firewall.
+NFTables ist der `Nachfolger von IPTables <https://netfilter.org/projects/nftables/>`_ und eine weit verbreitete Linux-Firewall.
 
-It can be used as host-firewall or even network-firewall.
+Sie kann als Host-Firewall oder sogar als Netzwerk-Firewall verwendet werden.
 
-It's the `default firewall in Debian 10+ <https://wiki.debian.org/nftables>`_.
+Es ist die `Standard-Firewall in Debian 10+ <https://wiki.debian.org/nftables>`_.
 
 **Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/watch?v=dnkuDjblI-k&t=41s>`_
 
@@ -46,8 +46,8 @@ Packet flow
 
 ----
 
-References
-**********
+Links
+*****
 
 * `Quick reference <https://wiki.nftables.org/wiki-nftables/index.php/Quick_reference-nftables_in_10_minutes>`_
 * `Change history <https://wiki.nftables.org/wiki-nftables/index.php/List_of_updates_since_Linux_kernel_3.13>`_
@@ -90,24 +90,24 @@ Installation
 ############
 
 
-Kernel Modules
-**************
+Kernel Module
+*************
 
-Some functionality of NFTables might not be enabled by default.
+Einige Funktionen von NFTables sind möglicherweise nicht standardmäßig aktiviert.
 
-To check which was enabled at compile-time - check the config file:
+Um zu überprüfen, welche Funktionen für Ihren Kernel aktiv sind, prüfen Sie die Konfigurationsdatei:
 
 .. code-block:: bash
 
     cat "/boot/config-$(uname -r)" | grep -E "CONFIG_NFT|CONFIG_NF_TABLES"
 
-To find all existing modules:
+Um alle vorhandenen Module zu finden:
 
 .. code-block:: bash
 
     find /lib/modules/$(uname -r) -type f -name '*.ko' | grep -E 'nf_|nft_'
 
-To enable a module:
+Um ein Modul zu aktivieren:
 
 .. code-block:: bash
 
@@ -116,20 +116,20 @@ To enable a module:
 
 ----
 
-Usage
-#####
+Nutzung
+#######
 
-Config File
-***********
+Config Files
+************
 
-NFTables can be completely configured from one or more config files.
+NFTables kann vollständig über eine oder mehrere Konfigurationsdateien konfiguriert werden.
 
-Most times you might want to use:
+In den meisten Fällen werden sie mehrere verwenden wollen:
 
-* a main config file: :code:`/etc/nftables.conf`
-* a configuration directory to include further files: :code:`/etc/nft.conf.d/`
+* Haupt-Konfiguration: :code:`/etc/nftables.conf`
+* Ein Verzeichnis dessen Inhalt inkludiert wird: :code:`/etc/nft.conf.d/`
 
-The systemd service will load the main config file by default:
+Der systemd-Dienst lädt standardmäßig die Hauptkonfigurationsdatei:
 
 .. code-block:: nft
 
@@ -145,7 +145,7 @@ The systemd service will load the main config file by default:
     ...
 
 
-Main config file example:
+Beispiel für die Hauptkonfigurationsdatei:
 
 .. code-block:: nft
 
@@ -153,9 +153,9 @@ Main config file example:
     flush ruleset
     include "/etc/nft.conf.d/*.conf"
 
-Then you can add your actual configuration in the configuration directory!
+Dann können Sie Ihre aktuelle Konfiguration in das Konfigurationsverzeichnis einfügen!
 
-To **test your configuration**:
+Um Ihre **Konfiguration zu testen**:
 
 .. code-block:: bash
 
@@ -171,7 +171,7 @@ CLI
 Programmatically
 ****************
 
-THere are some libraries/modules that enable you to manage NFTables from code directly:
+Es gibt einige Libraries/Module, mit denen Sie NFTables direkt aus dem Code heraus verwalten können:
 
 * Backend for the libraries: `libnftables <https://www.mankier.com/5/libnftables-json>`_
 * GoLang: `github.com/google/nftables <https://pkg.go.dev/github.com/google/nftables>`_, `source code <https://github.com/google/nftables>`_
@@ -191,19 +191,21 @@ Troubleshooting
 Trace
 *****
 
-You can trace traffic that flows through you chains.
+Sie können Pakete markieren um ihren Weg durch die Chains zu verfolgen.
 
-See also: `NFTables documentation - trace <https://wiki.nftables.org/wiki-nftables/index.php/Ruleset_debug/tracing>`_
+Siehe auch: `NFTables documentation - trace <https://wiki.nftables.org/wiki-nftables/index.php/Ruleset_debug/tracing>`_
 
-**You need to**:
+**Sie müssen dafür**:
 
-* Tag traffic you want to trace by adding the :code:`meta nftrace set 1` option to a rule.
+* Markieren Sie die zu verfolgenden Pakete, indem Sie die Option :code:`meta nftrace set 1` zu einer Regel hinzufügen.
 
-* Listen to this traces by running :code:`nft monitor trace` in a separate terminal.
+* Indem Sie :code:`nft monitor trace` in einem separaten Terminal ausführen, können sie die Logs dazu in Echtzeit sehen.
 
 You may want to start the trace at the point where the traffic enters.
 
-Example for **input traffic**:
+Sie sollten den trace an dem Punkt starten, an dem die Pakete in der Firewall ankommen.
+
+Beispiel für **input Pakete**:
 
 .. code-block:: nft
 
@@ -218,7 +220,7 @@ Example for **input traffic**:
     }
 
 
-Example for **output traffic**:
+Beispiel für **output Pakete**:
 
 .. code-block:: nft
 
@@ -232,7 +234,7 @@ Example for **output traffic**:
 
     }
 
-Example **monitor information**:
+Beispiel der **monitor Information**:
 
 .. code-block:: bash
 
@@ -245,32 +247,32 @@ Example **monitor information**:
     > trace id a95ea7ef ip filter input rule ct state established,related counter packets 168 bytes 53513 accept (verdict accept)
 
 
-Translate IPTables
-******************
+IPTables Regeln übersetzen
+**************************
 
-Most times the behaviour of IPTables and NFTables is pretty much the same.
+In den meisten Fällen ist das Verhalten von IPTables und NFTables nahezu identisch.
 
-In some Distributions the default IPTables backend is already migrated to NFTables.
+In einigen Distributionen, wie Debian, ist das Standard-IPTables-Backend bereits zu NFTables migriert.
 
-**Why translate from IPTables?**
+**Warum von IPTables übersetzen?**
 
-There are 1000x more resources related to IPTables out there that might help you get things working.
+Es gibt 1000x mehr Ressourcen zu IPTables, die Ihnen helfen könnten, die Dinge zum Laufen zu bringen.
 
-**I would recommend:**
+**Empfohlener Weg:**
 
-* having a blank VM to test IPTables ruleset
-* save the working minimal-ruleset :code:`iptables-save > /etc/iptables/rules.ipt`
-* translate the ruleset to nftables :code:`iptables-restore-translate -f /etc/iptables/rules.ipt > /etc/iptables/rules.nft`
-* test the NFTables ruleset and remove the default chains you don't need (*IPTables is a little more messy with its defaults*)
+* eine leere VM zum Testen des IPTables ruleset zu haben
+* das minimale, funktionierend, ruleset speichern: :code:`iptables-save > /etc/iptables/rules.ipt`
+* das ruleset zu NFTables übersetzen: :code:`iptables-restore-translate -f /etc/iptables/rules.ipt > /etc/iptables/rules.nft`
+* Testen Sie den NFTables-Regelsatz und entfernen Sie die standard Chains, die Sie nicht benötigen (*IPTables ist etwas unordentlicher mit seinen Chains*)
 
-BTW: one can also restore IPTables rules by using :code:`iptables-restore < /etc/iptables/rules.ipt`
+Zur Info: man kann auch IPTables Regeln wiederherstellen: :code:`iptables-restore < /etc/iptables/rules.ipt`
 
 ----
 
 Service
 #######
 
-To keep invalid configuration from stopping/failing your :code:`nftables.service` - you can add a config-validation in it:
+Um zu verhindern, dass eine invalide Konfiguration Ihren :code:`nftables.service` tötet, können Sie eine Konfigurations-Validierung hinzufügen:
 
 .. code-block:: text
 
@@ -293,64 +295,64 @@ To keep invalid configuration from stopping/failing your :code:`nftables.service
     Restart=on-failure
     RestartSec=5s
 
-This will catch and log config-errors before doing a reload/restart.
+Dadurch werden Konfigurationsfehler abgefangen und protokolliert, bevor ein reload/restart durchgeführt wird.
 
-When doing a system-reboot it will still fail if your config is bad.
+Bei einem System-Neustart wird es immer noch fehlschlagen, wenn die Konfiguration fehlerhaft ist.
 
 ----
 
 Addons
 ######
 
-NFTables lacks some functionality, that is commonly used in firewalling.
+NFTables fehlt es an einigen Funktionen, die üblicherweise bei der Firewall verwendet werden.
 
-You can add a scheduled scripts that add these functionalities to NFTables!
+Sie können ein geplantes Skript hinzufügen, das diese Funktionen zu NFTables hinzufügt!
 
-See: `Ansible-managed addons <https://github.com/ansibleguy/addons_nftables>`_
+Siehe: `Ansible-managed addons <https://github.com/ansibleguy/addons_nftables>`_
 
 DNS
 ***
 
-It is nice to have variables that hold the IPs of some DNS-record.
+Es ist schön, Variablen zu haben, die die IPs von einigen DNS-Einträgen enthalten.
 
-NFTables CAN resolve DNS-records - but will throw an error if the record resolves to more than one IP.. (Error: Hostname resolves to multiple addresses)
+NFTables KANN DNS-Einträge auflösen - gibt aber einen Fehler aus, wenn der Eintrag zu mehr als einer IP-Adresse aufgelöst wird (Fehler: Hostname löst zu mehreren Adressen auf).
 
-See: `NFTables Addon DNS <https://github.com/superstes/nftables_addon_dns>`_
+Siehe: `NFTables Addon DNS <https://github.com/superstes/nftables_addon_dns>`_
 
 IPLists
 *******
 
-This addon was inspired by `the same functionality provided on OPNSense <https://docs.opnsense.org/manual/how-tos/edrop.html#configure-spamhaus-e-drop>`_
+Dieses Addon wurde von der `gleichen Funktionalität inspiriert, die auf OPNSense <https://docs.opnsense.org/manual/how-tos/edrop.html#configure-spamhaus-e-drop>`_ angeboten wird.
 
-It will download existing IPLists and add them as NFTables variables.
+Es lädt vorhandene IPListen herunter und fügt sie als NFTables-Variablen hinzu.
 
-IPList examples:
+IPList Beispiele:
 
 * `Spamhaus DROP <https://www.spamhaus.org/drop/drop.txt>`_
 * `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
 * `Tor exit nodes <https://check.torproject.org/torbulkexitlist>`_
 
-See: `NFTables Addon IPList <https://github.com/superstes/nftables_addon_iplist>`_
+Siehe: `NFTables Addon IPList <https://github.com/superstes/nftables_addon_iplist>`_
 
 Failover
 ********
 
-See: `NFTables Addon Failover <https://github.com/superstes/nftables_addon_failover>`_
+Siehe: `NFTables Addon Failover <https://github.com/superstes/nftables_addon_failover>`_
 
 
 ----
 
-Config
-######
+Konfiguration
+#############
 
-`NFTables base-config example <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_base.txt>`_
+`NFTables Grundkonfiguration Beispiel <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_base.txt>`_
 
 .. _fw_nftables_tproxy:
 
 TPROXY
 ******
 
-Quote from the `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
+Zitat von den `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
 
 ::
 
@@ -360,18 +362,18 @@ Quote from the `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.ht
     The 'TPROXY' target provides similar functionality without relying on NAT.
 
 
-This functionality allows us to send traffic to an userspace process and read/modify it.
+Diese Funktionalität ermöglicht es uns, Datenverkehr an einen Userspace-Prozess zu senden und diesen zu lesen/zu verändern.
 
-This can **enable powerful solutions**! Per example see: `blog.cloudflare.com - Abusing Linux's firewall <https://blog.cloudflare.com/how-we-built-spectrum/>`_
+Dies kann **mächtige Lösungen** ermöglichen! Als Beispiel siehe: `blog.cloudflare.com - Abusing Linux's firewall <https://blog.cloudflare.com/how-we-built-spectrum/>`_
 
 .. warning::
 
-    TPROXY seems to only support local targets.
+    TPROXY scheint nur lokale Ziele zu unterstützen.
 
-    As one can see in the kernel sources - there is a check if the target port is in use: `nft_tproxy.c <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c#n64>`_
+    Wie man im Kernel-Sourcecode sehen kann, gibt es einem Check, ob der Ziel-Port in Nutzung ist:`nft_tproxy.c <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c#n64>`_
 
-References
-----------
+Links
+-----
 
 * `Kernel - TPROXY <https://docs.kernel.org/networking/tproxy.html>`_
 * `PowerDNS - TPROXY <https://powerdns.org/tproxydoc/tproxy.md.html>`_
@@ -380,33 +382,34 @@ References
 * `NFTables source - TPROXY <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c>`_
 * `Kernel source - TPROXY <http://git.netfilter.org/nftables/commit/?id=2be1d52644cf77bb2634fb504a265da480c5e901>`_
 
-Usage
------
+Nutzung
+-------
 
-One thing you'll need to know: The TPROXY operation can only be used in the **prerouting - filter (mangle)** chain!
+Eine Sache müssen Sie wissen: Die Operation TPROXY kann nur in der Kette  **prerouting - filter (mangle)** verwendet werden!
 
-Traffic that passes this chain/hook by default can easily be proxied.
+Verkehr, der diese Chain/Hook standardmäßig durchläuft, kann leicht über einen Proxy geleitet werden.
+
 
 **OUTPUT CHALLENGE:**
 
-Because of this - traffic that enters at the 'output' (*originating from the same host*) chain/hook can not be redirected directly.
+Aus diesem Grund kann der Verkehr, der am 'output' (*vom selben Host*) eingeht, nicht direkt umgeleitet werden.
 
-We need to route it to 'loopback' so it passes through 'prerouting'.
+Wir müssen ihn an 'loopback' weiterleiten, damit er 'prerouting' durchläuft.
 
-NOTE: This image shows the problem we are facing in a very abstract way. It might not display the traffic-flow in a correct manner!
+HINWEIS: Dieses Bild zeigt das Problem, mit dem wir konfrontiert sind, in einer sehr abstrakten Weise. Es kann sein, dass es den Verkehrsfluss nicht korrekt darstellt!
 
 |nft_tproxy|
 
 
 **REMOTE PROXY CHALLENGE:**
 
-You might want to target a remote proxy server. This does not work with this operation on its own.
+Möglicherweise möchten Sie einen remote Proxyserver ansteuern. Dies ist jedoch meist nicht einfach über ein DNAT möglich.
 
-One would need to use a proxy-forwarder tool that can handle this for you.
+Man müsste ein Proxy-Forwarder-Tool verwenden, das dies für Sie erledigen kann.
 
-We have patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_
+Wir haben ein bestehendes Tool für genau diesen Zweck gepatched: `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_
 
-With a tool like that you can wrap the plain traffic received from TPROXY and forward or tunnel it.
+Mit einem solchen Tool können Sie den von TPROXY empfangenen reinen Datenverkehr verpacken und weiterleiten oder tunneln.
 
 .. code-block:: text
 
@@ -430,8 +433,8 @@ With a tool like that you can wrap the plain traffic received from TPROXY and fo
 Examples
 --------
 
-* `NFTables TPROXY example <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY example <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_tproxy.txt>`_
-* `IPTables TPROXY example <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY example <https://docs.o-x-l.com/en/latest/_static/raw/fw_iptables_tproxy.txt>`_
+* `NFTables TPROXY Beispiel <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY Beispiel <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_tproxy.txt>`_
+* `IPTables TPROXY Beispiel <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY Beispiel <https://docs.o-x-l.com/en/latest/_static/raw/fw_iptables_tproxy.txt>`_
 
 ----
 
@@ -441,7 +444,7 @@ Examples
 Ansible
 *******
 
-See: `Ansible-based examples <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/UseCaseExamples.md>`_
+See: `Ansible-basiertes Beispiel <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/UseCaseExamples.md>`_
 
 IPv4 Baseline
 *************
