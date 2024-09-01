@@ -352,7 +352,7 @@ TPROXY
 
 Quote from the `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
 
-::
+.. note::
 
     Transparent proxying often involves "intercepting" traffic on a router.
     This is usually done with the iptables REDIRECT target; however, there are serious limitations of that method.
