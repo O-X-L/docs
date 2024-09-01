@@ -153,7 +153,7 @@ INTERCEPT
 
 This one will be used in **zero-trust** environments.
 
-See also: :ref:`Security Stances <net_security_approach>`
+See also: :ref:`TLS interception <proxy_tls_interception>`
 
 **Note**:
 
@@ -199,7 +199,7 @@ Why do we need to send 'output' traffic to loopback? Because TPROXY is only avai
 NFTables
 ========
 
-See: :ref:`NFTables TProxy <net_nftables_tproxy>`
+See: :ref:`NFTables TProxy <net_firewall_nftables_tproxy>`
 
 
 IPTables

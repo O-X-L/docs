@@ -1,12 +1,13 @@
-.. _net_proxy_squid:
+.. _net_intro:
 
 .. include:: ../_include/head.rst
 
-=============
-Proxy - Squid
-=============
+=========
+1 - Intro
+=========
 
 .. include:: ../_include/wip.rst
 
 Intro
 *****
+
