@@ -1,2 +1,2 @@
 .. warning::
-    This documentation is work-in-progress.
+    Diese Dokumentation ist noch in Arbeit.
