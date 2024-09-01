@@ -31,13 +31,8 @@ See also: `Cloudflare Blog - Email spoofing <https://www.cloudflare.com/learning
 
 ----
 
-Anti-Spoofing Protocols
-#######################
-
-There are multiple protocols that can help to protect E-Mail flows against spoofing.
-
 SPF - Sender Policy Framework
-*****************************
+#############################
 
 * E-Mail **senders** have to configure it in their DNS records
 * E-Mail **receivers** have to enable SPF checking on their E-Mail servers
@@ -52,7 +47,7 @@ SPF cannot stop email spoofing. It only makes it a bit more difficult for an att
 It checks the content of the :code:`envelope from`, not the :code:`message from` header that the receiving mail client sees. The SMTP transaction are not visible to the end client, even when viewing the message headers. If the E-Mail is forwarded by a mail-server or -proxy, it invalidated.
 
 SPF Examples
-============
+************
 
 These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`, :code:`a:<DNS>`, :code:`include:<DNS>`, :code:`redirect:<DNS>`, :code:`exists`
 
@@ -95,14 +90,14 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
 
 Limits
-======
+******
 
 SPF records are invalid if there are more than 10 :code:`include` (recursively)! This can be especially tricky if you rely on some cloud providers that already use multiple includes internally.
 
 ----
 
 DKIM - DomainKeys Identified Mail
-*********************************
+#################################
 
 * The **sender** needs to create a DKIM public-private key-pair that is identified using a :code:`selector`
 * The **sender** needs to configure the sending service to sign the emails with its private key
@@ -117,7 +112,7 @@ There are some attack vectors on this protocol - like `DKIM forging <https://git
 
 
 DKIM Examples
-=============
+*************
 
 * The key-pair selector is :code:`mail123`
 
@@ -130,7 +125,7 @@ DKIM Examples
 ----
 
 DMARC
-*****
+#####
 
 * The **sender** needs to publish a DMARC DNS record
 * E-Mail **receivers** have to enable DMARC checking on their E-Mail servers
@@ -140,7 +135,7 @@ Domain-based Message Authentication, Reporting and Conformance is defined in `RF
 DMARC ensures that the SPF and DKIM authentication mechanisms actually authenticate against the same base domain that the end user sees.
 
 Reporting
-=========
+*********
 
 You can add :code:`rua` (aggregate) and :code:`ruf` (forensic) to your DMARC record to get sent reports from receiving mail systems, regarding your delivery stats.
 
@@ -151,7 +146,7 @@ This is very useful to gain insights into the health of your email flows. It als
 You can use tools like `parsedmarc <https://github.com/O-X-L/dmarc-analyzer>`_ to get statistics regarding possible mailing issues you have.
 
 DMARC Examples
-==============
+**************
 
 Possible **policies**: :code:`none` (reporting/warning), :code:`quarantine`, :code:`reject`
 
