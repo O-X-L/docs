@@ -1,0 +1,72 @@
+#!/usr/sbin/nft -f
+
+# target: squid-openssl 4.13 with listener "http_port 127.0.0.1:3129 tproxy"
+
+# modify variables as needed
+define MARK_PROXY = 200;
+define MARK_DONE = 201;
+define EXCLUDES_PROXY_V4 = { 127.0.0.0/8, 192.168.0.0/16, 10.0.0.0/8, 172.16.0.0/12 };
+define EXCLUDES_LOOP_V4 = { 255.255.255.255/32 };
+define EXCLUDES_PROXY_V6 = { ::1 };
+define EXCLUDES_LOOP_V6 = { :: };
+define PROXY_PORT = 3129;
+define PROXY_UID = 13;
+
+
+delete table inet proxy
+
+table inet proxy {
+  chain prerouting {
+    type filter hook prerouting priority mangle; policy accept;
+    meta l4proto tcp socket transparent 1 meta mark set $MARK_PROXY comment "Redirect proxy sessions to proxy"
+    # meta mark $MARK_PROXY log prefix "PRE MARK PROXY"
+    # meta mark $MARK_DONE log prefix "PRE MARK DONE"
+    meta l4proto tcp jump proxy_redirect
+    meta mark $MARK_DONE ct mark set meta mark comment "Store mark in connection"
+  }
+
+  chain proxy_redirect {
+    ip daddr $EXCLUDES_PROXY_V4 return
+    ip6 daddr $EXCLUDES_PROXY_V6 return
+    ip protocol tcp meta mark $MARK_DONE return comment "Exclude proxied traffic - anti-loop"
+    meta protocol ip meta l4proto tcp tproxy ip to 127.0.0.1:$PROXY_PORT
+    meta protocol ip6 meta l4proto tcp tproxy ip6 to [::1]:$PROXY_PORT
+  }
+
+  chain output {
+    type route hook output priority mangle; policy accept;
+    ct mark $MARK_DONE meta mark set ct mark comment "Load mark from connection"
+    # meta mark $MARK_PROXY log prefix "OUT MARK PROXY"
+    # meta mark $MARK_DONE log prefix "OUT MARK DONE"
+    meta l4proto tcp jump output_loop
+    meta mark $MARK_DONE meta mark set 0 comment "Remove unnecessary mark"
+  }
+
+  chain output_loop {
+    ip daddr $EXCLUDES_PROXY_V4 return
+    ip6 daddr $EXCLUDES_PROXY_V6 return
+    ip daddr $EXCLUDES_LOOP_V4 return
+    ip6 daddr $EXCLUDES_LOOP_V6 return
+    meta skuid $PROXY_UID return comment "Exclude Traffic from proxy itself - anti-loop"
+    meta l4proto tcp meta mark $MARK_DONE return comment "Exclude proxied traffic - anti-loop"
+    meta l4proto tcp meta mark set $MARK_PROXY
+  }
+
+  chain prerouting_raw {
+    type filter hook prerouting priority raw; policy accept;
+    iifname != "lo" ip daddr 127.0.0.0/8 drop comment "Security fix for 'route_localnet'"
+  }
+
+  chain postrouting_mangle {
+    type filter hook postrouting priority mangle; policy accept;
+    oifname != "lo" ip saddr 127.0.0.0/8 drop comment "Security fix for 'route_localnet'"
+  }
+
+  chain input {
+    type filter hook input priority 0; policy accept;
+  }
+
+  chain forward {
+    type filter hook forward priority 0; policy accept;
+  }
+}

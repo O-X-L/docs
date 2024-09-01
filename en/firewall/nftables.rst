@@ -2,21 +2,21 @@
 
 .. include:: ../_include/head.rst
 
-.. |nft_flow| image:: ../_static/img/network_nftables_flow.png
+.. |nft_flow| image:: ../_static/img/fw_nftables_flow.png
    :class: wiki-img-lg
    :alt: OXL Docs - NFTables Packet Flow
 
-.. |nft_hooks| image:: ../_static/img/network_nftables_hooks.png
+.. |nft_hooks| image:: ../_static/img/fw_nftables_hooks.png
    :class: wiki-img-lg
    :alt: OXL Docs - NFTables Chains & Hooks
 
-.. |nft_tproxy| image:: ../_static/img/network_nftables_tproxy.png
+.. |nft_tproxy| image:: ../_static/img/fw_nftables_tproxy.png
    :class: wiki-img-sm
    :alt: OXL Docs - NFTables TProxy
 
-===================
-Firewall - NFTables
-===================
+========
+NFTables
+========
 
 .. include:: ../_include/wip.rst
 
@@ -174,7 +174,7 @@ THere are some libraries/modules that enable you to manage NFTables from code di
 Ansible
 *******
 
-See: `NFTables Ansible-Role <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/Example.md>`_
+See: `NFTables Ansible-Role <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/Example.md>`_, `NFTables Ansible-Modules <https://github.com/ansibleguy/collection_nftables>`_
 
 ----
 
@@ -260,10 +260,83 @@ BTW: one can also restore IPTables rules by using :code:`iptables-restore < /etc
 
 ----
 
+Service
+#######
+
+To keep invalid configuration from stopping/failing your :code:`nftables.service` - you can add a config-validation in it:
+
+.. code-block:: text
+
+    # /etc/systemd/system/nftables.service.d/override.conf
+
+    [Service]
+    # catch errors at start
+    ExecStartPre=/usr/sbin/nft -cf /etc/nftables.conf
+
+    # catch errors at reload
+    ExecReload=
+    ExecReload=/usr/sbin/nft -cf /etc/nftables.conf
+    ExecReload=/usr/sbin/nft -f /etc/nftables.conf
+
+    # catch errors at restart
+    ExecStop=
+    ExecStop=/usr/sbin/nft -cf /etc/nftables.conf
+    ExecStop=/usr/sbin/nft flush ruleset
+
+    Restart=on-failure
+    RestartSec=5s
+
+This will catch and log config-errors before doing a reload/restart.
+
+When doing a system-reboot it will still fail if your config is bad.
+
+----
+
+Addons
+######
+
+NFTables lacks some functionality, that is commonly used in firewalling.
+
+You can add a scheduled scripts that add these functionalities to NFTables!
+
+See: `Ansible-managed addons <https://github.com/ansibleguy/addons_nftables>`_
+
+DNS
+***
+
+It is nice to have variables that hold the IPs of some DNS-record.
+
+NFTables CAN resolve DNS-records - but will throw an error if the record resolves to more than one IP.. (Error: Hostname resolves to multiple addresses)
+
+See: `NFTables Addon DNS <https://github.com/superstes/nftables_addon_dns>`_
+
+IPLists
+*******
+
+This addon was inspired by `the same functionality provided on OPNSense <https://docs.opnsense.org/manual/how-tos/edrop.html#configure-spamhaus-e-drop>`_
+
+It will download existing IPLists and add them as NFTables variables.
+
+IPList examples:
+
+* `Spamhaus DROP <https://www.spamhaus.org/drop/drop.txt>`_
+* `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
+* `Tor exit nodes <https://check.torproject.org/torbulkexitlist>`_
+
+See: `NFTables Addon IPList <https://github.com/superstes/nftables_addon_iplist>`_
+
+Failover
+********
+
+See: `NFTables Addon Failover <https://github.com/superstes/nftables_addon_failover>`_
+
+
+----
+
 Config
 ######
 
-`NFTables base-config example <https://wiki.superstes.eu/en/latest/_static/raw/network/nftables_base.txt>`_
+`NFTables base-config example <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_base.txt>`_
 
 .. _fw_nftables_tproxy:
 
@@ -350,81 +423,8 @@ With a tool like that you can wrap the plain traffic received from TPROXY and fo
 Examples
 --------
 
-* `NFTables TPROXY example <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY example <https://wiki.superstes.eu/en/latest/_static/raw/network/nftables_tproxy.txt>`_
-* `IPTables TPROXY example <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY example <https://wiki.superstes.eu/en/latest/_static/raw/network/iptables_tproxy.txt>`_
-
-----
-
-Service
-#######
-
-To keep invalid configuration from stopping/failing your :code:`nftables.service` - you can add a config-validation in it:
-
-.. code-block:: text
-
-    # /etc/systemd/system/nftables.service.d/override.conf
-
-    [Service]
-    # catch errors at start
-    ExecStartPre=/usr/sbin/nft -cf /etc/nftables.conf
-
-    # catch errors at reload
-    ExecReload=
-    ExecReload=/usr/sbin/nft -cf /etc/nftables.conf
-    ExecReload=/usr/sbin/nft -f /etc/nftables.conf
-
-    # catch errors at restart
-    ExecStop=
-    ExecStop=/usr/sbin/nft -cf /etc/nftables.conf
-    ExecStop=/usr/sbin/nft flush ruleset
-
-    Restart=on-failure
-    RestartSec=5s
-
-This will catch and log config-errors before doing a reload/restart.
-
-When doing a system-reboot it will still fail if your config is bad.
-
-----
-
-Addons
-######
-
-NFTables lacks some functionality, that is commonly used in firewalling.
-
-You can add a scheduled scripts that add these functionalities to NFTables!
-
-See: `Ansible-managed addons <https://github.com/ansibleguy/addons_nftables>`_
-
-DNS
-***
-
-It is nice to have variables that hold the IPs of some DNS-record.
-
-NFTables CAN resolve DNS-records - but will throw an error if the record resolves to more than one IP.. (Error: Hostname resolves to multiple addresses)
-
-See: `NFTables Addon DNS <https://github.com/superstes/nftables_addon_dns>`_
-
-IPLists
-*******
-
-This addon was inspired by `the same functionality provided on OPNSense <https://docs.opnsense.org/manual/how-tos/edrop.html#configure-spamhaus-e-drop>`_
-
-It will download existing IPLists and add them as NFTables variables.
-
-IPList examples:
-
-* `Spamhaus DROP <https://www.spamhaus.org/drop/drop.txt>`_
-* `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
-* `Tor exit nodes <https://check.torproject.org/torbulkexitlist>`_
-
-See: `NFTables Addon IPList <https://github.com/superstes/nftables_addon_iplist>`_
-
-Failover
-********
-
-See: `NFTables Addon Failover <https://github.com/superstes/nftables_addon_failover>`_
-
+* `NFTables TPROXY example <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY example <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_tproxy.txt>`_
+* `IPTables TPROXY example <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY example <https://docs.o-x-l.com/en/latest/_static/raw/fw_iptables_tproxy.txt>`_
 
 ----
 

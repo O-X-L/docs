@@ -1,0 +1,43 @@
+#!/bin/bash
+
+# target: squid-openssl 4.13 with listener "http_port 127.0.0.1:3129 tproxy"
+
+MARK_PROXY=200
+MARK_DONE=201
+PROXY_UID=13
+PROXY_PORT=3129
+EXCLUDE_NETS=(127.0.0.0/8 192.168.0.0/16 10.0.0.0/8 172.16.0.0/12)
+
+iptables -t mangle -N PROXY_SESSION
+iptables -t mangle -A PROXY_SESSION -j MARK --set-mark "$MARK_PROXY"
+iptables -t mangle -A PROXY_SESSION -j ACCEPT
+iptables -t mangle -A PREROUTING -p tcp -m socket -j PROXY_SESSION
+# iptables -t mangle -A PREROUTING -m mark --mark $MARK_PROXY -j LOG --log-prefix "PRE MARK PROXY"
+# iptables -t mangle -A PREROUTING -m mark --mark $MARK_DONE -j LOG --log-prefix "PRE MARK DONE"
+
+iptables -t mangle -N PROXY_REDIRECT
+iptables -t mangle -A PROXY_REDIRECT -p tcp -m mark --mark "$MARK_DONE" -j RETURN 
+for net in "${EXCLUDE_NETS[@]}"
+do
+  iptables -t mangle -A PROXY_REDIRECT -p tcp -d "$net" -j RETURN
+done
+iptables -t mangle -A PROXY_REDIRECT -p tcp -j TPROXY --tproxy-mark "$MARK_PROXY/$MARK_PROXY" --on-ip 127.0.0.1 --on-port "$PROXY_PORT" 
+iptables -t mangle -A PREROUTING -p tcp -j PROXY_REDIRECT
+iptables -t mangle -A PREROUTING -m mark --mark "$MARK_DONE" -j CONNMARK --save-mark
+
+iptables -t mangle -N OUTPUT_LOOP
+iptables -t mangle -A OUTPUT_LOOP -m owner --uid-owner "$PROXY_UID" -j RETURN
+iptables -t mangle -A OUTPUT_LOOP -m owner --uid-owner "$PROXY2_UID" -j RETURN
+iptables -t mangle -A OUTPUT_LOOP -p tcp -m mark --mark "$MARK_DONE" -j RETURN 
+for net in "${EXCLUDE_NETS[@]}"
+do
+  iptables -t mangle -A OUTPUT_LOOP -p tcp -d "$net" -j RETURN
+done
+iptables -t mangle -A OUTPUT_LOOP -p tcp -d 255.255.255.255/32 -j RETURN
+iptables -t mangle -A OUTPUT_LOOP -p tcp -j MARK --set-mark "$MARK_PROXY"
+
+iptables -t mangle -A OUTPUT -m connmark --mark "$MARK_DONE" -j CONNMARK --restore-mark
+# iptables -t mangle -A OUTPUT -m mark --mark $MARK_PROXY -j LOG --log-prefix "OUT MARK PROXY"
+# iptables -t mangle -A OUTPUT -m mark --mark $MARK_DONE -j LOG --log-prefix "OUT MARK DONE"
+iptables -t mangle -A OUTPUT -p tcp -j OUTPUT_LOOP
+iptables -t mangle -A OUTPUT -m mark --mark "$MARK_DONE" -j MARK --set-mark 0

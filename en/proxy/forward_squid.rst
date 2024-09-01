@@ -212,7 +212,7 @@ See: `IPTables TPROXY <https://gist.github.com/superstes/c4fefbf403f61812abf8916
 Config
 ######
 
-`Config options <https://wiki.superstes.eu/en/latest/_static/raw/network/squid_config_options.txt>`_
+`Config options <https://docs.o-x-l.com/en/latest/_static/raw/proxy_squid_config_options.txt>`_
 
 Know-How
 ========
