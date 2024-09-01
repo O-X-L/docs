@@ -59,7 +59,7 @@ Installation
 SSL
 ***
 
-If you are only 'peaking' at SSL connections - this should be enough:
+If you only want to read the Server-Name-Identifier from the TLS-Handshake - this should be enough:
 
 .. code-block:: bash
 
@@ -144,6 +144,7 @@ By *peaking* at TLS handshake information in ssl-bump step-1 we are able to gain
 
 * less options to filter the traffic on
 * connections to *trustable* targets could carry dangerous payloads
+* will stop working if `encrypted SNI <https://www.cloudflare.com/learning/ssl/what-is-encrypted-sni/>`_ is enforced by the target server
 
 In some cases a basic DNS 'allow-list' will be enough to ensure good security. Many automated attacks can be blocked using this approach.
 
