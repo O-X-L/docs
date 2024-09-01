@@ -38,9 +38,13 @@ Further legal information and terms of use
 ******************************************
 
 Our website may only be used for lawful purposes. In particular, it is prohibited to use the website for the following purposes:
+
 * For the dissemination of illegal content
+
 * To infringe the rights of third parties
+
 * To spread viruses or other malware
+
 * To disrupt the operation of the website
 
 We accept no liability for damage caused by the use of the website. This applies in particular to damage caused by the use of the website or by the use of the content offered on the website.
