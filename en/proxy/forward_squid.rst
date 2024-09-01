@@ -199,7 +199,7 @@ Why do we need to send 'output' traffic to loopback? Because TPROXY is only avai
 NFTables
 ========
 
-See: :ref:`NFTables TProxy <net_firewall_nftables_tproxy>`
+See: :ref:`NFTables TProxy <fw_nftables_tproxy>`
 
 
 IPTables
