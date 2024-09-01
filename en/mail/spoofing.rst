@@ -58,39 +58,41 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
 * Allowing only E-Mails from you mail server, deny all others.
 
-  ```
-  Record: o-x-l.com
-  Type:   TXT
-  Value:  v=spf1 mx -all
-  ```
+    .. code-block:: bash
+
+        Record: o-x-l.com
+        Type:   TXT
+        Value:  v=spf1 mx -all
 
 * Allowing E-Mails from your mail server and a Cloud service, deny all others.
 
-  ```
-  Record: o-x-l.com
-  Type:   TXT
-  Value:  v=spf1 mx include:amazonses.com -all
-  ```
+    .. code-block:: bash
+
+      Record: o-x-l.com
+      Type:   TXT
+      Value:  v=spf1 mx include:amazonses.com -all
+
 
 * For DNS records that are not used to send mails, you should always deny any! Else someone could exploit those to send spoofing mails.
 
-  ```
-  Record: *.o-x-l.com
-  Type:   TXT
-  Value:  v=spf1 -all
-  ```
+    .. code-block:: bash
+
+        Record: *.o-x-l.com
+        Type:   TXT
+        Value:  v=spf1 -all
 
   We've also seen spoofing attempts that use records that are used for non-mailing services. You may also want to deny mails from these.
 
-  ```
-  Record: www.o-x-l.com
-  Type:   A
-  Value:  <IP OF WEB SERVICE>
+    .. code-block:: bash
 
-  Record: www.o-x-l.com
-  Type:   TXT
-  Value:  v=spf1 -all
-  ```
+        Record: www.o-x-l.com
+        Type:   A
+        Value:  <IP OF WEB SERVICE>
+
+        Record: www.o-x-l.com
+        Type:   TXT
+        Value:  v=spf1 -all
+
 
 Limits
 ======
@@ -119,11 +121,11 @@ DKIM Examples
 
 * The key-pair selector is :code:`mail123`
 
-  ```
-  Record: mail123._domainkey.o-x-l.com
-  Type:   TXT
-  Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
-  ```
+    .. code-block:: bash
+
+        Record: mail123._domainkey.o-x-l.com
+        Type:   TXT
+        Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
 
 ----
 
@@ -155,32 +157,32 @@ Possible **policies**: :code:`none` (reporting/warning), :code:`quarantine`, :co
 
 * Initially add a DMARC record in reporting-only mode.
 
-  ```
-  Record: _dmarc.o-x-l.com
-  Type:   TXT
-  Value:  v=DMARC1; p=none; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
-  ```
+    .. code-block:: bash
+
+        Record: _dmarc.o-x-l.com
+        Type:   TXT
+        Value:  v=DMARC1; p=none; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
 
 * Enforce DMARC alignment and move all other messages from this domain into the receivers quarantine.
 
-  ```
-  Record: _dmarc.o-x-l.com
-  Type:   TXT
-  Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
-  ```
+    .. code-block:: bash
+
+        Record: _dmarc.o-x-l.com
+        Type:   TXT
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
 
 * Set SPF & DKIM matching to be strict.
 
-  ```
-  Record: _dmarc.o-x-l.com
-  Type:   TXT
-  Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s;
-  ```
+    .. code-block:: bash
+
+        Record: _dmarc.o-x-l.com
+        Type:   TXT
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s;
 
 * Add a subdomain-policy.
 
-  ```
-  Record: _dmarc.o-x-l.com
-  Type:   TXT
-  Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;
-  ```
+    .. code-block:: bash
+
+        Record: _dmarc.o-x-l.com
+        Type:   TXT
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;

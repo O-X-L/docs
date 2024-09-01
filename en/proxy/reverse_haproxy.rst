@@ -63,7 +63,7 @@ You can track clients like so:
     # track by user-agent
     http-request track-sc1 req.fhdr(User-Agent) be_limiter_ua
 
-You can use a single :code:``track-scN` to track a client in multiple tables.
+You can use a single :code:`track-scN` to track a client in multiple tables.
 
 Tables
 ======
