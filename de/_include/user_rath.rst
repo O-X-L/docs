@@ -1,7 +1,7 @@
 ----
 
 .. |author_rath| image:: https://files.oxl.at/img/rath1.png
-   :class: wiki-img-sm
+   :class: wiki-portrait
    :alt: OXL Docs - Author Rath Pascal
 
 Autor

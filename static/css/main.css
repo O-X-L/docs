@@ -25,6 +25,15 @@
     border-width: 3px;
 }
 
+.wiki-portrait {
+    width: 60%;
+    margin: 5px 0px;
+    border-radius: 5px;
+    border-style: solid;
+    border-color: #343a40;
+    border-width: 1px;
+}
+
 #ty {
     position: absolute;
     bottom: 50px;
