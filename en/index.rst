@@ -2,15 +2,6 @@
 OXL Documentation
 *****************
 
-Base
-####
-
-.. toctree::
-    :glob:
-    :maxdepth: 1
-
-    base/*
-
 IT Automation
 #############
 
@@ -75,4 +66,11 @@ Virtualization & Containerization
 
    index_virt
 
+Base
+####
 
+.. toctree::
+    :glob:
+    :maxdepth: 1
+
+    base/*
