@@ -288,3 +288,5 @@ As seen in `this blog post <https://www.haproxy.com/blog/preserve-stick-table-da
 
     backend be_limiter_xyz
         stick-table type ipv6 size 10k expire 24h store http_req_cnt peers preserve_on_reload
+
+.. include:: ../_include/user_rath.rst

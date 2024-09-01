@@ -35,3 +35,5 @@ SNI Sniffing
 Alternatively to full TLS-Interception, Interceptors can read your target hostname from the `TLS SNI extension <https://www.cloudflare.com/learning/ssl/what-is-sni/>`_ as it is transferred in plaintext as the TLS handshake is performed. Clients and Servers are not aware of this kind of sniffing.
 
 The `encrypted SNI <https://www.cloudflare.com/learning/ssl/what-is-encrypted-sni/>`_ standard is designed to fix this information leak. Some states like China and Russia have reportedly started to block any ESNI TLS handshakes.
+
+.. include:: ../_include/user_rath.rst

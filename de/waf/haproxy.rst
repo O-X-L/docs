@@ -9,7 +9,7 @@ HAProxy
 .. include:: ../_include/wip.rst
 
 Intro
-*****
+#####
 
 See: `HAProxy <https://www.haproxy.com/>`_
 

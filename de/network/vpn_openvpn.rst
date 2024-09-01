@@ -7,7 +7,7 @@ VPN - OpenVPN
 =============
 
 Intro
-*****
+#####
 
 See: `OpenVPN <https://openvpn.net/>`_
 

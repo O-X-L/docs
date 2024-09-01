@@ -7,6 +7,6 @@ VPN - WireGuard
 ===============
 
 Intro
-*****
+#####
 
 See: `WireGuard <https://www.wireguard.com/>`_

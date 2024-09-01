@@ -397,7 +397,7 @@ You might want to target a remote proxy server. This does not work with this ope
 
 One would need to use a proxy-forwarder tool that can handle this for you.
 
-I've patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_
+We have patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_
 
 With a tool like that you can wrap the plain traffic received from TPROXY and forward or tunnel it.
 
@@ -405,18 +405,18 @@ With a tool like that you can wrap the plain traffic received from TPROXY and fo
 
     # NFTables =TCP=> TPROXY (forwarder @ 127.0.0.1) =HTTP[TCP]=> PROXY
 
-    > curl https://superstes.eu
+    > curl https://www.o-x-l.com
     # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> superstes.eu:443/tcp | connection established
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
     # proxy (squid)
-    NONE_NONE/200 0 CONNECT superstes.eu:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT superstes.eu:443 - HIER_DIRECT/superstes.eu -
+    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
 
-    > curl http://superstes.eu
+    > curl http://www.o-x-l.com
     # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> superstes.eu:80/tcp | connection established
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
     # proxy (squid)
-    TCP_REFRESH_MODIFIED/301 477 GET http://superstes.eu/ - HIER_DIRECT/superstes.eu text/html
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
 
 
 
@@ -471,3 +471,5 @@ Fail2Ban
 
 Squid
 *****
+
+.. include:: ../_include/user_rath.rst

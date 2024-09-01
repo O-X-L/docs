@@ -2,7 +2,7 @@
 
 .. include:: ../_include/head.rst
 
-.. |intercept| image:: ../_static/img/proxy_forward_squid_remote.png
+.. |squid_remote| image:: ../_static/img/proxy_forward_squid_remote.png
    :class: wiki-img
    :alt: OXL Docs - Proxy Remote Forwarding
 
@@ -301,7 +301,7 @@ You may want to cover at least those basic filters:
       .. code-block:: text
 
           acl domains_allowed dstdomain example.com
-          acl domains_allowed dstdomain superstes.eu
+          acl domains_allowed dstdomain www.o-x-l.com
           http_access allow domains_allowed
           http_access deny all
 
@@ -421,18 +421,18 @@ In this case we might need other tools like `proxy-forwarder <https://github.com
 
 .. code-block:: text
 
-    > curl https://superstes.eu
+    > curl https://www.o-x-l.com
     # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> superstes.eu:443/tcp | connection established
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
     # squid
-    NONE_NONE/200 0 CONNECT superstes.eu:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT superstes.eu:443 - HIER_DIRECT/superstes.eu -
+    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
 
     > curl http://superstes.eu
     # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> superstes.eu:80/tcp | connection established
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
     # squid
-    TCP_REFRESH_MODIFIED/301 477 GET http://superstes.eu/ - HIER_DIRECT/superstes.eu text/html
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
 
 
 |squid_remote|
@@ -549,3 +549,5 @@ Known problems
   See also: `Squid wiki - host_verify_strict <http://www.squid-cache.org/Doc/config/host_verify_strict/>`_ & `Squid wiki - host header forgery <https://wiki.squid-cache.org/KnowledgeBase/HostHeaderForgery>`_
 
   You could - of course use the `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_ to translate the intercepted TCP traffic into HTTP & HTTPS requests that you are able to send to the 'forward-proxy' port of squid. (*that one will ignore that check...*)
+
+.. include:: ../_include/user_rath.rst

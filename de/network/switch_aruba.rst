@@ -7,6 +7,6 @@ Switch - Aruba
 ==============
 
 Intro
-*****
+#####
 
 See: `Aruba Network Switches <https://www.arubanetworks.com/products/switches/>`_
