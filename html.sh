@@ -31,6 +31,10 @@ then
   source "$VENV_BIN"
 fi
 
+log 'COPYING STATICS'
+cp -r "${SRC_DIR}/static/"* "${SRC_DIR}/en/_static/"
+cp -r "${SRC_DIR}/static/"* "${SRC_DIR}/de/_static/"
+
 log 'BUILDING DOCS'
 sphinx-build -b html en/ "${TMP_DIR}/en/" >/dev/null
 sphinx-build -b html de/ "${TMP_DIR}/de/" >/dev/null
@@ -61,10 +65,6 @@ HTML_LANG_DE='html lang="de"'
 
 sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" *.html
 sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" */*.html
-
-log 'COPYING STATICS'
-cp -r "${SRC_DIR}/static/"* "${TMP_DIR}/en/_static/"
-cp -r "${SRC_DIR}/static/"* "${TMP_DIR}/de/_static/"
 
 log 'ACTIVATING'
 cd "$SRC_DIR"
