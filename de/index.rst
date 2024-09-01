@@ -35,6 +35,23 @@ Firewall
 
    index_firewall
 
+Security
+########
+
+.. toctree::
+   :maxdepth: 2
+
+   index_security
+
+Proxies
+#######
+
+.. toctree::
+   :maxdepth: 2
+
+   index_proxy
+
+
 Web Application Firewall
 ########################
 
