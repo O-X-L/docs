@@ -4,9 +4,11 @@
 
 .. |proxy_reverse| image:: ../_static/img/proxy_reverse.svg
    :class: wiki-img-sm
+   :alt: OXL Docs - Reverse Proxy
 
 .. |proxy_forward| image:: ../_static/img/proxy_forward.svg
    :class: wiki-img-sm
+   :alt: OXL Docs - Forward Proxy
 
 =========
 1 - Intro

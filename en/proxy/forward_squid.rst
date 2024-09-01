@@ -4,6 +4,7 @@
 
 .. |intercept| image:: ../_static/img/proxy_forward_squid_remote.png
    :class: wiki-img
+   :alt: OXL Docs - Proxy Remote Forwarding
 
 *********************
 Forward Proxy - Squid
