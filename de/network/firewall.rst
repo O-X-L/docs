@@ -1,7 +1,7 @@
 .. include:: ../_include/head.rst
 
-========
-Firewall
-========
+=========
+Firewalls
+=========
 
 See: :ref:`Firewall - Intro <fw_intro>`
