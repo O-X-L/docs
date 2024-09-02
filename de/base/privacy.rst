@@ -48,6 +48,12 @@ Für den Betrieb unserer Websites kann es erforderlich sein, dass wir Ihre Daten
 Cookies 🍪
 **********
 
-* **piccoloThemeMode**: Dark/Light Mode Switch (*local storage*)
-
 * **Path**: Lokale Fonts
+
+----
+
+Local Storage
+*************
+
+* **piccoloThemeMode**: Dark/Light Mode Switch
+
