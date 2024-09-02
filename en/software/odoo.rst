@@ -122,3 +122,15 @@ Else you need to use the shell:
 
     # update it (change HASH to the value you got by running the 'python3' command above)
     UPDATE res_users SET password='HASH' WHERE id=2;
+
+----
+
+Firewalling
+***********
+
+If you want to limit outbound connections you might need to allow HTTP+S connections to these Domains:
+
+* nightly.odoo.com
+* apps.odoo.com
+* partner-autocomplete.odoo.com
+* www.odoo.com
