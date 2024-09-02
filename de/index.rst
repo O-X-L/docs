@@ -67,6 +67,14 @@ Virtualization & Containerization
 
    index_virt
 
+Software Applikationen
+######################
+
+.. toctree::
+   :maxdepth: 2
+
+   index_software
+
 Grundlegendes
 #############
 
