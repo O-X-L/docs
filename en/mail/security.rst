@@ -187,3 +187,5 @@ Possible **policies**: :code:`none` (reporting/warning), :code:`quarantine`, :co
         Record: _dmarc.o-x-l.com
         Type:   TXT
         Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;
+
+.. include:: ../_include/user_rath.rst

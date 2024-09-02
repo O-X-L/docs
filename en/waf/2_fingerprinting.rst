@@ -67,3 +67,5 @@ JA4 Suite
 *********
 
 See: `FoxIO JA4 Fingerprinting Suite <https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/README.md>`_
+
+.. include:: ../_include/user_rath.rst

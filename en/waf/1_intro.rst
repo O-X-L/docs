@@ -108,3 +108,5 @@ In practise it is recommended to decouple the WAF from your application. This ha
   Not so if it's your own codebase.
 
 Not to say that you should not implement ANY security checks in your application! You should. But as mentioned above - a WAF is more than a few security checks. It really is a **firewall**!
+
+.. include:: ../_include/user_rath.rst
