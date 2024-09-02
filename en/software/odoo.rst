@@ -21,7 +21,7 @@ On-Premise Installation
 Community Edition
 *****************
 
-See: `Odoo Community Docs <https://www.odoo.com/documentation/17.0/administration/on_premise.html>`_
+See: `Odoo Community Docs <https://www.odoo.com/documentation/17.0/administration/on_premise/packages.html>`_
 
 Ansible Role: `ansibleguy.sw_odoo_community <https://github.com/ansibleguy/sw_odoo_community>`_
 
@@ -134,3 +134,4 @@ If you want to limit outbound connections you might need to allow HTTP+S connect
 * apps.odoo.com
 * partner-autocomplete.odoo.com
 * www.odoo.com
+* services.odoo.com

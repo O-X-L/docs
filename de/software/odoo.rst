@@ -21,7 +21,7 @@ On-Premise Installation
 Community Edition
 *****************
 
-Siehe: `Odoo Community Docs <https://www.odoo.com/documentation/17.0/administration/on_premise.html>`_
+Siehe: `Odoo Community Docs <https://www.odoo.com/documentation/17.0/administration/on_premise/packages.html>`_
 
 Ansible Role: `ansibleguy.sw_odoo_community <https://github.com/ansibleguy/sw_odoo_community>`_
 
@@ -134,3 +134,4 @@ Wenn Sie ausgehende Verbindungen einschränken möchten, müssen Sie möglicherw
 * apps.odoo.com
 * partner-autocomplete.odoo.com
 * www.odoo.com
+* services.odoo.com
