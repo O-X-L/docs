@@ -1,4 +1,4 @@
-.. _base_license:
+.. _legal_license:
 
 .. include:: ../_include/head.rst
 

@@ -74,11 +74,11 @@ Software Applications
 
    index_software
 
-Base
-####
+Legal
+#####
 
 .. toctree::
     :glob:
     :maxdepth: 1
 
-    base/*
+    legal/*

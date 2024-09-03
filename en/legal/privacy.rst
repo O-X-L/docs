@@ -1,4 +1,4 @@
-.. _base_privacy:
+.. _legal_privacy:
 
 .. include:: ../_include/head.rst
 

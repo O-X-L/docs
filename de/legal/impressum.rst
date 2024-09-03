@@ -1,4 +1,4 @@
-.. _base_impressum:
+.. _legal_impressum:
 
 .. include:: ../_include/head.rst
 
@@ -9,11 +9,15 @@ Impressum
 Info
 ****
 
-**Name**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
+**Firmenname**: **OXL IT Services e.U.**
+
+**Gründer**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
 
 **E-Mail**: kontakt@ oxl.at
 
 **Kontakt-Formular**: `Kontakt <https://www.oxl.at/contact>`_
+
+**Firmenbuchnummer**: `FN 635245i <https://justizonline.gv.at/jop/web/firmenbuchabfrage/635245i_1>`_
 
 **UID**: ATU81010549
 
