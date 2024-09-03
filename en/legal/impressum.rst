@@ -13,7 +13,7 @@ Info
 
 **Founder**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
 
-**E-Mail**: contact@ oxl.at
+**E-Mail**: `contact@oxl.at <mailto:contact@oxl.at>`_
 
 **Contact-Form**: `Contact <https://www.o-x-l.com/contact>`_
 
