@@ -126,6 +126,25 @@ DKIM Examples
         Type:   TXT
         Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
 
+* Full example:
+
+    .. code-block:: bash
+
+        test._domainkey.oxl.at TXT "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0BtDBbXYRNcft4d6LeTGkybsxc1JVXxZ2hJHDteHhU7TUfQGq2MqcsegVU97l6THb8VZxv7hWKCFSXwLh1QHRAVB9bxVFbu08cI9OMPpfvjq2XyVdY6D1lRD36emn4Mk9F6kIb5apP6QQtFPvMsX/15NZLZ/pr+G2DHl3TfG7vQIDAQAB"
+
+
+Generate Key-Pair
+*****************
+
+.. code-block:: bash
+
+    openssl genrsa -out mail.key 2048
+    chmod 600 mail.key
+    openssl rsa -in mail.key -pubout > mail.crt
+    cat mail.crt | tr -d '\n'
+
+Copy the Public-Key (*without header/trailer*).
+
 ----
 
 DMARC
