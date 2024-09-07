@@ -40,7 +40,7 @@ Manual
 Docker
 ======
 
-Sie können ein Docker-Image erstellen, wie in `diesem Repository zu sehen  <https://github.com/superstes/squid-openssl-docker>`_!
+Sie können ein Docker-Image erstellen, wie in `diesem Repository zu sehen  <https://github.com/O-X-L/squid-openssl-docker>`_!
 
 
 ----

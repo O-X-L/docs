@@ -40,7 +40,7 @@ Manual
 Docker
 ======
 
-You can build a docker image as seen `in this repository <https://github.com/superstes/squid-openssl-docker>`_!
+You can build a docker image as seen `in this repository <https://github.com/O-X-L/squid-openssl-docker>`_!
 
 
 ----
