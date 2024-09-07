@@ -306,6 +306,19 @@ You may want to cover at least those basic filters:
           http_access allow domains_allowed
           http_access deny all
 
+    * allow or deny access at specific times
+
+      Day-Codes: :code:`M=Monday, T=Tuesday, W=Wednesday, H=Thursday, F=Friday, A=Saturday, S=Sunday`
+
+      .. code-block:: text
+
+          acl time_lunch MTWHF 11:30-13:30
+          acl domains_lunch dstdomain .youtube.com
+          http_access allow time_lunch domains_lunch
+
+          acl time_evening 20:00-22:00
+          http_access deny all time_evening
+
 * **check server certificates** for issues (*expired, untrusted, weak ciphers*)
 
   .. code-block:: text
@@ -417,7 +430,7 @@ Practical examples of this:
 * A Cloud VPS or Root Server that is only connected to WAN
 * Distributed Systems using a central proxy (*p.e. on-site at customers*)
 
-In this case we might need other tools like `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_ to act as forwarder:
+In this case we might need other tools like `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_ to act as forwarder:
 
 
 .. code-block:: text
@@ -549,6 +562,6 @@ Known problems
 
   See also: `Squid wiki - host_verify_strict <http://www.squid-cache.org/Doc/config/host_verify_strict/>`_ & `Squid wiki - host header forgery <https://wiki.squid-cache.org/KnowledgeBase/HostHeaderForgery>`_
 
-  You could - of course use the `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_ to translate the intercepted TCP traffic into HTTP & HTTPS requests that you are able to send to the 'forward-proxy' port of squid. (*that one will ignore that check...*)
+  You could - of course use the `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_ to translate the intercepted TCP traffic into HTTP & HTTPS requests that you are able to send to the 'forward-proxy' port of squid. (*that one will ignore that check...*)
 
 .. include:: ../_include/user_rath.rst

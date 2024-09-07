@@ -309,6 +309,19 @@ Zumindest diese grundlegenden Filter sollten Sie abdecken:
           http_access allow domains_allowed
           http_access deny all
 
+    * zu spezifischen Zeiten Zugriffe freigeben oder blockieren
+
+      Tages-Kürzel: :code:`M=Montag, T=Dienstag, W=Mittwoch, H=Donnerstag, F=Freitag, A=Samstag, S=Sonntag`
+
+      .. code-block:: text
+
+          acl time_lunch MTWHF 11:30-13:30
+          acl domains_lunch dstdomain .youtube.com
+          http_access allow time_lunch domains_lunch
+
+          acl time_evening 20:00-22:00
+          http_access deny all time_evening
+
 * **Server Zertifikate** auf Fehler prüfen (*expired, untrusted, weak ciphers*)
 
   .. code-block:: text

@@ -15,6 +15,6 @@ Autor
 
     Er ist spezialisiert auf: **IT-Netzwerke, Linux-Systeme, IT-Automatisierung und OpenSource-Lösungen**.
 
-    `LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_ | `GitHub <https://github.com/superstes>`_ | E-Mail: rath @oxl.at
+    `LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_ | `GitHub <https://github.com/superstes>`_ | E-Mail: `kontakt@oxl.at <mailto:kontakt@oxl.at>`_
 
     |author_rath|

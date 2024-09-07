@@ -315,7 +315,7 @@ It is nice to have variables that hold the IPs of some DNS-record.
 
 NFTables CAN resolve DNS-records - but will throw an error if the record resolves to more than one IP.. (Error: Hostname resolves to multiple addresses)
 
-See: `NFTables Addon DNS <https://github.com/superstes/nftables_addon_dns>`_
+See: `NFTables Addon DNS <https://github.com/O-X-L/nftables_addon_dns>`_
 
 IPLists
 *******
@@ -330,12 +330,12 @@ IPList examples:
 * `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
 * `Tor exit nodes <https://check.torproject.org/torbulkexitlist>`_
 
-See: `NFTables Addon IPList <https://github.com/superstes/nftables_addon_iplist>`_
+See: `NFTables Addon IPList <https://github.com/O-X-L/nftables_addon_iplist>`_
 
 Failover
 ********
 
-See: `NFTables Addon Failover <https://github.com/superstes/nftables_addon_failover>`_
+See: `NFTables Addon Failover <https://github.com/O-X-L/nftables_addon_failover>`_
 
 
 ----
@@ -404,7 +404,7 @@ You might want to target a remote proxy server. This does not work with this ope
 
 One would need to use a proxy-forwarder tool that can handle this for you.
 
-We have patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_
+We have patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_
 
 With a tool like that you can wrap the plain traffic received from TPROXY and forward or tunnel it.
 
