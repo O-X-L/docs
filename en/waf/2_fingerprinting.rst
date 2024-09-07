@@ -15,7 +15,7 @@ For Web-Application firewalls it is very useful to fingerprint their clients.
 
 The more information we have about our clients, the easier it is to recognize attack schemes and validate if requests are legitimate users or bots.
 
-Of course - fingerprinting has also the negative aspect of losing a bit of privacy as clients can be tracked easier. This is especially true for client-side fingerprinting. Server-side fingerprinting has a not less information about
+Of course - fingerprinting has also the negative aspect of losing a bit of privacy as clients can be tracked easier. This is especially true for client-side fingerprinting. Server-side fingerprinting has a lot less information about its clients.
 
 ----
 
@@ -60,6 +60,20 @@ JA4
 See: `FoxIO JA4 TLS Fingerprint <https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/JA4.md>`_ | `FoxIO JA4 Database <https://ja4db.com/>`_
 
 We've created a `JA4 HAProxy Lua Plugin <https://github.com/O-X-L/haproxy-ja4>`_. It showcases how the fingerprint is constructed.
+
+----
+
+TCP Fingerprinting
+******************
+
+As the TCP connection has some Operating-System specific attributes, we can utilize this information to gather some knowledge about the client we are communicating with.
+
+The Max-Segment-Size can also be a hint if the client is currently connecting over a VPN or Proxy.
+
+JA4T
+====
+
+See: `FoxIO JA4T Fingerprint <https://medium.com/foxio/ja4t-tcp-fingerprinting-12fb7ce9cb5a>`_
 
 ----
 

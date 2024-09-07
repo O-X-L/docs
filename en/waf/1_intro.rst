@@ -19,11 +19,15 @@ Your application needs to be reachable for many users - many times even globally
 
 WAFs supplement common (network) firewalls in protecting your systems.
 
+A WAF must be specially customised to the applications it is supposed to protect. This is not a one-off task! It must be **permanently maintained**!
+
+By scanning request responses, a WAF can also further protect your application against data leakage.
+
 The major two categories of WAFs are **cloud-hosted and self-hosted** ones.
 
 See also: `Web application security <https://www.cloudflare.com/learning/security/what-is-web-application-security/>`_
 
-Basic WAF workflow
+Working with a WAF
 ******************
 
 * **Defining the 'interfaces'**
@@ -42,6 +46,8 @@ Basic WAF workflow
 
   |waf_dev_flow|
 
+An ‘audit mode’ is usually used to test the behaviour of the WAF before it is actually activated.
+
 ----
 
 Self Hosted
@@ -49,9 +55,11 @@ Self Hosted
 
 As a WAF has access to all information that passes through it, including sensitive user data, it might not be acceptable for your company or project to have it hosted by a third party.
 
-Some enterprise-grade solutions may get expensive, but you can always start-out with an Open-Source community product like :ref:`HAProxy <proxy_reverse_haproxy>` and upgrade later on.
+Some enterprise-grade solutions may get expensive, but you can always start-out with an Open-Source product like :ref:`HAProxy Community <proxy_reverse_haproxy>`, `SafeLine <https://github.com/chaitin/SafeLine>`_ or `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_ and upgrade later on.
 
-I may be more work to get to a finished WAF setup, but you have
+You need to ensure that you have enough internal resources or a consultant to maintain it.
+
+It may be more work to get to a finished WAF setup, but that way you have an independent system.
 
 ----
 
@@ -77,7 +85,7 @@ In practise it is recommended to decouple the WAF from your application. This ha
 
   In such cases I always remember the sentence: :code:`Never implement your own encryption algorithm. You might think its safe - but I can assure you - it's not!` (`from Cryptography Lectures <https://www.youtube.com/watch?v=2aHkqB2-46k&list=PL2jrku-ebl3H50FiEPr4erSJiJHURM9BX>`_)
 
-  WAF solutions have staff that is specialized in developing for this use-case.
+  WAF-solution providers have staff that is specialized in developing for this use-case.
 
   Your developers might know about `OWASP <https://www.cloudflare.com/learning/security/threats/owasp-top-10/>`_ and have good experience developing secure code, but a WAF has to have a broad toolset like (at least) :code:`DDOS protection`, :code:`Detect and Block common attacks via SQLi/XSS/CSRF/SSRF/...`, :code:`Blocking by IP and ASN/ISP` and :code:`Bot detection and handling`.
 
