@@ -182,3 +182,5 @@ In that case, the software ignores the system trust-store.
 We see this behavior in banking applications.
 
 This is the only way of ensuring the connection between your client and server is not inspected by any 3th party.
+
+.. include:: ../_include/user_rath.rst

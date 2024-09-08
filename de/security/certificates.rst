@@ -181,3 +181,5 @@ In diesem Fall ignoriert die Software den Trust-Store des Systems.
 Wir sehen dieses Verhalten bei Bankanwendungen.
 
 Dies ist die einzige Möglichkeit, um sicherzustellen, dass die Verbindung zwischen Client und Server nicht von einer dritten Partei inspiziert wird.
+
+.. include:: ../_include/user_rath.rst

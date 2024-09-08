@@ -42,3 +42,5 @@ Dies wird häufig für die Verschlüsselung von Daten im Ruhezustand auf der Pla
 Diese Art der Verschlüsselung kann sehr nützlich sein, wenn Sie Geräte haben, die Sie nicht physisch vor dem Zugriff anderer schützen können. Beispiele hierfür sind: Server in einem verwalteten Rechenzentrum, mobile Geräte wie Laptops oder Smartphones, Sicherungen die außer Haus gebracht werden
 
 Beispiele: `Linux LUKS disk encryption <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/security_hardening/encrypting-block-devices-using-luks_security-hardening>`_, `Android Encryption <https://source.android.com/docs/security/features/encryption>`_, `Microsoft Windows Bitlocker <https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/>`_
+
+.. include:: ../_include/user_rath.rst

@@ -42,3 +42,5 @@ This is often used for at-rest encryption of data on disk.
 This kind of encryption can be very useful if you have devices, which you cannot physically protect against the access of others. Examples are: Servers in a managed datacenter, Mobile devices like laptops or smartphones, off-site backups
 
 Examples: `Linux LUKS disk encryption <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/security_hardening/encrypting-block-devices-using-luks_security-hardening>`_, `Android Encryption <https://source.android.com/docs/security/features/encryption>`_, `Microsoft Windows Bitlocker <https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/>`_
+
+.. include:: ../_include/user_rath.rst
