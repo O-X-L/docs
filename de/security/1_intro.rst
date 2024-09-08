@@ -11,3 +11,5 @@
 Intro
 #####
 
+* :ref:`Zertifikate <security_certificates>`
+* :ref:`Verschlüsselung <security_encryption>`
