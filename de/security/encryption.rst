@@ -3,9 +3,9 @@
 .. include:: ../_include/head.rst
 
 
-==========
-Encryption
-==========
+===============
+Verschlüsselung
+===============
 
 .. include:: ../_include/wip.rst
 

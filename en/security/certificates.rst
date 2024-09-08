@@ -6,9 +6,9 @@
    :class: wiki-img-lg
    :alt: OXL Docs - Public Key Infrastructure & x509 Certificates
 
-==========
-Encryption
-==========
+============
+Certificates
+============
 
 .. include:: ../_include/wip.rst
 
@@ -16,13 +16,6 @@ Intro
 #####
 
 The kind of certificates currently used are known as `X.509 <https://en.wikipedia.org/wiki/X.509>`_.
-
-See also: `Cloudflare - What is an SSL certificate <https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/>`_
-
-----
-
-Certificates
-############
 
 x509 certificates have a public and a private key.
 
@@ -32,13 +25,16 @@ Example: `Firefox <https://support.mozilla.org/en-US/kb/secure-website-certifica
 
 The **private keys need to be kept safe**! If not - attackers are able to impersonate your service and gain access to sensitive information!
 
+
+See also: `Cloudflare - What is an SSL certificate <https://www.cloudflare.com/learning/ssl/what-is-an-ssl-certificate/>`_
+
 ----
 
 Attributes
-**********
+##########
 
 Common Name
-===========
+***********
 
 The common name is the 'pretty name' users see first, when inspecting your certificate.
 
@@ -47,7 +43,7 @@ You might want to include your company name and a brief description of the servi
 Example: :code:`OXL - Documentation`
 
 Subject Alternative Names
-=========================
+*************************
 
 Whenever a service is access over TLS, it will be access over either a DNS-name or an IP-address.
 
@@ -60,7 +56,7 @@ It is important to set this attribute correctly, as it will be validated!
 ----
 
 Public Key Infrastructure & Trust Chains
-****************************************
+########################################
 
 **Security is very important** when it comes to certificate trust-chains!
 
@@ -81,10 +77,10 @@ See also: `EasyRSA Docs <https://easy-rsa.readthedocs.io/en/latest/intro-to-PKI/
 ----
 
 Trust-Store
-===========
+***********
 
 Debian-based Linux
-------------------
+==================
 
 **Store**: :code:`/etc/ssl/certs/ca-certificates.crt`
 
@@ -98,17 +94,17 @@ Debian-based Linux
     sudo update-ca-certificates
 
 Windows
--------
+=======
 
 See: `learn.microsoft.com <https://learn.microsoft.com/en-us/skype-sdk/sdn/articles/installing-the-trusted-root-certificate>`_
 
 ----
 
 Public vs Internal CAs
-**********************
+######################
 
 Public
-======
+******
 
 Public CAs are technically the same. Only their are added to the default trust-store of many devices.
 
@@ -121,7 +117,7 @@ Not all public certificate providers allow you to **create/update certificates n
 ----
 
 Private
-=======
+*******
 
 If you want to have full control - you may want to create a private CA!
 
@@ -143,7 +139,7 @@ Best practices: `AWS <https://docs.aws.amazon.com/privateca/latest/userguide/ca-
 .. _security_certificates_verify:
 
 Verification
-************
+############
 
 There are ways for attackers to :ref:`exploit trust chains and thus break encryption <proxy_tls_interception>`.
 
@@ -151,8 +147,8 @@ To stop the attacker from performing such a `Man-in-the-Middle attack <https://e
 
 If an active check fails, so does the connection.
 
-Trust
-=====
+Trust-Store
+***********
 
 This verification is on by default and should not be disabled.
 
@@ -163,21 +159,21 @@ Most software will use the system-wide trust-store for this validation.
 If an attacker was able to insert his own CA in this store, this check will find no issue.
 
 Subject Alternative Names
-=========================
+*************************
 
 This verification is on by default and should not be disabled.
 
 It checks that the DNS-name or IP-address we use to access the service, is listed inside the SAN of the certificate.
 
 Specific Attributes
-===================
+*******************
 
 Some software like OpenVPN allows you to validate the peer certificate by other certificate attributes.
 
 Per example - we are able to check that the Common-Name attribute matches a specific string.
 
 Only trust specific CA
-======================
+**********************
 
 Privacy- or Security-sensitive software sometimes will implement a check that makes sure the peer certificate is signed by a specific certificate authority. This CA will be hardcoded inside the client-side application.
 
