@@ -5,7 +5,7 @@
    :alt: OXL Docs - Author Rath Pascal
 
 Author
-******
+######
 
 .. note::
     We hope you enjoyed this article!
