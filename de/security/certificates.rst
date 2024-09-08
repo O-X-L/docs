@@ -137,8 +137,8 @@ Best practices: `AWS <https://docs.aws.amazon.com/privateca/latest/userguide/ca-
 
 .. _security_certificates_verify:
 
-Verification
-############
+Verifizierung
+#############
 
 Es gibt Möglichkeiten für Angreifer, :ref:`Trust-Chains auszunutzen und so die Verschlüsselung zu brechen<proxy_tls_interception>`.
 
