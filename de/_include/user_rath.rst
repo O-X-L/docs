@@ -1,6 +1,6 @@
 ----
 
-.. |author_rath| image:: https://files.oxl.at/img/rath1.png
+.. |author_rath| image:: https://files.oxl.at/img/rath1.jpg
    :class: wiki-portrait
    :alt: OXL Docs - Author Rath Pascal
 
