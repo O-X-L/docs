@@ -1,1 +1,11 @@
 build/
+
+de/_static/css/main.css
+de/_static/img/*
+de/_static/js/*
+de/_static/raw/*
+
+en/_static/css/main.css
+en/_static/img/*
+en/_static/js/*
+en/_static/raw/*
