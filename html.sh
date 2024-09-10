@@ -76,9 +76,6 @@ sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" *.html
 sed -i "s|$HTML_LANG_EN|$HTML_LANG_DE|g" */*.html
 
 
-
-
-
 log 'ACTIVATING'
 cd "$SRC_DIR"
 if [ -d "$DEST_DIR" ]
