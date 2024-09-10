@@ -34,6 +34,25 @@
     border-width: 1px;
 }
 
+.oxl-nav-logo > img, .oxl-head-logo {
+    border-radius: 5px;
+}
+
+.oxl-nav-logo > img {
+    width: 80px !important;
+    height: auto !important;
+}
+
+.oxl-head-logo {
+    width: 150px;
+    height: auto;
+}
+
+nav {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+}
+
 #ty {
     position: absolute;
     bottom: 50px;

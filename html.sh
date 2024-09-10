@@ -36,6 +36,7 @@ cp -r "${SRC_DIR}/static/"* "${SRC_DIR}/en/_static/"
 cp -r "${SRC_DIR}/static/"* "${SRC_DIR}/de/_static/"
 
 log 'BUILDING DOCS'
+export PYTHONWARNINGS='ignore'
 sphinx-build -b html en/ "${TMP_DIR}/en/" >/dev/null
 sphinx-build -b html de/ "${TMP_DIR}/de/" >/dev/null
 
@@ -51,8 +52,8 @@ HTML_META="${HTML_META}<link rel=\"icon\" type=\"image/svg\" href=\"https://file
 HTML_META_EN="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.at\" hreflang=\"de\">"
 HTML_META_DE="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.com\" hreflang=\"en\">"
 HTML_LOGO_LINK_SRC='href=".*Go to homepage"'
-HTML_LOGO_LINK_DE='href="https://www.oxl.at" title="OXL IT Services Website"'
-HTML_LOGO_LINK_EN='href="https://www.o-x-l.com" title="OXL IT Services Website"'
+HTML_LOGO_LINK_DE='href="https://www.oxl.at" class="oxl-nav-logo" title="OXL IT Services Website"'
+HTML_LOGO_LINK_EN='href="https://www.o-x-l.com" class="oxl-nav-logo" title="OXL IT Services Website"'
 
 cd "${TMP_DIR}/en/"
 
