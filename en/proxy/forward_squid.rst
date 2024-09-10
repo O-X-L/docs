@@ -291,9 +291,9 @@ You may want to cover at least those basic filters:
 
       .. code-block:: text
 
-          acl dst_internal src 192.168.0.0/16
-          acl dst_internal src 172.16.0.0/12
-          acl dst_internal src 10.0.0.0/8
+          acl dst_internal dst 192.168.0.0/16
+          acl dst_internal dst 172.16.0.0/12
+          acl dst_internal dst 10.0.0.0/8
           http_access allow dst_internal
           http_access deny all
 
