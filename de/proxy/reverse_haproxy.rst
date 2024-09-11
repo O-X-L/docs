@@ -411,6 +411,8 @@ Ansible Beispiel: `ansibleguy/infra_haproxy - ACME <https://github.com/ansiblegu
 
 ----
 
+.. _proxy_reverse_haproxy_rate:
+
 Rate Limits
 ###########
 
