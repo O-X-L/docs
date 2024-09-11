@@ -433,7 +433,7 @@ Praktische Beispiele hierfür:
 * Ein Cloud-VPS oder Root-Server, der nur mit dem WAN verbunden ist
 * Verteilte Systeme, die einen zentralen Proxy verwenden (*z.B. beim Kunden vor Ort*)
 
-In diesem Fall benötigen wir möglicherweise andere Tools wie `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_ um die Weiterleitung abzuhandeln:
+In diesem Fall benötigen wir möglicherweise andere Tools wie `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_ um die Weiterleitung abzuhandeln:
 
 
 .. code-block:: text
@@ -565,6 +565,6 @@ Bekannte Probleme
 
   Siehe auch: `Squid wiki - host_verify_strict <http://www.squid-cache.org/Doc/config/host_verify_strict/>`_ & `Squid wiki - host header forgery <https://wiki.squid-cache.org/KnowledgeBase/HostHeaderForgery>`_
 
-  Sie können natürlich den `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_ nutzen um den abgefangenen TCP-Verkehr in HTTP- und HTTPS-Anfragen zu übersetzen, die Sie an den 'Forward-Proxy'-Port von Squid senden können. (*diese Prüfung wird ignoriert...*)
+  Sie können natürlich den `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_ nutzen um den abgefangenen TCP-Verkehr in HTTP- und HTTPS-Anfragen zu übersetzen, die Sie an den 'Forward-Proxy'-Port von Squid senden können. (*diese Prüfung wird ignoriert...*)
 
 .. include:: ../_include/user_rath.rst

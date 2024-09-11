@@ -27,6 +27,32 @@ Check if your configuration is valid:
 
 ----
 
+Configuration
+#############
+
+
+----
+
+Stats
+#####
+
+
+----
+
+
+Logging
+#######
+
+
+----
+
+
+Certificates
+############
+
+
+----
+
 Rate Limits
 ###########
 
@@ -295,5 +321,66 @@ As seen in `this blog post <https://www.haproxy.com/blog/preserve-stick-table-da
 
     backend be_limiter_xyz
         stick-table type ipv6 size 10k expire 24h store http_req_cnt peers preserve_on_reload
+
+----
+
+GeoIP
+#####
+
+Enterprise Edition
+==================
+
+The enterprise edition has a `built-in Maxmind-Module <https://www.haproxy.com/documentation/hapee/latest/load-balancing/geolocation/maxmind/>`_.
+
+Community Edition
+=================
+
+You can use our `community-drive Lua module <https://github.com/O-X-L/haproxy-geoip>`_.
+
+Setup
+-----
+
+* Add the LUA script to your system
+* Install and set up the `GeoIP lookup-backend <https://github.com/O-X-L/geoip-lookup-service>`_ of your choice
+
+Config
+------
+
+* Load the LUA module by adding lua-load :code:`/etc/haproxy/lua/geoip_lookup.lua` in the global section
+* Execute the LUA script on HTTP requests:
+
+  * In HTTP mode
+
+    .. code-block:: bash
+
+        # country
+        http-request lua.lookup_geoip_country
+        # asn
+        http-request lua.lookup_geoip_asn
+
+  * In TCP mode
+
+    .. code-block:: bash
+
+        # country
+        tcp-request content lua.lookup_geoip_country
+        # asn
+        tcp-request content lua.lookup_geoip_asn
+
+* Log the data:
+
+  * In HTTP mode
+
+    .. code-block:: bash
+
+        http-request capture var(txn.geoip_asn) len 10
+        http-request capture var(txn.geoip_country) len 2
+
+  * In TCP mode
+
+    .. code-block:: bash
+
+        tcp-request content capture var(txn.geoip_asn) len 10
+        tcp-request content capture var(txn.geoip_country) len 2
 
 .. include:: ../_include/user_rath.rst

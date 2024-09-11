@@ -317,7 +317,7 @@ Es ist schön, Variablen zu haben, die die IPs von einigen DNS-Einträgen enthal
 
 NFTables KANN DNS-Einträge auflösen - gibt aber einen Fehler aus, wenn der Eintrag zu mehr als einer IP-Adresse aufgelöst wird (Fehler: Hostname löst zu mehreren Adressen auf).
 
-Siehe: `NFTables Addon DNS <https://github.com/superstes/nftables_addon_dns>`_
+Siehe: `NFTables Addon DNS <https://github.com/O-X-L/nftables_addon_dns>`_
 
 IPLists
 *******
@@ -332,12 +332,12 @@ IPList Beispiele:
 * `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
 * `Tor exit nodes <https://check.torproject.org/torbulkexitlist>`_
 
-Siehe: `NFTables Addon IPList <https://github.com/superstes/nftables_addon_iplist>`_
+Siehe: `NFTables Addon IPList <https://github.com/O-X-L/nftables_addon_iplist>`_
 
 Failover
 ********
 
-Siehe: `NFTables Addon Failover <https://github.com/superstes/nftables_addon_failover>`_
+Siehe: `NFTables Addon Failover <https://github.com/O-X-L/nftables_addon_failover>`_
 
 
 ----
@@ -407,7 +407,7 @@ Möglicherweise möchten Sie einen remote Proxyserver ansteuern. Dies ist jedoch
 
 Man müsste ein Proxy-Forwarder-Tool verwenden, das dies für Sie erledigen kann.
 
-Wir haben ein bestehendes Tool für genau diesen Zweck gepatched: `proxy-forwarder <https://github.com/superstes/proxy-forwarder>`_
+Wir haben ein bestehendes Tool für genau diesen Zweck gepatched: `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_
 
 Mit einem solchen Tool können Sie den von TPROXY empfangenen reinen Datenverkehr verpacken und weiterleiten oder tunneln.
 
