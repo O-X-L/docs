@@ -25,14 +25,408 @@ Prüfen Sie, ob Ihre Konfiguration gültig ist:
     # custom - multiple config files:
     /usr/sbin/haproxy -c -f /etc/haproxy/haproxy.cfg -f /etc/haproxy/conf.d/
 
+Ansible Role: `ansibleguy/infra_haproxy <https://github.com/ansibleguy/infra_haproxy>`_
+
+Konfiguration
+#############
+
+Wann immer Sie die Konfiguration ändern, sollten Sie sie auf Fehler überprüfen:
+
+.. code-block:: bash
+
+    haproxy -c -f /etc/haproxy/haproxy.cfg
+
+    # with multiple config files:
+    haproxy -c -f /etc/haproxy/haproxy.cfg -f /etc/haproxy/conf.d/
+
+
+Danach müssen Sie es neu laden:
+
+.. code-block:: bash
+
+    systemctl reload haproxy.service
+
+Grundlagen
+**********
+
+HTTP Methods
+============
+
+Möglicherweise möchten Sie Verbindungen über nicht verwendete HTTP-Methoden verweigern:
+
+.. code-block:: bash
+
+    http-request deny status 405 default-errorfiles if { method TRACE CONNECT }
+
+----
+
+HTTP Headers
+============
+
+Möglicherweise möchten Sie sicherheitsrelevante Header hinzufügen und erzwingen:
+
+.. code-block:: bash
+
+    # Note: use 'set' to add a new header or overwrite it if it already exists; 'add' might duplicate it
+    http-response set-header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload"
+    http-response set-header X-Frame-Options "SAMEORIGIN"
+    http-response set-header X-Content-Type-Options "nosniff"
+    http-response set-header X-Permitted-Cross-Domain-Policies "none"
+    http-response set-header X-XSS-Protection "1; mode=block"
+    http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
+
+Sie können sie auch nur dann hinzufügen, wenn die Anwendung sie nicht bereits hinzugefügt hat:
+
+.. code-block:: bash
+
+    http-after-response add-header X-Frame-Options "SAMEORIGIN" if !{ res.hdr(X-Frame-Options) -m found }
+    http-after-response add-header X-Content-Type-Options "nosniff" if !{ res.hdr(X-Content-Type-Options) -m found }
+    http-after-response add-header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" if !{ res.hdr(Strict-Transport-Security) -m found }
+    http-after-response add-header Referrer-Policy "strict-origin-when-cross-origin" if !{ res.hdr(Referrer-Policy) -m found }
+
+Oder überschreiben/entfernen Sie einige:
+
+.. code-block:: bash
+
+    http-response set-header Server OXL-LB
+
+    http-response del-header X-Powered-By
+
+----
+
+List Files
+==========
+
+Sie können dateibasierte Listen laden und sie in ACLs verwenden.
+
+Dies ist besonders nützlich, wenn Sie IP-Listen verwenden oder Requests anhand anderer Daten zuordnen wollen.
+
+.. code-block:: bash
+
+    # /etc/haproxy/lst/tor-exit-node.lst
+
+    http-request deny status 418 if { src -f /etc/haproxy/lst/tor-exit-node.lst }
+
+Beispiel IP-Listen:
+
+* `Tor Exit Nodes <https://check.torproject.org/torbulkexitlist>`_
+* `Spamhaus DROP <https://www.spamhaus.org/drop/drop.txt>`_
+* `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
+
+----
+
+Map Files
+=========
+
+Sie können eine Datei mit Schlüssel-Wert-Paaren verwenden, um Daten dynamisch abzugleichen. Schlüssel und Werte werden durch ein Leerzeichen getrennt.
+
+Dies kann besonders nützlich sein, wenn Sie Ihre HAProxy-Konfiguration so weit abstrahieren können, dass Sie nur diese Dateien aktualisieren müssen, um Dienste hinzuzufügen oder zu entfernen.
+
+Beispiel Map-Datei:
+
+.. code-block:: bash
+
+    # JA4 TLS fingerprint matching: https://github.com/O-X-L/haproxy-ja4
+    t13d1517h2_8daaf6152771_b0da82dd1658 Mozilla/5.0_(Windows_NT_10.0;_Win64;_x64)_AppleWebKit/537.36_(KHTML,_like_Gecko)_Chrome/125.0.0.0_Safari/537.36
+    t13d1516h2_8daaf6152771_02713d6af862 Chromium_Browser
+    ...
+
+Wie man diese benutzt:
+
+.. code-block:: bash
+
+    http-request set-var(txn.fingerprint_app) var(txn.fingerprint_ja4),map(/etc/haproxy/map/fingerprint_ja4_app.map)
+
+    # log it
+    http-request capture var(txn.fingerprint_app) len 200
+
+Siehe: `HAProxy Maps <https://www.haproxy.com/blog/introduction-to-haproxy-maps>`_
+
+----
+
+Security Filter
+***************
+
+Dumme Bots flaggen
+==================
+
+Sie können einige der 'dummen' Bots mit Hilfe dieser Regeln leicht kennzeichnen:
+
+.. code-block:: bash
+
+    # flag bots by common user-agent substrings
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } !{ req.fhdr(User-Agent) -m found }
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } { req.fhdr(User-Agent) -m sub -i -f /etc/haproxy/lst/bot-ua-sub.lst }
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } { req.fhdr(User-Agent) -m sub -i -f /etc/haproxy/lst/crawler-ua-sub.lst }
+
+    # flag well-known script-bots
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } { req.fhdr(User-Agent) -m sub -i -f /etc/haproxy/lst/badbot-ua-sub.lst }
+
+    # fallback
+    http-request set-var(txn.bot) int(0) if !{ var(txn.bot) -m found }
+
+    # log it
+    http-request capture var(txn.bot) len 1
+
+Dieses Kennzeichen kann verwendet werden, um strengere Regeln für diese IPs einzuführen:
+
+.. code-block:: bash
+
+    # see rate-limits section for more context
+    http-request deny deny_status 429 if !{ var(txn.bot) -m int 0 } { sc_http_req_rate(1,be_limiter_http_short) gt 20 }
+    http-request deny deny_status 429 if { var(txn.bot) -m int 0 } { sc_http_req_rate(1,be_limiter_http_short) gt 50 }
+
+Beispiel Listen:
+
+* `badbot-ua-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_badbot-ua-sub.lst>`_
+* `bot-ua-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_bot-ua-sub.lst>`_
+* `crawler-ua-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_crawler-ua-sub.lst>`_
+
+----
+
+Script-Kiddies blockieren
+=========================
+
+Filter wie diese müssen für Ihre Umgebung und Anwendung(en) angepasst werden.
+
+Sie können Ihre Logs grundsätzlich beobachten und bei Bedarf die Listen erweitern.
+
+.. code-block:: bash
+
+    # paths you want to exclude from all checks
+    acl script_kiddy_excluded path -m sub -i -f /etc/haproxy/lst/waf-script-kiddy-excludes.lst
+
+    # block if match in files
+    http-request deny status 418 default-errorfiles if !script_kiddy_excluded { path -m beg -i -f /etc/haproxy/lst/script-kiddy-path-beg.lst }
+    http-request deny status 418 default-errorfiles if !script_kiddy_excluded { path -m end -i -f /etc/haproxy/lst/script-kiddy-path-end.lst }
+    http-request deny status 418 default-errorfiles if !script_kiddy_excluded { path -m sub -i -f /etc/haproxy/lst/script-kiddy-path-sub.lst }
+
+Beispiel Listen:
+
+* `script-kiddy-path-beg.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_script-kiddy-path-beg.lst>`_
+* `script-kiddy-path-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_script-kiddy-path-sub.lst>`_
+* `script-kiddy-path-end.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_script-kiddy-path-end.lst>`_
+
+----
+
+Rate Limits / Anti DDOS
+=======================
+
+Siehe: :ref:`proxy_reverse_haproxy_rate`
+
+----
+
+GeoIP Filtering
+===============
+
+Siehe: :ref:`proxy_reverse_haproxy_geoip`
+
+----
+
+TLS Client Fingerprinting
+=========================
+
+Siehe: :ref:`proxy_reverse_haproxy_tls_fp`
+
+
+----
+
+Service
+#######
+
+Sie möchten vielleicht Konfigurationsfehler bei Reloads protokollieren.
+
+Standardmäßig werden Reloads im Modus :code:`quiet` ausgeführt und versteckt.
+
+.. code-block:: bash
+
+    # /etc/systemd/system/haproxy.service.d/override.conf
+
+    [Service]
+    ExecReload=
+    ExecReload=/usr/sbin/haproxy -Ws -f $CONFIG -c -q $EXTRAOPTS
+    ExecReload=/bin/kill -USR2 $MAINPID
+
+----
+
+Stats
+#####
+
+Sie können eine einfache Statusseite für HAProxy wie folgt aktivieren:
+
+.. code-block:: bash
+
+    frontend stats
+        mode http
+        bind *:10000
+        stats enable
+        stats uri /stats
+        stats refresh 10s
+        stats realm Authorized\ Personal\ Only
+
+        redirect code 301 location /stats if { path -i / }
+
+        stats auth <STATS-USER>:<STATS-PWD>
+
+        # this enables you to perform some actions
+        stats admin if LOCALHOST
+
+        # you may want to disable logging if your monitoring will check this endpoint; enable it if 'admin' is enabled..
+        no log
+
+
+Danach können Sie die Webseite aufrufen: :code:`http://<HAPROXY-IP>:10000/stats` und melden Sie sich mit den angegebenen Anmeldedaten an.
+
+Sie können auch TLS wie bei jedem anderen Frontend aktivieren.
+
+----
+
+Logging
+#######
+
+Sie können entweder die Standardprotokollierungsformate für Ihre Frontends ändern oder Daten mit :code:`capture` erfassen.
+
+Siehe: `HAProxy Logging <https://www.haproxy.com/blog/introduction-to-haproxy-logging>`_
+
+Formats
+=======
+
+.. code-block:: bash
+
+    # HTTP mode
+    ## default
+    [%ci]:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r
+
+    ## with prefix for easier filtering
+    HTTP: [%ci]:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r
+
+    # TCP mode
+    ## default
+    TCP: [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
+
+    ## with prefix for easier filtering
+    TCP: [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
+
+Siehe: `HAProxy Logging Formats <https://www.haproxy.com/blog/introduction-to-haproxy-logging#haproxy-log-format>`_
+
+----
+
+Capture
+=======
+
+Mit :code:`capture` können Sie dynamisch Daten abfangen. Dies kann in einigen Fällen nützlich sein.
+
+Beispiel für die Aufzeichnung von GeoIP-Land und ASN:
+
+.. code-block:: bash
+
+    140.82.115.0:33494 [04/May/2024:18:58:57.790] fe_web~ be_test2/srv2 0/0/26/26/52 200 1778 - - ---- 2/2/0/0/0 0/0 {US|36459|github-camo (4b76e509)} "GET /infra_haproxy.pylint.svg HTTP/1.1"
+
+Sie können viele Arten von Daten erfassen.
+
+Erfassungen können einfach wie folgt hinzugefügt werden:
+
+.. code-block:: bash
+
+    http-request capture <WHAT-TO-LOG> len <MAX-LENGTH>
+
+    # log a header
+    http-request capture req.fhdr(User-Agent) len 200
+    http-request capture req.hdr(Host) len 50
+    http-request capture req.hdr(Referer) len 200
+
+    # log a variable
+    http-request capture var(txn.geoip_asn) len 10
+
+Bei den Antworten ist es ein wenig anders:
+
+.. code-block:: bash
+
+    declare capture response len <MAX-LENGTH>
+    http-response capture <WHAT-TO-LOG> id <POSITION>
+
+    declare capture response len 20
+    http-response capture res.hdr(Content-Type) id 1
+
+Siehe: `HAProxy Logging via Capture <https://www.haproxy.com/blog/introduction-to-haproxy-logging#other-fields>`_
+
+----
+
+
+Zertifikate
+###########
+
+HAProxy erwartet, dass sich die öffentlichen und privaten Schlüssel in derselben Datei befinden:
+
+.. code-block:: bash
+
+    cat "${FULLCHAINFILE}" "${KEYFILE}" > "${HAPROXY_CERT_DIR}/${CERTNAME}.pem"
+
+Wenn Sie viele Zertifikate haben, können Sie ein Zertifikatsverzeichnis zur Verfügung stellen - das richtige Zertifikat, welches die Zieldomäne in dessen Subject-Alt-Name enthält, wird automatisch ausgewählt:
+
+.. code-block:: bash
+
+    bind [::]:443 v4v6 ssl crt /etc/ssl/haproxy_acme/certs alpn h2,http/1.1
+
+HTTP-Anfragen können auf HTTPS umgeleitet werden:
+
+.. code-block:: bash
+
+    http-request redirect scheme https code 301 if !{ ssl_fc } !{ path_beg -i /.well-known/acme-challenge/ }
+
+ACME HTTP-Challenges benötigen einen separaten Webserver wie :code:`nginx-light`, um ihre Challenge-Tokens zu liefern. Beispiel Backend-Konfiguration:
+
+.. code-block:: bash
+
+    frontend fe_web
+        ...
+
+        use_backend be_haproxy_acme if { path_beg -i /.well-known/acme-challenge/ }
+
+        ...
+
+    backend be_haproxy_acme
+        server haproxy_acme 127.0.0.1:${ACME_CHALLENGE_PORT} check
+
+Grundlegende ACME nginx-Konfiguration:
+
+.. code-block:: bash
+
+    rm /etc/nginx/sites-enabled/default
+
+    mkdir -p ${ACME_CHALLENGE_DIR}
+
+    nano /etc/nginx/sites-enabled/haproxy_acme
+    > server {
+    >     listen 127.0.0.1:${ACME_CHALLENGE_PORT};
+    >
+    >     autoindex off;
+    >     server_tokens off;
+    >
+    >     location ^~ /.well-known/acme-challenge {
+    >         alias ${ACME_CHALLENGE_DIR};
+    >     }
+    >     location / {
+    >         deny all;
+    >     }
+    > }
+
+    systemctl enable nginx.service
+    systemctl restart nginx.service
+
+
+LetsEncrypt Script: `dehydrated <https://github.com/dehydrated-io/dehydrated>`_
+
+Ansible Beispiel: `ansibleguy/infra_haproxy - ACME <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleAcme.md>`_ | `dehydrated hooks <https://github.com/ansibleguy/infra_haproxy/blob/latest/templates/usr/local/bin/dehydrated_hook.sh.j2>`_
+
 ----
 
 Rate Limits
 ###########
 
-Die Konfiguration von Ratenbegrenzungen kann ein wenig verwirrend sein.
+Die Konfiguration von Rate-Limits kann ein wenig verwirrend sein.
 
-Ratenbegrenzungen bestehen im Wesentlichen aus zwei Komponenten: **tables** und **trackers**
+Rate-Limits bestehen im Wesentlichen aus zwei Komponenten: **tables** und **trackers**
 
 ----
 
@@ -294,5 +688,156 @@ Wie in `diesem Blogbeitrag <https://www.haproxy.com/blog/preserve-stick-table-da
 
     backend be_limiter_xyz
         stick-table type ipv6 size 10k expire 24h store http_req_cnt peers preserve_on_reload
+
+----
+
+.. _proxy_reverse_haproxy_geoip:
+
+GeoIP Support
+#############
+
+Enterprise Edition
+==================
+
+Die Enterprise-Ausgabe verfügt über ein `integriertes Maxmind-Modul <https://www.haproxy.com/documentation/hapee/latest/load-balancing/geolocation/maxmind/>`_.
+
+Community Edition
+=================
+
+Sie können unser `LUA-Modul verwenden <https://github.com/O-X-L/haproxy-geoip>`_.
+
+Ansible Beispiel: `ansibleguy/infra_haproxy - GeoIP <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleGeoIP.md>`_ | `ansibleguy/infra_haproxy - GeoIP TCP Mode <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleTCP.md>`_
+
+Setup
+-----
+
+* Fügen Sie das LUA-Skript :code:`geoip_lookup.lua` zu Ihrem System hinzu
+* Installieren und richten Sie das `GeoIP Lookup-Backend <https://github.com/O-X-L/geoip-lookup-service>`_ Ihrer Wahl ein.
+
+Config
+------
+
+* Laden des LUA-Moduls durch Hinzufügen von lua-load :code:`/etc/haproxy/lua/geoip_lookup.lua` im globalen Abschnitt
+* Lassen Sie das LUA-Skript bei Requests ausführen:
+
+  * Im HTTP Modus
+
+    .. code-block:: bash
+
+        # country
+        http-request lua.lookup_geoip_country
+        # asn
+        http-request lua.lookup_geoip_asn
+
+  * Im TCP Modus
+
+    .. code-block:: bash
+
+        # country
+        tcp-request content lua.lookup_geoip_country
+        # asn
+        tcp-request content lua.lookup_geoip_asn
+
+* Die Daten loggen:
+
+  * Im HTTP Modus
+
+    .. code-block:: bash
+
+        http-request capture var(txn.geoip_asn) len 10
+        http-request capture var(txn.geoip_country) len 2
+
+  * Im TCP Modus
+
+    .. code-block:: bash
+
+        tcp-request content capture var(txn.geoip_asn) len 10
+        tcp-request content capture var(txn.geoip_country) len 2
+
+----
+
+.. _proxy_reverse_haproxy_tls_fp:
+
+TLS Client Fingerprinting Support
+#################################
+
+JA3N
+****
+
+JA3 war nativ mit den in HAProxy eingebauten Konvertern möglich. Aber JA3 brach vor einiger Zeit zusammen, als die Browser begannen, die Sortierung ihrer Erweiterungen zu randomisieren.
+
+JA3N sortiert die Erweiterungen, bevor es den gleichen Fingerabdruck erstellt.
+
+Sie können diese Art von TLS-Client-Fingerprint mit Hilfe unseres LUA-Plugins erstellen: `O-X-L/haproxy-ja3n <https://github.com/O-X-L/haproxy-ja3n>`_
+
+**Über JA3**:
+
+* `Salesforce Repository <https://github.com/salesforce/ja3>`_
+* `HAProxy Enterprise JA3 Fingerprint <https://customer-docs.haproxy.com/bot-management/client-fingerprinting/tls-fingerprint/>`_
+* `Why JA3 broke => JA3N <https://github.com/salesforce/ja3/issues/88>`_
+
+Setup
+=====
+
+* Fügen Sie das LUA-Skript :code:`ja3n.lua` zu Ihrem System hinzu
+
+Config
+======
+
+* Aktivieren Sie die SSL/TLS-Erfassung mit der globalen Einstellung `tune.ssl.capture-buffer-size 96 <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#tune.ssl.capture-buffer-size>`_
+* Laden Sie das LUA-Modul durch Hinzufügen von `lua-load /etc/haproxy/lua/ja3n.lua` in die globalen Einstellungen
+* Ausführen des LUA-Skripts bei HTTP-Requests: `http-request lua.fingerprint_ja3n`
+* Logge den Fingerprint: `http-request capture var(txn.fingerprint_ja3n) len 32`
+
+----
+
+JA4
+***
+
+Sie können einen JA4 TLS-Client-Fingerprint mit Hilfe unseres LUA-Plugins erstellen: `O-X-L/haproxy-ja4 <https://github.com/O-X-L/haproxy-ja4>`_
+
+**Über JA4**:
+
+* `JA4 TLS details <https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/JA4.md>`_
+* `Cloudflare Blog <https://blog.cloudflare.com/ja4-signals>`_
+* `FoxIO Blog <https://blog.foxio.io/ja4%2B-network-fingerprinting>`_
+* `FoxIO JA4 Database <https://ja4db.com/>`_
+* `JA4 Suite <https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/README.md>`_
+
+Setup
+=====
+
+* Fügen Sie das LUA-Skript :code:`ja4.lua` zu Ihrem System hinzu
+
+Config
+======
+
+* Aktivieren Sie die SSL/TLS-Erfassung mit der globalen Einstellung `tune.ssl.capture-buffer-size 128 <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#tune.ssl.capture-buffer-size>`_
+* Laden Sie das LUA-Modul durch Hinzufügen von `lua-load /etc/haproxy/lua/ja4.lua` in die globalen Einstellungen
+* Ausführen des LUA-Skripts bei HTTP-Requests: `http-request lua.fingerprint_ja4`
+* Logge den Fingerprint: `http-request capture var(txn.fingerprint_ja3n) len 36`
+
+JA4 Datenbank
+=============
+
+You can use `the DB to MAP script <https://github.com/O-X-L/haproxy-ja4/blob/latest/ja4db-to-map.py`_ to create a HAProxy Mapfile from the `FoxIO JA4-Database <https://ja4db.com/>`_:
+
+Sie können das `DB=>Map Skript <https://github.com/O-X-L/haproxy-ja4/blob/latest/ja4db-to-map.py`_ verwenden, um eine HAProxy-Mapdatei aus der `FoxIO JA4-Datenbank <https://ja4db.com/>`_ zu erstellen:
+
+.. code-block:: bash
+
+    # download the DB in JSON format: https://ja4db.com/api/download/
+    # place it in the same directory as the script
+
+    # build the map-file
+    python3 ja4db-to-map.py
+
+    # examples:
+    > t13d1517h2_8daaf6152771_b0da82dd1658 Mozilla/5.0_(Windows_NT_10.0;_Win64;_x64)_AppleWebKit/537.36_(KHTML,_like_Gecko)_Chrome/125.0.0.0_Safari/537.36
+    > t13d1516h2_8daaf6152771_02713d6af862 Chromium_Browser
+
+So können Sie die Werte suchen: :code:`http-request set-var(txn.fingerprint_app) var(txn.fingerprint_ja4),map(/etc/haproxy/map/fingerprint_ja4_app.map)`
+
+Und diese loggen: :code:`http-request capture var(txn.fingerprint_app) len 200`
 
 .. include:: ../_include/user_rath.rst

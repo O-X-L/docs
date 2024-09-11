@@ -722,7 +722,7 @@ Config
 ------
 
 * Load the LUA module by adding lua-load :code:`/etc/haproxy/lua/geoip_lookup.lua` in the global section
-* Execute the LUA script on HTTP requests:
+* Execute the LUA script on requests:
 
   * In HTTP mode
 
@@ -824,7 +824,7 @@ Config
 JA4 Database
 ============
 
-You can use `the DB to MAP script <https://github.com/O-X-L/haproxy-ja4/blob/latest/ja4db-to-map.py`_ to create a HAProxy Mapfile from the `FoxIO JA4-Database <https://ja4db.com/>`_:
+You can use `the DB=>MAP script <https://github.com/O-X-L/haproxy-ja4/blob/latest/ja4db-to-map.py`_ to create a HAProxy Mapfile from the `FoxIO JA4-Database <https://ja4db.com/>`_:
 
 .. code-block:: bash
 
@@ -838,7 +838,7 @@ You can use `the DB to MAP script <https://github.com/O-X-L/haproxy-ja4/blob/lat
     > t13d1517h2_8daaf6152771_b0da82dd1658 Mozilla/5.0_(Windows_NT_10.0;_Win64;_x64)_AppleWebKit/537.36_(KHTML,_like_Gecko)_Chrome/125.0.0.0_Safari/537.36
     > t13d1516h2_8daaf6152771_02713d6af862 Chromium_Browser
 
-You can enable lookups like this: :code:`http-request set-var(txn.fingerprint_app) var(txn.fingerprint_ja4),map(/tmp/haproxy_ja4.map)`
+You can enable lookups like this: :code:`http-request set-var(txn.fingerprint_app) var(txn.fingerprint_ja4),map(/etc/haproxy/map/fingerprint_ja4_app.map)`
 
 And log the results like this: :code:`http-request capture var(txn.fingerprint_app) len 200`
 
