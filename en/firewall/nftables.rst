@@ -343,7 +343,7 @@ See: `NFTables Addon Failover <https://github.com/O-X-L/nftables_addon_failover>
 Config
 ######
 
-`NFTables base-config example <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_base.txt>`_
+`NFTables base-config example <https://docs.o-x-l.com/_static/raw/fw_nftables_base.txt>`_
 
 .. _fw_nftables_tproxy:
 
@@ -430,8 +430,8 @@ With a tool like that you can wrap the plain traffic received from TPROXY and fo
 Examples
 --------
 
-* `NFTables TPROXY example <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY example <https://docs.o-x-l.com/en/latest/_static/raw/fw_nftables_tproxy.txt>`_
-* `IPTables TPROXY example <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY example <https://docs.o-x-l.com/en/latest/_static/raw/fw_iptables_tproxy.txt>`_
+* `NFTables TPROXY example <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY example <https://docs.o-x-l.com/_static/raw/fw_nftables_tproxy.txt>`_
+* `IPTables TPROXY example <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY example <https://docs.o-x-l.com/_static/raw/fw_iptables_tproxy.txt>`_
 
 ----
 
