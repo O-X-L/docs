@@ -47,8 +47,8 @@ Afterwards you need to reload it:
 
     systemctl reload haproxy.service
 
-Basic Security Filters
-**********************
+Basics
+******
 
 HTTP Methods
 ============
@@ -145,6 +145,9 @@ See: `HAProxy Maps <https://www.haproxy.com/blog/introduction-to-haproxy-maps>`_
 
 ----
 
+Security Filters
+****************
+
 Flag Dumb-Bots
 ==============
 
@@ -204,6 +207,13 @@ Example List-Files:
 * `script-kiddy-path-beg.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_script-kiddy-path-beg.lst>`_
 * `script-kiddy-path-sub.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_script-kiddy-path-sub.lst>`_
 * `script-kiddy-path-end.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_script-kiddy-path-end.lst>`_
+
+----
+
+Rate Limits / Anti DDOS
+=======================
+
+See: :ref:`proxy_reverse_haproxy_rate`
 
 ----
 
@@ -411,6 +421,8 @@ LetsEncrypt Script: `dehydrated <https://github.com/dehydrated-io/dehydrated>`_
 Ansible Example: `ansibleguy/infra_haproxy - ACME <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleAcme.md>`_ | `dehydrated hooks <https://github.com/ansibleguy/infra_haproxy/blob/latest/templates/usr/local/bin/dehydrated_hook.sh.j2>`_
 
 ----
+
+.. _proxy_reverse_haproxy_rate:
 
 Rate Limits
 ###########
