@@ -7,7 +7,6 @@
 Reverse Proxy - HAProxy
 ***********************
 
-
 ----
 
 Intro
@@ -25,24 +24,313 @@ Check if your configuration is valid:
     # custom - multiple config files:
     /usr/sbin/haproxy -c -f /etc/haproxy/haproxy.cfg -f /etc/haproxy/conf.d/
 
+Ansible Role: `ansibleguy/infra_haproxy <https://github.com/ansibleguy/infra_haproxy>`_
+
 ----
 
 Configuration
 #############
 
+Whenever you change the config - you might want to check it for errors:
+
+.. code-block:: bash
+
+    haproxy -c -f /etc/haproxy/haproxy.cfg
+
+    # with multiple config files:
+    haproxy -c -f /etc/haproxy/haproxy.cfg -f /etc/haproxy/conf.d/
+
+
+Afterwards you need to reload it:
+
+.. code-block:: bash
+
+    systemctl reload haproxy.service
+
+Basic Security Filters
+**********************
+
+HTTP Methods
+============
+
+You might want to deny connections over unused HTTP methods:
+
+.. code-block:: bash
+
+    http-request deny status 405 default-errorfiles if { method TRACE CONNECT }
+
+----
+
+HTTP Headers
+============
+
+You may want to add security-related headers:
+
+
+You can also only add them in case the proxied application has not already added them:
+
+.. code-block:: bash
+
+    http-after-response add-header X-Frame-Options "SAMEORIGIN" if !{ res.hdr(X-Frame-Options) -m found }
+    http-after-response add-header X-Content-Type-Options "nosniff" if !{ res.hdr(X-Content-Type-Options) -m found }
+    http-after-response add-header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload" if !{ res.hdr(Strict-Transport-Security) -m found }
+    http-after-response add-header Referrer-Policy "strict-origin-when-cross-origin" if !{ res.hdr(Referrer-Policy) -m found }
+
+Or overwrite/remove some from the responses:
+
+.. code-block:: bash
+
+    http-response set-header Server OXL-LB
+
+    http-response del-header X-Powered-By
+
+----
+
+List Files
+==========
+
+You can load file-based lists and use them in ACLs.
+
+This is specially useful if you need/want to use IP-Lists or match requests by some other data.
+
+.. code-block:: bash
+
+    # /etc/haproxy/lst/tor-exit-node.lst
+
+    http-request deny status 418 if { src -f /etc/haproxy/lst/tor-exit-node.lst }
+
+Example IP-Lists:
+
+* `Tor Exit Nodes <https://check.torproject.org/torbulkexitlist>`_
+* `Spamhaus DROP <https://www.spamhaus.org/drop/drop.txt>`_
+* `Spamhaus EDROP <https://www.spamhaus.org/drop/edrop.txt>`_
+
+----
+
+Map Files
+=========
+
+You can use a file of key-value pairs to dynamically match/lookup data. Keys and values are separated by a whitespace.
+
+This can be especially useful if you are able to abstract your HAProxy config to a point where you only need to update those files to add or remove services.
+
+Example Map file:
+
+.. code-block:: bash
+
+    # JA4 TLS fingerprint matching: https://github.com/O-X-L/haproxy-ja4
+    t13d1517h2_8daaf6152771_b0da82dd1658 Mozilla/5.0_(Windows_NT_10.0;_Win64;_x64)_AppleWebKit/537.36_(KHTML,_like_Gecko)_Chrome/125.0.0.0_Safari/537.36
+    t13d1516h2_8daaf6152771_02713d6af862 Chromium_Browser
+    ...
+
+How to use it:
+
+.. code-block:: bash
+
+    http-request set-var(txn.fingerprint_app) var(txn.fingerprint_ja4),map(/etc/haproxy/map/fingerprint_ja4_app.map)
+
+    # log it
+    http-request capture var(txn.fingerprint_app) len 200
+
+See: `HAProxy Maps <https://www.haproxy.com/blog/introduction-to-haproxy-maps>`_
+
+----
+
+Flag Dumb-Bots
+==============
+
+You can easily flag some of the 'dumb' bots using rules like these:
+
+.. code-block:: bash
+
+    # flag bots by common user-agent substrings
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } !{ req.fhdr(User-Agent) -m found }
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } { req.fhdr(User-Agent) -m sub -i -f /etc/haproxy/lst/bot-ua-sub.lst }
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } { req.fhdr(User-Agent) -m sub -i -f /etc/haproxy/lst/crawler-ua-sub.lst }
+
+    # flag well-known script-bots
+    http-request set-var(txn.bot) int(1) if !{ var(txn.bot) -m found } { req.fhdr(User-Agent) -m sub -i -f /etc/haproxy/lst/badbot-ua-sub.lst }
+
+    # fallback
+    http-request set-var(txn.bot) int(0) if !{ var(txn.bot) -m found }
+
+    # log it
+    http-request capture var(txn.bot) len 1
+
+This flag can be used to put stricter rules for those clients in-place:
+
+.. code-block:: bash
+
+    # see rate-limits section for more context
+    http-request deny deny_status 429 if !{ var(txn.bot) -m int 0 } { sc_http_req_rate(1,be_limiter_http_short) gt 20 }
+    http-request deny deny_status 429 if { var(txn.bot) -m int 0 } { sc_http_req_rate(1,be_limiter_http_short) gt 50 }
+
+Example List-Files:
+
+* `badbot-ua-sub.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_badbot-ua-sub.lst>`_
+* `bot-ua-sub.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_bot-ua-sub.lst>`_
+* `crawler-ua-sub.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_crawler-ua-sub.lst>`_
+
+----
+
+Deny Script-Kiddies
+===================
+
+Filters like these will have to be modified for your environment and application(s).
+
+You can basically observe your logs and add blocks as needed.
+
+.. code-block:: bash
+
+    # paths you want to exclude from all checks
+    acl script_kiddy_excluded path -m sub -i -f /etc/haproxy/lst/waf-script-kiddy-excludes.lst
+
+    # block if match in files
+    http-request deny status 418 default-errorfiles if !script_kiddy_excluded { path -m beg -i -f /etc/haproxy/lst/script-kiddy-path-beg.lst }
+    http-request deny status 418 default-errorfiles if !script_kiddy_excluded { path -m end -i -f /etc/haproxy/lst/script-kiddy-path-end.lst }
+    http-request deny status 418 default-errorfiles if !script_kiddy_excluded { path -m sub -i -f /etc/haproxy/lst/script-kiddy-path-sub.lst }
+
+Example List-Files:
+
+* `script-kiddy-path-beg.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_script-kiddy-path-beg.lst>`_
+* `script-kiddy-path-sub.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_script-kiddy-path-sub.lst>`_
+* `script-kiddy-path-end.lst <https://docs.o-x-l.com/en/latest/_static/raw/proxy_reverse_haproxy_script-kiddy-path-end.lst>`_
+
+----
+
+GeoIP Filtering
+===============
+
+See: :ref:`proxy_reverse_haproxy_geoip`
+
+----
+
+TLS Client Fingerprinting
+=========================
+
+See: :ref:`proxy_reverse_haproxy_tls_fp`
+
+
+----
+
+Service
+#######
+
+You might want to log config-errors on reloads.
+
+By default it executes reloads in :code:`quiet` mode and hides them.
+
+.. code-block:: bash
+
+    # /etc/systemd/system/haproxy.service.d/override.conf
+
+    [Service]
+    ExecReload=
+    ExecReload=/usr/sbin/haproxy -Ws -f $CONFIG -c -q $EXTRAOPTS
+    ExecReload=/bin/kill -USR2 $MAINPID
 
 ----
 
 Stats
 #####
 
+You can enable a basic status-page for HAProxy like this:
+
+.. code-block:: bash
+
+    frontend stats
+        mode http
+        bind *:10000
+        stats enable
+        stats uri /stats
+        stats refresh 10s
+        stats realm Authorized\ Personal\ Only
+
+        redirect code 301 location /stats if { path -i / }
+
+        stats auth <STATS-USER>:<STATS-PWD>
+
+        # this enables you to perform some actions
+        stats admin if LOCALHOST
+
+        # you may want to disable logging if your monitoring will check this endpoint; enable it if 'admin' is enabled..
+        no log
+
+
+Afterwards you can access the web-page: :code:`http://<HAPROXY-IP>:10000/stats` and login with the credentials specified.
+
+You can also enable TLS like on every other frontend.
 
 ----
-
 
 Logging
 #######
 
+You can either modify the default logging-formats for your frontends, or :code:`capture` data.
+
+See: `HAProxy Logging <https://www.haproxy.com/blog/introduction-to-haproxy-logging>`_
+
+Formats
+=======
+
+.. code-block:: bash
+
+    # HTTP mode
+    ## default
+    [%ci]:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r
+
+    ## with prefix for easier filtering
+    HTTP: [%ci]:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r
+
+    # TCP mode
+    ## default
+    TCP: [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
+
+    ## with prefix for easier filtering
+    TCP: [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
+
+See: `HAProxy Logging Formats <https://www.haproxy.com/blog/introduction-to-haproxy-logging#haproxy-log-format>`_
+
+----
+
+Capture
+=======
+
+With :code:`capture` you can dynamically catch data. This might be useful in some cases.
+
+Example of logging GeoIP country & ASN:
+
+.. code-block:: bash
+
+    140.82.115.0:33494 [04/May/2024:18:58:57.790] fe_web~ be_test2/srv2 0/0/26/26/52 200 1778 - - ---- 2/2/0/0/0 0/0 {US|36459|github-camo (4b76e509)} "GET /infra_haproxy.pylint.svg HTTP/1.1"
+
+You can capture many kinds of data.
+
+Captures can simply be added like this:
+
+.. code-block:: bash
+
+    http-request capture <WHAT-TO-LOG> len <MAX-LENGTH>
+
+    # log a header
+    http-request capture req.fhdr(User-Agent) len 200
+    http-request capture req.hdr(Host) len 50
+    http-request capture req.hdr(Referer) len 200
+
+    # log a variable
+    http-request capture var(txn.geoip_asn) len 10
+
+For responses it is a little different:
+
+.. code-block:: bash
+
+    declare capture response len <MAX-LENGTH>
+    http-response capture <WHAT-TO-LOG> id <POSITION>
+
+    declare capture response len 20
+    http-response capture res.hdr(Content-Type) id 1
+
+See: `HAProxy Logging via Capture <https://www.haproxy.com/blog/introduction-to-haproxy-logging#other-fields>`_
 
 ----
 
@@ -50,6 +338,68 @@ Logging
 Certificates
 ############
 
+HAProxy will expect the public- and private-keys to be in the same file like this:
+
+.. code-block:: bash
+
+    cat "${FULLCHAINFILE}" "${KEYFILE}" > "${HAPROXY_CERT_DIR}/${CERTNAME}.pem"
+
+You can provide HAProxy with a certificate directory if you have many certs - the correct one, that includes the target domain in its Subject-Alt-Name, will be automatically selected:
+
+.. code-block:: bash
+
+    bind [::]:443 v4v6 ssl crt /etc/ssl/haproxy_acme/certs alpn h2,http/1.1
+
+HTTP requests may be redirected to HTTPS:
+
+.. code-block:: bash
+
+    http-request redirect scheme https code 301 if !{ ssl_fc } !{ path_beg -i /.well-known/acme-challenge/ }
+
+ACME HTTP-challenges will need a separate web-server like :code:`nginx-light` to serve its challenge-tokens. Example backend config:
+
+.. code-block:: bash
+
+    frontend fe_web
+        ...
+
+        use_backend be_haproxy_acme if { path_beg -i /.well-known/acme-challenge/ }
+
+        ...
+
+    backend be_haproxy_acme
+        server haproxy_acme 127.0.0.1:${ACME_CHALLENGE_PORT} check
+
+Basic ACME nginx config:
+
+.. code-block:: bash
+
+    rm /etc/nginx/sites-enabled/default
+
+    mkdir -p ${ACME_CHALLENGE_DIR}
+
+    nano /etc/nginx/sites-enabled/haproxy_acme
+    > server {
+    >     listen 127.0.0.1:${ACME_CHALLENGE_PORT};
+    >
+    >     autoindex off;
+    >     server_tokens off;
+    >
+    >     location ^~ /.well-known/acme-challenge {
+    >         alias ${ACME_CHALLENGE_DIR};
+    >     }
+    >     location / {
+    >         deny all;
+    >     }
+    > }
+
+    systemctl enable nginx.service
+    systemctl restart nginx.service
+
+
+LetsEncrypt Script: `dehydrated <https://github.com/dehydrated-io/dehydrated>`_
+
+Ansible Example: `ansibleguy/infra_haproxy - ACME <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleAcme.md>`_ | `dehydrated hooks <https://github.com/ansibleguy/infra_haproxy/blob/latest/templates/usr/local/bin/dehydrated_hook.sh.j2>`_
 
 ----
 
@@ -324,8 +674,10 @@ As seen in `this blog post <https://www.haproxy.com/blog/preserve-stick-table-da
 
 ----
 
-GeoIP
-#####
+.. _proxy_reverse_haproxy_geoip:
+
+GeoIP Support
+#############
 
 Enterprise Edition
 ==================
@@ -336,6 +688,8 @@ Community Edition
 =================
 
 You can use our `community-drive Lua module <https://github.com/O-X-L/haproxy-geoip>`_.
+
+Ansible Example: `ansibleguy/infra_haproxy - GeoIP <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleGeoIP.md>`_ | `ansibleguy/infra_haproxy - GeoIP TCP Mode <https://github.com/ansibleguy/infra_haproxy/blob/latest/ExampleTCP.md>`_
 
 Setup
 -----
@@ -382,5 +736,89 @@ Config
 
         tcp-request content capture var(txn.geoip_asn) len 10
         tcp-request content capture var(txn.geoip_country) len 2
+
+----
+
+.. _proxy_reverse_haproxy_tls_fp:
+
+TLS Client Fingerprinting Support
+#################################
+
+JA3N
+****
+
+JA3 was possible natively using HAProxy built-in converters. But JA3 broke some time ago as browsers started to randomize the sorting of their extensions.
+
+JA3N sorts the extensions before creating the same fingerprint.
+
+You can create this kind of TLS-Client-Fingerprint by using our LUA plugin: `O-X-L/haproxy-ja3n <https://github.com/O-X-L/haproxy-ja3n>`_
+
+**About JA3**:
+
+* `Salesforce Repository <https://github.com/salesforce/ja3>`_
+* `HAProxy Enterprise JA3 Fingerprint <https://customer-docs.haproxy.com/bot-management/client-fingerprinting/tls-fingerprint/>`_
+* `Why JA3 broke => JA3N <https://github.com/salesforce/ja3/issues/88>`_
+
+Setup
+=====
+
+* Add the LUA script `ja3n.lua` to your system
+
+Config
+======
+
+* Enable SSL/TLS capture with the global setting `tune.ssl.capture-buffer-size 96 <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#tune.ssl.capture-buffer-size>`_
+* Load the LUA module by adding `lua-load /etc/haproxy/lua/ja3n.lua` in the `global` section
+* Execute the LUA script on HTTP requests: `http-request lua.fingerprint_ja3n`
+* Log the fingerprint: `http-request capture var(txn.fingerprint_ja3n) len 32`
+
+----
+
+JA4
+***
+
+You can create a JA4 TLS-Client-Fingerprint by using our LUA plugin: `O-X-L/haproxy-ja4 <https://github.com/O-X-L/haproxy-ja4>`_
+
+**About JA4**:
+
+* `JA4 TLS details <https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/JA4.md>`_
+* `Cloudflare Blog <https://blog.cloudflare.com/ja4-signals>`_
+* `FoxIO Blog <https://blog.foxio.io/ja4%2B-network-fingerprinting>`_
+* `FoxIO JA4 Database <https://ja4db.com/>`_
+* `JA4 Suite <https://github.com/FoxIO-LLC/ja4/blob/main/technical_details/README.md>`_
+
+Setup
+=====
+
+* Add the LUA script `ja4.lua` to your system
+
+Config
+======
+
+* Enable SSL/TLS capture with the global setting `tune.ssl.capture-buffer-size 128 <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/#tune.ssl.capture-buffer-size>`_
+* Load the LUA module by adding `lua-load /etc/haproxy/lua/ja4.lua` in the `global` section
+* Execute the LUA script on HTTP requests: `http-request lua.fingerprint_ja4`
+* Log the fingerprint: `http-request capture var(txn.fingerprint_ja4) len 36`
+
+JA4 Database
+============
+
+You can use `the DB to MAP script <https://github.com/O-X-L/haproxy-ja4/blob/latest/ja4db-to-map.py`_ to create a HAProxy Mapfile from the `FoxIO JA4-Database <https://ja4db.com/>`_:
+
+.. code-block:: bash
+
+    # download the DB in JSON format: https://ja4db.com/api/download/
+    # place it in the same directory as the script
+
+    # build the map-file
+    python3 ja4db-to-map.py
+
+    # examples:
+    > t13d1517h2_8daaf6152771_b0da82dd1658 Mozilla/5.0_(Windows_NT_10.0;_Win64;_x64)_AppleWebKit/537.36_(KHTML,_like_Gecko)_Chrome/125.0.0.0_Safari/537.36
+    > t13d1516h2_8daaf6152771_02713d6af862 Chromium_Browser
+
+You can enable lookups like this: :code:`http-request set-var(txn.fingerprint_app) var(txn.fingerprint_ja4),map(/tmp/haproxy_ja4.map)`
+
+And log the results like this: :code:`http-request capture var(txn.fingerprint_app) len 200`
 
 .. include:: ../_include/user_rath.rst
