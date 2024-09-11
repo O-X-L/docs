@@ -15,16 +15,6 @@ Intro
 
 Wenn Sie HAProxy konfigurieren - halten Sie das `Konfigurationshandbuch <https://www.haproxy.com/documentation/haproxy-configuration-manual/latest/>`_ bereit/offen! Sie werden es brauchen!
 
-Prüfen Sie, ob Ihre Konfiguration gültig ist:
-
-.. code-block:: bash
-
-    # default - only one config file:
-    /usr/sbin/haproxy -c -f /etc/haproxy/haproxy.cfg
-
-    # custom - multiple config files:
-    /usr/sbin/haproxy -c -f /etc/haproxy/haproxy.cfg -f /etc/haproxy/conf.d/
-
 Ansible Role: `ansibleguy/infra_haproxy <https://github.com/ansibleguy/infra_haproxy>`_
 
 Konfiguration
