@@ -11,5 +11,4 @@ HAProxy
 Intro
 #####
 
-See: `HAProxy <https://www.haproxy.com/>`_
-
+Before starting with advanced HAProxy feature - make sure to be familiar with the :ref:`basic HAProxy configration sets <proxy_reverse_haproxy>`!

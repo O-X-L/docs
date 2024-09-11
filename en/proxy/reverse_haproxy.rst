@@ -64,8 +64,17 @@ You might want to deny connections over unused HTTP methods:
 HTTP Headers
 ============
 
-You may want to add security-related headers:
+You may want to add and enforce security-related headers:
 
+.. code-block:: bash
+
+    # Note: use 'set' to add a new header or overwrite it if it already exists; 'add' might duplicate it
+    http-response set-header Strict-Transport-Security "max-age=31536000; includeSubdomains; preload"
+    http-response set-header X-Frame-Options "SAMEORIGIN"
+    http-response set-header X-Content-Type-Options "nosniff"
+    http-response set-header X-Permitted-Cross-Domain-Policies "none"
+    http-response set-header X-XSS-Protection "1; mode=block"
+    http-response set-header Referrer-Policy "strict-origin-when-cross-origin"
 
 You can also only add them in case the proxied application has not already added them:
 
