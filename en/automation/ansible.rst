@@ -1,5 +1,9 @@
 .. _atm_ansible:
 
+.. |ansible-how| image:: ../_static/img/atm_ansible_intro.jpg
+   :class: wiki-img-lg
+   :alt: OXL Docs - How Ansible Works
+
 .. include:: ../_include/head.rst
 
 ==============
@@ -26,6 +30,8 @@ There is **support for managing**:
 * ...
 
 See: `Ansible Collection Index <https://docs.ansible.com/ansible/latest/collections/index.html>`_
+
+|ansible-how|
 
 Ansible enables you to implement `Infrastructure-as-Code <https://www.redhat.com/en/topics/automation/what-is-infrastructure-as-code-iac>`_ to manage your IT environment.
 

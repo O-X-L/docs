@@ -31,7 +31,7 @@ If this tool gets taken-down by an attacker - you have a bad time ahead of you.
 Official
 ########
 
-If you are a business that wants to use Ansible extensively - we recommend to use & buy the Web-Interface provided by RedHat Ansible: `Ansible Automation Platform <https://www.redhat.com/en/technologies/management/ansible>`_
+If you are a business that wants to use Ansible extensively - **we recommend to use & buy the Web-Interface provided by RedHat Ansible**: `Ansible Automation Platform <https://www.redhat.com/en/technologies/management/ansible>`_
 
 Open-Source Version - AWX
 *************************
@@ -77,6 +77,17 @@ Documentation: `ansible-webui.oxl.at <ansible-webui.oxl.at>`_
 
 ----
 
+Ansible Forms
+*************
+
+If you want a nice WebUI that is specialized in providing forms for Ansible - `Ansible Forms <https://github.com/ansibleguy76/ansibleforms>`_ is another choice.
+
+Documentation: `ansibleforms.com <https://ansibleforms.com/introduction/>`_
+
+.. include:: ../_include/user_rath.rst
+
+----
+
 Ansible Semaphore
 *****************
 
@@ -86,17 +97,6 @@ We see some issues with the way the project is maintained (*sooo many open issue
 
 Thus **we can not recommend it**.
 
-But basically it is pretty nice to look at.
+But basically it has a pretty UI and could work for your use-cases.
 
 Documentation: `docs.semaphoreui.com <https://docs.semaphoreui.com/>`_
-
-----
-
-Ansible Forms
-*************
-
-If you want a nice WebUI that is specialized in providing forms for Ansible - `Ansible Forms <https://github.com/ansibleguy76/ansibleforms>`_ is another choice.
-
-Documentation: `ansibleforms.com <https://ansibleforms.com/introduction/>`_
-
-.. include:: ../_include/user_rath.rst
