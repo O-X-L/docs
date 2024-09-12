@@ -4,17 +4,17 @@
 
    <url><loc>https://docs.o-x-l.com/firewall/nftables</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/proxy/1_intro</loc></url>
-   <url><loc>https://docs.o-x-l.com/proxy/forward_squid</loc></url>
-   <url><loc>https://docs.o-x-l.com/proxy/reverse_haproxy</loc></url>
-   <url><loc>https://docs.o-x-l.com/proxy/tls_interception</loc></url>
+   <url><loc>https://docs.o-x-l.com/proxy/1_intro.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/proxy/forward_squid.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/proxy/reverse_haproxy.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/proxy/tls_interception.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/waf/1_intro</loc></url>
-   <url><loc>https://docs.o-x-l.com/waf/2_fingerprinting</loc></url>
+   <url><loc>https://docs.o-x-l.com/waf/1_intro.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/waf/2_fingerprinting.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/mail/1_intro</loc></url>
-   <url><loc>https://docs.o-x-l.com/mail/security</loc></url>
+   <url><loc>https://docs.o-x-l.com/mail/1_intro.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/mail/security.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/security/certificates</loc></url>
-   <url><loc>https://docs.o-x-l.com/security/encryption</loc></url>
+   <url><loc>https://docs.o-x-l.com/security/certificates.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/security/encryption.html</loc></url>
 </urlset>
