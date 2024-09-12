@@ -36,9 +36,13 @@ If you are a business that wants to use Ansible extensively - we recommend to us
 Open-Source Version - AWX
 *************************
 
-For testing purposes you can first use the Open-Source version of it: `Ansible AWX <https://www.ansible.com/community/awx-project>`_. But this one comes without any official support. You have to set-up Kubernetes and run it on top of that.
+For testing purposes you can first use the Open-Source version of it: `Ansible AWX <https://www.ansible.com/community/awx-project>`_.
 
-From practical experience - **we cannot recommend it**.
+But this one comes without any official support.
+
+You have to set-up Kubernetes and run it on top of that.
+
+From practical experience - **we cannot recommend it** for production use.
 
 ----
 
