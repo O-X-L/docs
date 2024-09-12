@@ -60,4 +60,12 @@ Setup
 
 See: :ref:`Ansible Setup <atm_ansible_setup>`
 
+----
+
+Web User-Interface
+##################
+
+See: :ref:`Ansible Setup <atm_ansible_webui>`
+
+
 .. include:: ../_include/user_rath.rst

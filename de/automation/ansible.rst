@@ -70,4 +70,12 @@ Setup
 
 Siehe: :ref:`Ansible Setup <atm_ansible_setup>`
 
+----
+
+Weboberfläche
+#############
+
+Siehe: :ref:`Ansible Setup <atm_ansible_webui>`
+
 .. include:: ../_include/user_rath.rst
+
