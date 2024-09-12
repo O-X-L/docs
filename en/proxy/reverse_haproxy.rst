@@ -144,22 +144,30 @@ Utilize the :code:`use_backend` action to choose the route the traffic should ta
         acl src_privileged src 192.168.0.48
         acl domains_test req.hdr(host) -m str -i test.oxl.at
 
-        use_backend be_admin domains_adm src_privileged
-        use_backend be_test domains_test
+        use_backend be_admin if domains_adm src_privileged
+        use_backend be_test if domains_test
 
         use_backend be_fallback
 
+    backend be_test
+        mode http
+
+        # plain http backends; but use sticky-session via cookie
+        server test-1 192.168.10.11:80 check cookie test1
+        server test-2 192.168.10.12:80 check cookie test2
+
     backend be_admin
         mode http
+
         # use ssl from haproxy to backends
         ## verify using default CA trust-store
         server srv-1 192.168.10.11:443 check ssl verify required
 
         ## verify using specific CA
-        server srv-1 192.168.10.12:443 check ssl verify required ca-file /etc/ssl/certs/internal-ca.crt
+        server srv-2 192.168.10.12:443 check ssl verify required ca-file /etc/ssl/certs/internal-ca.crt
 
         ## skip verification (not recommended)
-        server srv-2 192.168.10.13:443 check ssl verify none
+        server srv-3 192.168.10.13:443 check ssl verify none
 
     backend be_fallback
         mode http
@@ -464,7 +472,7 @@ Capture
 
 With :code:`capture` you can dynamically catch data. This might be useful in some cases.
 
-Example of logging GeoIP country & ASN:
+Example of logging GeoIP-country, GeoIP-ASN and User-Agent:
 
 .. code-block:: bash
 
