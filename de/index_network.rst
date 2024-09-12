@@ -1,6 +1,6 @@
-#######
-Network
-#######
+########
+Netzwerk
+########
 
 .. toctree::
     :glob:

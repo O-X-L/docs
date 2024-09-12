@@ -10,8 +10,8 @@ IT Automation
 
    index_automation
 
-Network
-#######
+Netzwerk
+########
 
 .. toctree::
    :maxdepth: 2
