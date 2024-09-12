@@ -47,6 +47,8 @@ Using **IaC has some powerful advantages**:
 * **Introduce processes for approving changes**
 * **Catch errors before implementation**
 
+Note: IaC like this also requires some kind of `Version Control System (like Git) <https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control>`_.
+
 .. tip::
 
     We can `support you to implement Ansible and Infrastructure-as-Code <https://www.o-x-l.com/automation>`_!

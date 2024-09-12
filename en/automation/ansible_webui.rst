@@ -84,19 +84,19 @@ If you want a nice WebUI that is specialized in providing forms for Ansible - `A
 
 Documentation: `ansibleforms.com <https://ansibleforms.com/introduction/>`_
 
-.. include:: ../_include/user_rath.rst
-
 ----
 
 Ansible Semaphore
 *****************
 
-Another choice is `Ansible Semaphore <https://github.com/semaphoreui/semaphore>`_.
+`Semaphore <https://github.com/semaphoreui/semaphore>`_ is another choice.
 
-We see some issues with the way the project is maintained (*sooo many open issues, important issues not being addressed in months*) and the direction in which it is going (*cloud-based product with many features - no focus on Ansible*).
+We have seen some issues with the way the project is maintained (*many open issues, important issues not being addressed in months*) and the direction in which it is going (*cloud-based product with many features - no focus on Ansible*).
 
 Thus **we can not recommend it**.
 
 But basically it has a pretty UI and could work for your use-cases.
 
 Documentation: `docs.semaphoreui.com <https://docs.semaphoreui.com/>`_
+
+.. include:: ../_include/user_rath.rst

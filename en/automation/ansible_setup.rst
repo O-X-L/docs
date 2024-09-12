@@ -25,15 +25,12 @@ Basic Ansible
 Prerequisites
 *************
 
-* Ansible `can only run on a linux/unix system <https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html>`_!
+Ansible `can only run on a linux/unix system <https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html>`_!
 
 Windows
 =======
 
-`Microsoft WSL is not supported <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements>`_.
-
-It might work, but it can be unstable.
-
+`Microsoft WSL is not supported <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements>`_. It might work, but it can be unstable.
 
 If you are running on a Windows client-OS you will need to either:
 
@@ -110,7 +107,7 @@ Collections / Roles
 
 There are many Ansible Collections and Roles you can use.
 
-Collections can provide a wide range of features.
+Collections can provide a `wide range of features <https://docs.ansible.com/ansible/latest/dev_guide/developing_plugins.html>`_.
 
 **Important**: You need to have a security awareness:
 
@@ -178,7 +175,7 @@ And install them:
 Linting
 #######
 
-Using linting-checks helps you to ensure your code/scripts **comply with existing best-practices** and show you errors you have made.
+Using lint-checks helps you to ensure your code/scripts **comply with existing best-practices** and show you errors you have made.
 
 These checks provide you with feedback and help you learn faster and more efficient.
 
@@ -232,8 +229,19 @@ You may want to create a script that runs those commands in the base-directory o
 
     cd "$(dirname "$0")"
 
+    echo ''
+    echo '### LINTING ANSIBLE... ###'
     ansible-lint -c .ansible-lint.yml
+
+    echo ''
+    echo '### LINTING YAML... ###'
     yamllint .
+
+    echo ''
+    echo '### LINTING PYTHON... ###'
     pylint . --recursive=y
+
+    echo ''
+    echo '### DONE ###'
 
 .. include:: ../_include/user_rath.rst
