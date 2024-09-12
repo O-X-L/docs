@@ -3,7 +3,7 @@
 .. include:: ../_include/head.rst
 
 ===============
-Ansible - Setup
+Ansible - WebUI
 ===============
 
 .. include:: ../_include/wip.rst
