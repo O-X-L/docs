@@ -107,7 +107,7 @@ Sie können ACLs mit AND/OR/NOT-Bedingungen kombinieren:
 
 ----
 
-Variables
+Variablen
 =========
 
 Variablen können für dynamischere Verwendungszwecke eingesetzt werden.
