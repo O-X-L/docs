@@ -22,4 +22,4 @@ Richtlinien
 
 * **Anerkennung** — Sie müssen eine angemessene Quellenangabe machen, einen Link zur Lizenz bereitstellen und angeben, ob Änderungen vorgenommen wurden. Sie können dies in jeder angemessenen Weise tun, aber nicht in einer Weise, die den Eindruck erweckt, dass der Lizenzgeber Sie oder Ihre Nutzung unterstützt.
 * **Nicht-kommerziell** — Sie dürfen das Material nicht für kommerzielle Zwecke verwenden.
-* **Keine Änderungen** — Wenn Sie das Material remixen, umgestalten oder darauf aufbauen, dürfen Sie das veränderte Material nicht weitergeben.
+* **Keine Änderungen** — Wenn Sie das Material ändern, umgestalten oder darauf aufbauen, dürfen Sie das veränderte Material nicht weitergeben.
