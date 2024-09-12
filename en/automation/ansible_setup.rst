@@ -1,0 +1,311 @@
+.. _atm_ansible_setup:
+
+.. include:: ../_include/head.rst
+
+===============
+Ansible - Setup
+===============
+
+.. include:: ../_include/wip.rst
+
+Intro
+#####
+
+This tutorial shows you how to set-up a simple Ansible controller.
+
+At its base, Ansible is a command-line-tool. That's why the most lightweight and simple solution is to use it as such.
+
+All Ansible Web-Interfaces build on-top of this core-tool. If you want to understand how it works and how to troubleshoot it - we recommend you starting to use Ansible via shell/CLI!
+
+----
+
+Basic Ansible
+#############
+
+Prerequisites
+*************
+
+* Ansible `can only run on a linux/unix system <https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html>`_!
+
+Windows
+=======
+
+`Microsoft WSL is not supported <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements>`_.
+
+It might work, but it can be unstable.
+
+
+If you are running on a Windows client-OS you will need to either:
+
+* Install a Linux virtual machine locally (for example using `VirtualBox <https://www.virtualbox.org/>`_)
+
+  If you are using an IDE/Editor to manage your Ansible projects - you might want to map/redirect your local project directories into your VM.
+
+  You might not want/need a GUI installation of linux. Commandline-only will do. Per example: `Debian minimal <https://www.debian.org/CD/netinst/>`_ (*what we recommend*) or `Ubuntu server <https://ubuntu.com/download/server>`_
+
+* Or `use a Docker container <https://hub.docker.com/r/ansible/ansible>`_
+
+----
+
+Editor / IDE
+============
+
+You can make your life a lot easier by installing a IDE/Editor that supports syntax checking for Ansible and its related file-types.
+
+* `VSCode <https://code.visualstudio.com/download>`_
+
+  `Official Ansible Plugin <https://marketplace.visualstudio.com/items?itemName=redhat.ansible>`_
+
+* `PyCharm <https://www.jetbrains.com/pycharm/>`_
+
+  `Ansible Plugin <https://plugins.jetbrains.com/plugin/14893-ansible>`_
+
+----
+
+Install
+*******
+
+You need Python3 and PIP to run Ansible:
+
+.. code-block:: bash
+
+    sudo apt install python3 python3-pip
+
+The 'sshpass' package is needed for the SSH connection-type:
+
+.. code-block:: bash
+
+    sudo apt install sshpass
+
+Create a `Python virtual-environment <https://realpython.com/python-virtual-environments-a-primer/>`_:
+
+.. code-block:: bash
+
+    python3 -m pip install virtualenv
+    python3 -m virtualenv ~/venv_ansible
+
+    # automatically activate the venv on login
+    echo 'VIRTUAL_ENV_DISABLE_PROMPT=1 source ~/venv_ansible/bin/activate' >> ~/.bashrc
+
+    # logout and -in
+
+    # you can verify it is active by checking which python3 binary is currently used
+    which python3
+    > ~/venv_ansible/bin/python3
+
+Install Ansible itself
+
+
+.. code-block:: bash
+
+    python3 -m pip install ansible
+
+    # try to execute it
+    ansible-playbook --help
+
+----
+
+Collections / Roles
+*******************
+
+There are many Ansible Collections and Roles you can use.
+
+Collections can provide a wide range of features.
+
+**Important**: You need to have a security awareness:
+
+* These Roles and Modules will get **access to the secrets you pass to Ansible** whenever you execute them!
+* These Roles and Modules can **execute code on the target system** using your privileges!
+
+So be sure they are from a trusted source and maintainer! Test them well.
+
+See: `Ansible Collection Index <https://docs.ansible.com/ansible/latest/collections/index.html>`_, `Ansible Galaxy Collections <https://galaxy.ansible.com/ui/collections/>`_, `Ansible Galaxy Roles <https://galaxy.ansible.com/ui/standalone/roles/>`_
+
+You can install them like so:
+
+.. code-block:: bash
+
+    # roles
+    ansible-galaxy install ansibleguy.infra_wireguard
+
+    ## from github
+    ansible-galaxy install git+https://github.com/ansibleguy/infra_haproxy
+
+    ## install to a specific path
+    ansible-galaxy install --roles-path ./roles ansibleguy.infra_wireguard
+
+    # collections
+    ansible-galaxy collection install ansibleguy.opnsense
+
+    ## from github
+    ansible-galaxy collection install git+https://github.com/ansibleguy/collection_opnsense
+
+    ## install to a specific path
+    ansible-galaxy collection install ansibleguy.opnsense -p ./collections
+
+You can also save your requirements to a file:
+
+.. code-block:: yaml
+
+    ---
+
+    collections:
+      - name: 'community.crypto'
+
+      - name: 'https://github.com/ansibleguy/collection_opnsense.git'
+        type: 'git'
+
+    roles:
+      - src: 'ansibleguy.infra_certs'
+
+      - name: 'ansibleguy.infra_nftables'
+        src: 'https://github.com/ansibleguy/infra_nftables'
+
+See also: `Install Roles <https://galaxy.ansible.com/docs/using/installing.html#installing-multiple-roles-from-a-file>`_ and `install Collections <https://docs.ansible.com/ansible/devel/collections_guide/collections_installing.html#installing-collections-with-ansible-galaxy>`_
+
+And install them:
+
+.. code-block:: bash
+
+    # roles
+    ansible-galaxy install -r requirements.yml
+
+    # collections
+    ansible-galaxy collection install -r requirements.yml
+
+----
+
+Linting
+#######
+
+Using linting-checks helps you to ensure your code/scripts **comply with existing best-practices** and show you errors you have made.
+
+These checks provide you with feedback and help you learn faster and more efficient.
+
+Install
+*******
+
+.. code-block:: bash
+
+    python3 -m pip install ansible-lint yamllint pylint
+
+----
+
+Configure
+*********
+
+You might have the need to disable or modify some tests.
+
+Ansible-Lint
+============
+
+See: `Documentation <https://ansible-lint.readthedocs.io/configuring/>`_
+
+YamlLint
+========
+
+See: `Documentation <https://yamllint.readthedocs.io/en/stable/configuration.html>`_
+
+PyLint
+======
+
+Generate the default config for your current version of pylint:
+
+.. code-block:: bash
+
+    pylint --generate-rcfile > .pylintrc
+
+See: `Documentation <https://yamllint.readthedocs.io/en/stable/configuration.html>`_
+
+----
+
+Run
+***
+
+You may want to create a script that runs those commands in the base-directory of your project:
+
+.. code-block:: bash
+
+    #!/usr/bin/env bash
+
+    set -euo pipefail
+
+    cd "$(dirname "$0")"
+
+    ansible-lint -c .ansible-lint.yml
+    yamllint .
+    pylint . --recursive=y
+
+
+----
+
+Web Interfaces
+##############
+
+As these web applications will have access to your infrastructure credentials, to run jobs, make sure you really trust those projects. Firewall them well.
+
+We will not (*yet*) go into the details on how to set-up such Web-Interfaces.
+
+Official
+********
+
+If you are a business that want to use Ansible extensively - we recommend to use & buy the Web-Interface provided by RedHat Ansible: `Ansible Automation Platform <https://www.redhat.com/en/technologies/management/ansible>`_
+
+For testing purposes you can first use the Open-Source version of it: `Ansible AWX <https://www.ansible.com/community/awx-project>`_. But this one comes without any official support. You have to set-up Kubernetes and run it on top of that.
+
+From practical experience - **we cannot recommend it**.
+
+----
+
+Community-Driven
+****************
+
+There are some other Open-Source projects that you can use. They all have benefits and drawbacks.
+
+These tool might be useful for admins, tech-enthusiasts and small to medium businesses. But if you are using Ansible on a larger scale or your business depends on it - invest the money and buy the official Ansible product!
+
+Lightweight local Ansible WebUI
+===============================
+
+We have developed a very simple and lightweight `Ansible WebUI <https://github.com/O-X-L/ansible-webui>`_!
+
+.. code-block:: bash
+
+    # install
+    python3 -m pip install oxl-ansible-webui
+
+    # enter your playbook directory; for example:
+    cd ~/ansible
+
+    # run
+    python3 -m oxl-ansible-webui
+
+    # copy the auto-created credentials
+
+Afterwards you can access the WebUI: `http://localhost:8000 <http://localhost:8000>`_
+
+Documentation: `ansible-webui.oxl.at <ansible-webui.oxl.at>`_
+
+----
+
+Ansible Semaphore
+=================
+
+Another choice is `Ansible Semaphore <https://github.com/semaphoreui/semaphore>`_.
+
+We see some issues with the way the project is maintained (*sooo many open issues, important issues not being addressed in months*) and the direction in which it is going (*cloud-based product with many features - no focus on Ansible*).
+
+Thus **we can not recommend it**.
+
+But basically it is pretty nice to look at.
+
+Documentation: `docs.semaphoreui.com <https://docs.semaphoreui.com/>`_
+
+----
+
+Ansible Forms
+=============
+
+If you want a nice WebUI that is specialized in providing forms for Ansible - `Ansible Forms <https://github.com/ansibleguy76/ansibleforms>`_ is another choice.
+
+Documentation: `ansibleforms.com <https://ansibleforms.com/introduction/>`_

@@ -7,3 +7,8 @@
 =========
 
 .. include:: ../_include/wip.rst
+
+RedHat Ansible
+##############
+
+See: :ref:`Ansible <atm_ansible>`
