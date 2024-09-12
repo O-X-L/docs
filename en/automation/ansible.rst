@@ -51,3 +51,5 @@ Setup
 #####
 
 See: :ref:`Ansible Setup <atm_ansible_setup>`
+
+.. include:: ../_include/user_rath.rst
