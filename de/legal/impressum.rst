@@ -21,6 +21,12 @@ Info
 
 **UID**: ATU81010549
 
+**Bank Kontodaten**:
+
+* IBAN: AT95 3807 5000 0206 3295
+* BIC: RZSTAT2G075
+* Institut: Raiffeisenbank Mittlere Südoststeiermark
+
 **Standort**: Berndorf 30, 8324 Kirchberg, AT 🇦🇹
 
 **Landesgericht fuer ZRS**: Graz

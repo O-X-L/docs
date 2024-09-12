@@ -21,6 +21,13 @@ Info
 
 **VAT**: ATU81010549
 
+**Banking Account Information**:
+
+* IBAN: AT95 3807 5000 0206 3295
+* BIC: RZSTAT2G075
+* Bank Name: Raiffeisenbank Mittlere Südoststeiermark
+
+
 **Site**: Berndorf 30, 8324 Kirchberg, AT 🇦🇹
 
 **Regional Court for Civil Matters**: Graz
