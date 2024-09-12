@@ -40,6 +40,163 @@ Afterwards you need to reload it:
 Basics
 ******
 
+ACLs
+====
+
+You can define ACLs to create some conditional matching:
+
+.. code-block:: bash
+
+    acl <NAME> <CONDITION>
+
+    acl net_private src 192.168.0.0/16 172.16.0.0/12 10.0.0.0/8 127.0.0.0/8 ::1
+
+These can also be used in-line as anonymous ACL - this makes sense if you only need to use it once:
+
+.. code-block:: bash
+
+    <ACTION> if { <CONDITION> }
+
+Data can be matched in different ways:
+
+.. code-block:: bash
+
+    # match as string (hast to be full-match)
+    acl domain1 req.hdr(host) -m str oxl.at
+
+    # match case-insensitive
+    acl domain1 req.hdr(host) -m str -i oxl.at
+
+    # match an integer
+    acl some_digit req.hdr(some-hdr) -m int 1000
+
+    # check if the value exists
+    acl has_some_header req.hdr(some-hdr) -m found
+
+    # match if one of some values (has limits => see list-files)
+    acl is_country_x res.hdr(X-Geoip-Country) -m str -i CN RU US
+
+    # match beginning of string
+    acl path_api path -m beg -i /api/
+
+    # match part of string
+    acl path_test path -m sub -i /test/
+
+    # match end of string
+    acl path_scripts path -m end -i .php .py
+
+You can combine ACLs with AND/OR/NOT conditions:
+
+.. code-block:: bash
+
+    acl domains_adm req.hdr(host) -m str -i admin.example.oxl.at
+    acl domains_test req.hdr(host) -m str -i test.oxl.at
+    acl src_privileged src 192.168.0.48
+    acl src_internal src 172.16.0.0/12
+
+    # implicit AND condition
+    use_backend be_test if domains_adm src_privileged
+
+    # NOT condition
+    http-request deny status 401 if domains_adm !src_privileged
+
+    # OR condition
+    http-request redirect code 302 location https://www.oxl.at domains_test || src_internal
+
+    # with inline ACLs
+    http-request deny status 400 if { path -m sub -i /.env/ /.git/ } ||
+
+----
+
+Variables
+=========
+
+Variables can be used for more dynamic use-cases.
+
+Example:
+
+.. code-block:: bash
+
+    # set a variable
+    http-request set-var(txn.bot) int(1) if !{ req.fhdr(User-Agent) -m found }
+
+    # check if variable exists
+    http-request set-var(txn.bot) int(0) if !{ var(txn.bot) -m found }
+
+    # conditions
+    http-request deny deny_status 400 if !{ var(txn.bot) -m int 0 }
+
+    # log a variable with max-length of 1 characters
+    http-request capture var(txn.bot) len 1
+
+----
+
+Backends
+========
+
+Utilize the :code:`use_backend` action to choose the route the traffic should take:
+
+.. code-block:: bash
+
+    frontend fe_web:
+        ...
+        acl domains_adm req.hdr(host) -m str -i admin.example.oxl.at
+        acl src_privileged src 192.168.0.48
+        acl domains_test req.hdr(host) -m str -i test.oxl.at
+
+        use_backend be_admin domains_adm src_privileged
+        use_backend be_test domains_test
+
+        use_backend be_fallback
+
+    backend be_admin
+        mode http
+        # use ssl from haproxy to backends
+        ## verify using default CA trust-store
+        server srv-1 192.168.10.11:443 check ssl verify required
+
+        ## verify using specific CA
+        server srv-1 192.168.10.12:443 check ssl verify required ca-file /etc/ssl/certs/internal-ca.crt
+
+        ## skip verification (not recommended)
+        server srv-2 192.168.10.13:443 check ssl verify none
+
+    backend be_fallback
+        mode http
+        http-request redirect code 302 location https://www.oxl.at
+
+See: `HAProxy Backends <https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/backends/>`_
+
+----
+
+Basic Auth
+==========
+
+You can either use plaintext or hashed (recommended) passwords.
+
+.. code-block:: bash
+
+    # plaintext
+    userlist basic_auth_xyz_plain
+        # user <USER> insecure-password <PASSWORD>
+        user userTest insecure-password super!Secret
+
+    # hashed; created via: 'mkpasswd -m sha-256 mypassword123'
+    userlist basic_auth_xyz_hash
+      user userTest password $5$s6Subz0X7FSX2zON$r94OtF6gOfWlGmySwvn3pDFIAHbIpe6mWneueqtBOm/
+
+    backend be_xyz
+        mode http
+        http-request auth unless { http_auth(basic_auth_xyz_plain) }
+        http-request del-header X-User
+        http-request del-header X-Auth
+        http-request del-header X-Auth-Type
+        http-request del-header Authorization
+
+See: `HAProxy Basic-Auth <https://www.haproxy.com/documentation/haproxy-configuration-tutorials/authentication/basic-authentication/>`_
+
+----
+
 HTTP Methods
 ============
 
@@ -288,14 +445,14 @@ Formats
     ## default
     [%ci]:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r
 
-    ## with prefix for easier filtering
+    ## with prefix for easier log-filtering
     HTTP: [%ci]:%cp [%tr] %ft %b/%s %TR/%Tw/%Tc/%Tr/%Ta %ST %B %CC %CS %tsc %ac/%fc/%bc/%sc/%rc %sq/%bq %hr %hs %{+Q}r
 
     # TCP mode
     ## default
-    TCP: [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
+    [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
 
-    ## with prefix for easier filtering
+    ## with prefix for easier log-filtering
     TCP: [%ci]:%cp [%t] %ft %b/%s %Tw/%Tc/%Tt %B %ts %ac/%fc/%bc/%sc/%rc %sq/%bq
 
 See: `HAProxy Logging Formats <https://www.haproxy.com/blog/introduction-to-haproxy-logging#haproxy-log-format>`_
