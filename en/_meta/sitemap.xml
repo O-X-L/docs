@@ -22,4 +22,7 @@
    <url><loc>https://docs.o-x-l.com/automation/ansible.html</loc></url>
    <url><loc>https://docs.o-x-l.com/automation/ansible_setup.html</loc></url>
    <url><loc>https://docs.o-x-l.com/automation/ansible_webui.html</loc></url>
+
+   <url><loc>https://docs.o-x-l.com/linux/1_intro.html</loc></url>
+   <url><loc>https://docs.o-x-l.com/linux/linux_ha.html</loc></url>
 </urlset>
