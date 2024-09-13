@@ -2,9 +2,9 @@
 
 .. include:: ../_include/head.rst
 
-=========
-Impressum
-=========
+==============
+Privacy Policy
+==============
 
 Data Privacy Policy
 *******************
