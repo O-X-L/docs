@@ -54,22 +54,39 @@ nav {
     padding-bottom: 0.5rem !important;
 }
 
-#ty {
-    position: absolute;
-    bottom: 50px;
-    right: 50px;
-    width: 20px;
+#fb-pos, #fb-neg {
+    position: fixed;
+    bottom: 20px;
     height: 20px;
-    opacity: 0.8;
+    width: 20px;
+    opacity: 0.5;
     background-color: #606060;
+    z-index: 90;
+    padding: 5px;
+    border-radius: 5px;
+    transition: background-color 0.2s;
+    border-style: solid;
+    border-width: 1px;
+    border-color: whitesmoke;
 }
 
-#tyCnt {
-    position: absolute;
-    bottom: 50px;
-    right: 120px;
-    width: 40px;
-    height: 20px;
-    opacity: 0.8;
-    background-color: #606060;
+#fb-pos:hover, #fb-neg:hover {
+    cursor: pointer;
+    opacity: 0.9;
+}
+
+#fb-pos:hover {
+    background-color: green;
+}
+
+#fb-neg:hover {
+    background-color: darkred;
+}
+
+#fb-pos {
+    right: 70px;
+}
+
+#fb-neg {
+    right: 30px;
 }

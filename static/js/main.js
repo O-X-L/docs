@@ -1,32 +1,56 @@
-function pullThankYouCount() {
-    // todo: pull thank you count from server
-    return Math.floor(Math.random() * 5);
+const FEEDBACK_TEXT = {
+    'en': {'pos': 'This information was useful!', 'neg': 'Bad information - did not like it!'},
+    'de': {'pos': 'Diese Informationen waren nützlich!', 'neg': 'Schlechte Informationen - hat mir nicht gefallen!'},
 }
 
-function registerThankYou() {
-    // todo: post to server to track likes
+function getLang() {
+    return document.getElementsByTagName('html')[0].getAttribute('lang');
 }
 
-function hideThankYouButton() {
-    document.getElementById('ty').setAttribute("hidden", "hidden");
+function giveFeedback(kind) {
+    let http = new XMLHttpRequest();
+    http.open('GET', window.location.href + '?feedback=' + kind, true);
+    http.send();
+    localStorage.setItem(feedbackStorePrefix + window.location.pathname, '1');
 }
 
-function addThankYouButton() {
-    let thankYouButton = document.createElement('div');
-    thankYouButton.id = 'ty';
-    thankYouButton.innerText = '👍';
-    thankYouButton.title = 'This information was useful!'
+function hideFeedbackButtons() {
+    document.getElementById('fb-pos').setAttribute("hidden", "hidden");
+    document.getElementById('fb-neg').setAttribute("hidden", "hidden");
+}
 
-    thankYouButton.addEventListener('click', function(e) {
-        hideThankYouButton();
+const feedbackStorePrefix = 'feedback-';
+
+function feedbackGiven() {
+    return localStorage.getItem(feedbackStorePrefix + window.location.pathname) === '1';
+}
+
+function addFeedbackButton(id, text, title, kind) {
+    if (feedbackGiven()) {
+        return;
+    }
+
+    let feedbackButton = document.createElement('div');
+    feedbackButton.id = id;
+    feedbackButton.innerText = text;
+    feedbackButton.title = title
+    document.body.appendChild(feedbackButton);
+
+    feedbackButton.addEventListener('click', function(e) {
+        hideFeedbackButtons();
+        giveFeedback(kind);
     })
 }
 
-function addThankYouCounter() {
-    let thankYouCounter = document.createElement('div');
-    thankYouCounter.id = 'tyCnt';
-    thankYouCounter.innerText = pullThankYouCount() + ' found this useful'
+function addFeedbackButtonPositive() {
+    addFeedbackButton('fb-pos', '👍', FEEDBACK_TEXT[getLang()]['pos'], 'positive');
 }
 
-addThankYouButton()
-addThankYouCounter()
+function addFeedbackButtonNegative() {
+    addFeedbackButton('fb-neg', '👎', FEEDBACK_TEXT[getLang()]['neg'], 'negative');
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+    addFeedbackButtonPositive()
+    addFeedbackButtonNegative()
+})
