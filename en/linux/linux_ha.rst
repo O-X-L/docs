@@ -526,8 +526,6 @@ Monitoring
 
 Here is an example script that can be used to monitor your LinuxHA cluster-status: `OXL/zabbix-linuxha <https://github.com/O-X-L/zabbix-linuxha>`_
 
-# todo: add link to repository
-
 Example usage:
 
 .. code-block::
