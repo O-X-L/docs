@@ -27,6 +27,7 @@
 
 .wiki-portrait {
     width: 60%;
+    max-width: 500px;
     margin: 5px 0px;
     border-radius: 5px;
     border-style: solid;
