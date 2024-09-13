@@ -7,6 +7,6 @@
 
     Melde `fehlende oder inkorrekte Informationen und veraltete Links <https://github.com/O-X-L/docs/issues/new>`_
 
-    Kontaktieren Sie uns für Beratung: `Kontakt <https://www.oxl.at/contact>`_
+    Kontaktieren Sie uns für Beratung: `✉️ <mailto:kontakt@oxl.at>`_ | `📝 <https://www.oxl.at/contact>`_ | `📞 <tel:+437203025731>`_
 
     |logo|

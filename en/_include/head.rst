@@ -7,6 +7,6 @@
 
     Report `missing/invalid information or broken links <https://github.com/O-X-L/docs/issues/new>`_
 
-    Contact us for Consultation: `Contact <https://www.o-x-l.com/contact>`_
+    Contact us for Consultation: `✉️ <mailto:contact@oxl.at>`_ | `📝 <https://www.o-x-l.com/contact>`_ | `📞 <tel:+437203025731>`_
 
     |logo|

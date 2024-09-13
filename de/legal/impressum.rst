@@ -17,7 +17,7 @@ Info
 
 **Kontakt-Formular**: `Kontakt <https://www.oxl.at/contact>`_
 
-**Telefonnummer**: +43 720 302 573 1
+**Telefonnummer**: `+43 720 302 573 1 <tel:+437203025731>`_
 
 **Firmenbuchnummer**: `FN 635245i <https://justizonline.gv.at/jop/web/firmenbuchabfrage/635245i_1>`_
 
