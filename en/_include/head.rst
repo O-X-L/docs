@@ -5,7 +5,7 @@
 
 .. tip::
 
-    Report missing/invalid information or broken links: `📝 <https://github.com/O-X-L/blog/issues/new>`_ | `✉️ <mailto:contact@oxl.at>`_
+    Report missing/invalid information or broken links: `📝 <https://github.com/O-X-L/blog/issues/new>`_ | `✉️ <mailto:contact+docs@oxl.at>`_
 
     Contact us for Consultation: `✉️ <mailto:contact@oxl.at>`_ | `📝 <https://www.o-x-l.com/contact>`_ | `📞 <tel:+437203025731>`_
 
