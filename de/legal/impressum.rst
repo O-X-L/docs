@@ -76,6 +76,4 @@ Hinweis auf Verbraucherschlichtungsstelle bei Online-Geschäften mit Verbraucher
 
 Bei Online-Geschäften wird auf die Möglichkeit einer Streitbereinigung im Wege einer `Online-Streitbeilegungsplattform <https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=DE>`_ (Art 14 Abs 1 S 1 ODR-VO) und nationaler Verbraucherschlichtungsstellen hingewiesen, sofern es sich beim Kunden um einen Verbraucher handelt.
 
-Der Unternehmer ist zur Teilnahme an einem solchen Schlichtungsstellungsverfahren nicht bereit.
-
 Sie können allfällige Beschwerden auch an die oben angegebene E-Mail-Adresse richten.

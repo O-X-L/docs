@@ -76,6 +76,4 @@ Reference to consumer arbitration board for online transactions with consumers
 
 In the case of online transactions, reference is made to the possibility of dispute resolution via an `online dispute resolution platform <https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=EN>`_ and national consumer arbitration boards, provided the customer is a consumer.
 
-The entrepreneur is not prepared to participate in such arbitration proceedings.
-
 You can also send any complaints to the e-mail address given above.
