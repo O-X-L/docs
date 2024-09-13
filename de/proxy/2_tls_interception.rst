@@ -19,9 +19,9 @@ Wenn der Datenverkehr verschlüsselt ist (derzeit mit TLS), ist dies nicht mögl
 
 Um ein Abfangen des verschlüsselten Datenverkehrs zu ermöglichen, muss ein `Man-in-the-Middle-Angriff <https://en.wikipedia .org/wiki/Man-in-the-middle_attack>`_ durchgeführt werden. In diesem Fall baut der Client eine verschlüsselte Verbindung zum Mittelsmann auf, der sich seinerseits mit dem eigentlichen Zielserver verbindet.
 
-Zum Schutz vor solchen Angriffen ist der TLS-Handshake nur dann erfolgreich, wenn das `Serverzertifikat <https://www.cloudflare.com/learning/ssl/how-does-ssl-work/>`_ von einer **vertrauenswürdigen Zertifizierungsstelle** signiert ist und einen gültigen **Subject Alternative Name** aufweist, der den tatsächlichen Server-/Dienstenamen enthält. Dieser Schutz ist als :ref:`SSL/TLS-Verifizierung <security_certificates_verify>` bekannt.
+Zum Schutz vor solchen Angriffen ist der TLS-Handshake nur dann erfolgreich, wenn das `Serverzertifikat <https://www.cloudflare.com/learning/ssl/how-does-ssl-work/>`_ von einer **vertrauenswürdigen Zertifizierungsstelle** signiert ist und einen gültigen **Subject Alternative Name** aufweist, der den tatsächlichen Server-/Dienstenamen enthält. Dieser Schutz ist als :ref:`SSL/TLS-Verifizierung <security_certs_verify>` bekannt.
 
-Um diesen Schutz zu umgehen, muss der abfangende Proxy Zugang zu einer Zertifikatsautorität haben, der der Client vertraut. Unternehmen würden :ref:`eine interne PKI <security_encryption>` verwenden, um eine solche Zertifikatsvertrauenskette zu erstellen.
+Um diesen Schutz zu umgehen, muss der abfangende Proxy Zugang zu einer Zertifikatsautorität haben, der der Client vertraut. Unternehmen würden :ref:`eine interne PKI <security_certs_pki>` verwenden, um eine solche Zertifikatsvertrauenskette zu erstellen.
 
 |intercept|
 

@@ -11,5 +11,5 @@
 Intro
 #####
 
-* :ref:`Certificates <security_certificates>`
+* :ref:`Certificates <security_certs>`
 * :ref:`Encryption <security_encryption>`

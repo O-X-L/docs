@@ -19,9 +19,9 @@ If the traffic is encrypted (currently using TLS) this is not possible, as the t
 
 To make interception of such encrypted traffic possible, a `Man-in-the-Middle attack <https://en.wikipedia .org/wiki/Man-in-the-middle_attack>`_ needs to be performed. In that case the client will establish an encrypted connection to the middle-man and it in turn will connect to the actual target server.
 
-As a protection against such attacks, the TLS handshake will only be successful if the `server certificate <https://www.cloudflare.com/learning/ssl/how-does-ssl-work/>`_ is **signed by a trusted certificate-authority** and has a valid **subject alternative name** that includes its actual server/service name. This protection is known as :ref:`SSL/TLS verification <security_certificates_verify>`.
+As a protection against such attacks, the TLS handshake will only be successful if the `server certificate <https://www.cloudflare.com/learning/ssl/how-does-ssl-work/>`_ is **signed by a trusted certificate-authority** and has a valid **subject alternative name** that includes its actual server/service name. This protection is known as :ref:`SSL/TLS verification <security_certs_verify>`.
 
-To work around this protection, the intercepting proxy needs to have access to a certificate-authority that is trusted by the client. Enterprises would use :ref:`an internal PKI <security_encryption>` to create such a certificate trust chain.
+To work around this protection, the intercepting proxy needs to have access to a certificate-authority that is trusted by the client. Enterprises would use :ref:`an internal PKI <security_certs_pki>` to create such a certificate trust chain.
 
 |intercept|
 

@@ -1,4 +1,4 @@
-.. _security_certificates:
+.. _security_certs:
 
 .. include:: ../_include/head.rst
 
@@ -54,6 +54,8 @@ Example: :code:`DNS:www.oxl.at,DNS:www.o-x-l.com,IP:1.1.1.1`
 It is important to set this attribute correctly, as it will be validated!
 
 ----
+
+.. _security_certs_pki:
 
 Public Key Infrastructure & Trust Chains
 ########################################
@@ -136,7 +138,7 @@ Best practices: `AWS <https://docs.aws.amazon.com/privateca/latest/userguide/ca-
 
 ----
 
-.. _security_certificates_verify:
+.. _security_certs_verify:
 
 Verification
 ############
