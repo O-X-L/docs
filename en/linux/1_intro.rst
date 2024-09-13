@@ -15,7 +15,7 @@ Linux is a unix-like operating system that had its first release in 1991. See `H
 
 It is an Open-Source operating system.
 
-There are `many distributions <https://en.wikipedia.org/wiki/List_of_Linux_distributions>`_
+There are `many distributions <https://en.wikipedia.org/wiki/List_of_Linux_distributions>`_  that build on top of the basic functionalities of Linux.
 
 Distributions like Android, Debian, Ubuntu and ChromeOS are widely used.
 

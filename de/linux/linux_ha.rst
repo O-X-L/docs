@@ -11,34 +11,34 @@ LinuxHA
 Intro
 #####
 
-LinuxHA is the name for a software stack that allows you to design multi-server high-availability clusters.
+LinuxHA ist der Name für einen Software-Stack, mit dem Sie Multi-Server Hochverfügbarkeitscluster erstellen können.
 
-This documentation focuses on the setup and maintenance on Debian linux.
+Diese Dokumentation konzentriert sich auf die Einrichtung und Wartung unter Debian-Linux.
 
-See also: `RedHat HA Clusters <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html-single/configuring_and_managing_high_availability_clusters/index>`_
+Siehe auch: `RedHat HA Clusters <https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html-single/configuring_and_managing_high_availability_clusters/index>`_
 
 Ansible Collection: `ansibleguy.linuxha <https://github.com/ansibleguy/collection_linuxha>`_
 
 ----
 
-Components
-##########
+Komponenten
+###########
 
 Corosync
 ********
 
-Documentation: `Manpage corosync <https://manpages.debian.org/unstable/corosync/corosync.conf.5.en.html>`_, `Corosync knet <http://people.redhat.com/ccaulfie/docs/KnetCorosync.pdf>`_
+Dokumentation: `Manpage corosync <https://manpages.debian.org/unstable/corosync/corosync.conf.5.en.html>`_, `Corosync knet <http://people.redhat.com/ccaulfie/docs/KnetCorosync.pdf>`_
 
 Service: :code:`corosync.service`
 
 Votequorum
 ==========
 
-Documentation: `Manpage votequorum <https://manpages.debian.org/unstable/corosync/votequorum.5.en.html>`_
+Dokumentation: `Manpage votequorum <https://manpages.debian.org/unstable/corosync/votequorum.5.en.html>`_
 
-It is important to understand how the cluster decides how to handle failure events and how it avoids split-brain scenarios.
+Es ist wichtig zu verstehen, wie der Cluster entscheidet, wie er mit Ausfallereignissen umgeht und wie er Split-Brain-Szenarien vermeidet.
 
-It does this by having a number of votes assigned to each system in the cluster and ensuring that only when a majority of the votes are present, cluster operations are allowed to proceed.
+Dies geschieht, indem jedem System im Cluster eine bestimmte Anzahl von Stimmen/Votes zugewiesen wird und sichergestellt wird, dass die Clusteroperationen nur dann fortgesetzt werden können, wenn eine Mehrheit der .
 
 ----
 
@@ -47,9 +47,9 @@ Pacemaker
 
 Service: :code:`pacemaker.service`
 
-Documentation: `Clusterlabs pacemaker <https://clusterlabs.org/pacemaker/>`_
+Dokumentation: `Clusterlabs pacemaker <https://clusterlabs.org/pacemaker/>`_
 
-It handles the resources and cluster actions.
+Es verwaltet die Ressourcen und Clusteraktionen.
 
 ----
 
@@ -60,9 +60,9 @@ Package: :code:`corosync-qdevice`
 
 Service: :code:`corosync-qdevice.service`
 
-Documentation: :code:`Manpage qdevice <https://manpages.ubuntu.com/manpages/focal/en/man8/corosync-qdevice.8.html>`_
+Dokumentation: :code:`Manpage qdevice <https://manpages.ubuntu.com/manpages/focal/en/man8/corosync-qdevice.8.html>`_
 
-It provides votes to the cluster quorum.
+Es stellt Stimmen für das Cluster-Quorum zur Verfügung
 
 ----
 
@@ -71,7 +71,7 @@ CRM Shell
 
 Package: :code:`crmsh`
 
-Command-line interface to interact with the LinuxHA configuration.
+Befehlszeilenschnittstelle zur Interaktion mit der LinuxHA-Konfiguration.
 
 ----
 
@@ -82,18 +82,18 @@ Package: :code:`corosync-qnetd`
 
 Service: :code:`corosync-qnetd.service`
 
-Documentation: `Manpage qnetd <https://manpages.debian.org/testing/corosync-qnetd/corosync-qnetd.8.en.html>`_
+Dokumentation: `Manpage qnetd <https://manpages.debian.org/testing/corosync-qnetd/corosync-qnetd.8.en.html>`_
 
-It is designed to run outside of the cluster with the purpose of providing a vote to the corosync-qdevice model net.
+Es ist so konzipiert, dass es außerhalb des Clusters läuft, um eine Abstimmung mit dem corosync-qdevice model net zu ermöglichen.
 
-It can serve multiple clusters and be almost configuration and state free.
+Er kann mehrere Cluster bedienen und ist nahezu konfigurations- und zustandsfrei.
 
-Adding a qnetd can be used instead of :code:`auto_tie_breaker` to get quorate on an even number of nodes.
+Das Hinzufügen eines qnetd kann anstelle von :code:`auto_tie_breaker` verwendet werden, um Quorate auf einer geraden Anzahl von Nodes zu erhalten.
 
 ----
 
-Install
-#######
+Installation
+############
 
 .. code-block:: bash
 
@@ -110,13 +110,13 @@ Install
 
 ----
 
-Configuration
+Konfiguration
 #############
 
 2-Node Cluster
 **************
 
-For 2-node clusters to function, you need to disable these features:
+Damit 2-Knoten-Cluster funktionieren, müssen Sie diese Funktionen deaktivieren:
 
 .. code-block:: bash
 
@@ -127,20 +127,20 @@ For 2-node clusters to function, you need to disable these features:
 
     commit
 
-Alternatively, you can configure the :code:`quorum` to :code:`two_node: 1`.
+Alternativ kann man das :code:`quorum` auf :code:`two_node: 1` konfigurieren.
 
 ----
 
 Corosync
 ********
 
-The configuration is placed at :code:`/etc/corosync/corosync.conf`.
+Die Konfiguration befindet sich unter :code:`/etc/corosync/corosync.conf`.
 
-It should have the same content on all nodes that are part of the cluster!
+Sie sollte auf allen Knoten, die Teil des Clusters sind, den gleichen Inhalt haben!
 
-You can reload the config using: :code:`corosync-cfgtool -R`
+Sie können die Konfiguration folgendermaßen neu laden: :code:`corosync-cfgtool -R`
 
-Check the **current status** using:
+Prüfen Sie den **aktuellen Status** mit:
 
 * :code:`crm status bynode`
 
@@ -151,9 +151,9 @@ Check the **current status** using:
 Totem
 =====
 
-The :code:`totem` basically describes how the nodes communicate with each other.
+Das :code:`totem` beschreibt im Wesentlichen, wie die Nodes miteinander kommunizieren.
 
-If you want to use encryption - you have to create a key-file using :code:`corosync-keygen` and place it at :code:`/etc/corosync/keyfile` on all cluster nodes.
+Wenn Sie eine Verschlüsselung verwenden möchten, müssen Sie eine Schlüsseldatei mit :code:`corosync-keygen` erstellen und sie unter :code:`/etc/corosync/keyfile` auf allen Cluster-Nodes ablegen.
 
 .. code-block::
 
@@ -180,7 +180,7 @@ If you want to use encryption - you have to create a key-file using :code:`coros
 Quorum
 ======
 
-The :code:`quorum` section configures the cluster voting system.
+Der Abschnitt :code:`quorum` konfiguriert das Abstimmungssystem des Clusters
 
 .. code-block::
 
@@ -209,9 +209,9 @@ The :code:`quorum` section configures the cluster voting system.
 Nodelist
 ========
 
-The :code:`nodelist` section configures the cluster nodes.
+Der Abschnitt :code:`nodelist` konfiguriert die Cluster-Nodes.
 
-Names should match the actual node's hostnames.
+Die Namen sollten mit den tatsächlichen Hostnamen der Nodes übereinstimmen.
 
 .. code-block::
 
@@ -229,14 +229,14 @@ Names should match the actual node's hostnames.
         ring0_addr: <NODE2-IP>
     }
 
-The :code:`ring0` relates to the totem interfaces. If you have multiple networks for corosync to communicate over - you can add :code:`ring1_addr` and so on.
+Der :code:`ring0` bezieht sich auf die Totem-Schnittstellen. Wenn Sie mehrere Netzwerke haben, über die corosync kommunizieren soll, können Sie :code:`ring1_addr` etc hinzufügen.
 
 ----
 
 Full
 ====
 
-This is a very basic full-example of the corosync config:
+Dies ist ein sehr einfaches Beispiel für die corosync-Konfiguration:
 
 .. code-block::
 
@@ -282,25 +282,25 @@ This is a very basic full-example of the corosync config:
 
 ----
 
-Resources
-*********
+Ressourcen
+**********
 
-You need to have a working corosync cluster to start configuring your resources.
+Sie benötigen einen funktionierenden corosync-Cluster, um mit der Konfiguration Ihrer Ressourcen zu beginnen.
 
-The resources are the actual high-available services.
+Die Ressourcen sind die eigentlichen hochverfügbaren Dienste.
 
-You can show your current config like this: :code:`crm configure show`
+Sie können Ihre aktuelle Konfiguration wie folgt anzeigen: :code:`crm configure show`
 
-To configure them, enter the configuration context: :code:`crm configure`
+Um sie zu konfigurieren, geben Sie den Konfigurationskontext ein: :code:`crm configure`
 
-To save your changes - :code:`commit` them.
+Um Ihre Änderungen zu speichern - :code:`commit` sie.
 
 ----
 
 Floating IP
 ===========
 
-To configure a floating IP, you need to have NICs with the same names on all nodes. Maybe you can use NIC-aliases to workaround different hardware.
+Um eine floating-IP zu konfigurieren, müssen Sie NICs mit denselben Namen auf allen Nodes haben. Vielleicht können Sie NIC-Aliase verwenden, um unterschiedliche Hardware zu umgehen.
 
 .. code-block::
 
@@ -314,9 +314,9 @@ To configure a floating IP, you need to have NICs with the same names on all nod
 Systemd Service
 ===============
 
-Services that are managed by LinuxHA should be disabled on startup to not interfere with the cluster-handling: :code:`systemctl disable <SERVICE>.service`
+Dienste, die von LinuxHA verwaltet werden, sollten beim Start deaktiviert werden, um die Handhabung des Clusters nicht zu beeinträchtigen: :code:`systemctl disable <SERVICE>.service`
 
-Make sure the service is running on all nodes:
+Stellen Sie sicher, dass der Dienst auf allen Nodes läuft:
 
 .. code-block::
 
@@ -324,7 +324,7 @@ Make sure the service is running on all nodes:
         op monitor interval=5
     clone cloneHAProxy resHAProxy
 
-Or make sure the service only runs on one node, but should always be on the same node as the floating IP:
+Oder stellen Sie sicher, dass der Dienst nur auf einer Node läuft, der aber immer auf der selben Node wie die floating-IP sein soll:
 
 .. code-block::
 
@@ -343,7 +343,7 @@ Or make sure the service only runs on one node, but should always be on the same
 Ping check
 ==========
 
-To make sure the current node is healthy, you can run ping-jobs that will impact the node-health if whenever they fail:
+Um sicherzustellen, dass die aktuelle Node ordnungsgemäß funktioniert, können Sie Ping-Jobs ausführen. Wenn diese fehlschlagen, wirken sie sich negativ auf den Node-Gesundheitsstatus aus.
 
 .. code-block::
 
@@ -358,7 +358,7 @@ To make sure the current node is healthy, you can run ping-jobs that will impact
 Prefer node
 ===========
 
-You can define that a specific resource should prefer a specific node if it is alive:
+Sie können festlegen, dass eine bestimmte Ressource eine bestimmte Node bevorzugen soll, wenn diese aktiv ist:
 
 .. code-block::
 
@@ -369,7 +369,7 @@ You can define that a specific resource should prefer a specific node if it is a
 DRBD Replication
 ================
 
-Note: If you need a file-share & floating-IP to start with the :code:`resDRBDMount` - you can simple move it into a group and put the group inside the :code:`colocation` and :code:`order`
+Hinweis: Wenn Sie eine Dateifreigabe und eine floating-IP benötigen, welche mit dem :code:`resDRBDMount` starten soll, können Sie diese einfach in eine Gruppe verschieben und die Gruppe in die :code:`colocation` und :code:`order` einfügen.
 
 .. code-block::
 
@@ -396,13 +396,13 @@ Note: If you need a file-share & floating-IP to start with the :code:`resDRBDMou
 
 ----
 
-Maintenance
-###########
+Wartung
+#######
 
 Corosync Status
 ***************
 
-You can easily see the node and resource stati.
+Sie können den Status der Nodes und Ressourcen leicht erkennen.
 
 .. code-block::
 
@@ -434,7 +434,7 @@ You can easily see the node and resource stati.
 Votequorum
 **********
 
-If you see that the :code:`Total votes` are lower than the :code:`Expected votes` - something is wrong.
+Wenn Sie sehen, dass die :code:`Total votes` niedriger sind als die :code:`Expected votes` - dann stimmt etwas nicht.
 
 .. code-block::
 
@@ -466,8 +466,8 @@ If you see that the :code:`Total votes` are lower than the :code:`Expected votes
 
 ----
 
-Move Resource
-*************
+Ressource verschieben
+*********************
 
 .. code-block::
 
@@ -475,10 +475,10 @@ Move Resource
 
 ----
 
-Update Node
-***********
+Node updaten
+************
 
-Whenever you need to install updates/patch the system.
+Wann immer Sie Updates/Patches für das System installieren müssen.
 
 .. code-block::
 
@@ -495,12 +495,12 @@ Whenever you need to install updates/patch the system.
 
 ----
 
-Resource Maintenance
-********************
+Ressource warten
+****************
 
-If you need to do maintenance work on a single resource/service across the whole cluster.
+Wenn Sie Wartungsarbeiten an einer einzelnen Ressource/einem einzelnen Dienst im gesamten Cluster durchführen müssen.
 
-LinuxHA will ignore its status in that period. Make sure the state is as before, when disabling the maintenance - else LinuxHA might be a little confused.
+LinuxHA wird den Status in diesem Zeitraum ignorieren. Vergewissern Sie sich, dass der Status wie zuvor ist, wenn Sie die Wartung deaktivieren - andernfalls könnte LinuxHA ein wenig verwirrt sein.
 
 .. code-block::
 
@@ -512,23 +512,21 @@ LinuxHA will ignore its status in that period. Make sure the state is as before,
 
 ----
 
-Unknown Cluster Status
-**********************
+Unbekannte Cluster Status
+*************************
 
-It might be you have a firewalling issue or your pacemaker services are not working correctly.
+Möglicherweise haben Sie ein Firewall-Problem oder Ihre Pacemaker funktionieren nicht richtig.
 
-Check the status of all services.
+Überprüfen Sie den Status aller Dienste.
 
 ----
 
 Monitoring
 ##########
 
-Here is an example script that can be used to monitor your LinuxHA cluster-status: `OXL/zabbix-linuxha <https://github.com/O-X-L/zabbix-linuxha>`_
+Hier ist ein Beispielskript, das zur Überwachung des Status Ihres LinuxHA-Clusters verwendet werden kann: `OXL/zabbix-linuxha <https://github.com/O-X-L/zabbix-linuxha>`_
 
-# todo: add link to repository
-
-Example usage:
+Beispiel für die Nutzung:
 
 .. code-block::
 
