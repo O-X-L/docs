@@ -11,9 +11,11 @@ Info
 
 **Company**: **OXL IT Services e.U.**
 
-**Founder**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
+**Owner**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
 
 **E-Mail**: `contact@oxl.at <mailto:contact@oxl.at>`_
+
+**Phone**: +43 720 302 573 1
 
 **Contact-Form**: `Contact <https://www.o-x-l.com/contact>`_
 
@@ -27,14 +29,17 @@ Info
 * BIC: RZSTAT2G075
 * Bank Name: Raiffeisenbank Mittlere Südoststeiermark
 
+**Site**: Berndorf 30, 8324 Kirchberg an der Raab, AT 🇦🇹
 
-**Site**: Berndorf 30, 8324 Kirchberg, AT 🇦🇹
+**Commercial register court**: Regional court Graz
 
-**Regional Court for Civil Matters**: Graz
+**Regulatory authority**: Bezirkshauptmannschaft Südoststeiermark
+
+**Corporate purpose**: Services in automatic data processing and information technology, Trade with machinery and technology
 
 **Commercial regulations**: Trade law (`www.ris.bka.gv.at <http://www.ris.bka.gv.at/>`_)
 
-**Orientation**: Providing information about products and technologies that we use as a company and promoting their sales.
+**Content orientation**: Providing information about products and technologies that we use as a company and promoting their sales.
 
 ----
 
@@ -63,3 +68,14 @@ We accept no liability for damage caused by the use of the website. This applies
 All contents of this website are protected by copyright. Any use, duplication or other use under copyright law, in particular text or data scraping, of the content is expressly prohibited.
 
 We reserve the right to amend the terms of use at any time. The amended terms of use will be published on the website.
+
+----
+
+Reference to consumer arbitration board for online transactions with consumers
+******************************************************************************
+
+In the case of online transactions, reference is made to the possibility of dispute resolution via an `online dispute resolution platform <https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=EN>`_ and national consumer arbitration boards, provided the customer is a consumer.
+
+The entrepreneur is not prepared to participate in such arbitration proceedings.
+
+You can also send any complaints to the e-mail address given above.

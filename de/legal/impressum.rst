@@ -11,11 +11,13 @@ Info
 
 **Firmenname**: **OXL IT Services e.U.**
 
-**Gründer**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
+**Inhaber**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
 
 **E-Mail**: `kontakt@oxl.at <mailto:kontakt@oxl.at>`_
 
 **Kontakt-Formular**: `Kontakt <https://www.oxl.at/contact>`_
+
+**Telefonnummer**: +43 720 302 573 1
 
 **Firmenbuchnummer**: `FN 635245i <https://justizonline.gv.at/jop/web/firmenbuchabfrage/635245i_1>`_
 
@@ -27,9 +29,13 @@ Info
 * BIC: RZSTAT2G075
 * Institut: Raiffeisenbank Mittlere Südoststeiermark
 
-**Standort**: Berndorf 30, 8324 Kirchberg, AT 🇦🇹
+**Standort**: Berndorf 30, 8324 Kirchberg an der Raab, AT 🇦🇹
 
-**Landesgericht fuer ZRS**: Graz
+**Firmenbuchgericht**: Landesgericht Graz
+
+**Aufsichtsbehörde**: Bezirkshauptmannschaft Südoststeiermark
+
+**Unternehmensgegenstand**: Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik, Handelsgewerbe Maschinen- und Technologiehandel
 
 **Gewerberechtliche Vorschriften**: Gewerbeordnung (`www.ris.bka.gv.at <http://www.ris.bka.gv.at/>`_)
 
@@ -62,3 +68,14 @@ Wir übernehmen keine Haftung für Schäden, die durch die Nutzung der Website e
 Alle Inhalte dieser Website sind urheberrechtlich geschützt. Jegliche Nutzung, Vervielfältigung oder sonstige urheberrechtlich relevante Nutzung, insbesondere Text- oder Data-Scraping, der Inhalte ist ausdrücklich untersagt.
 
 Wir behalten uns das Recht vor, die Nutzungsbedingungen jederzeit zu ändern. Die geänderten Nutzungsbedingungen werden auf der Website veröffentlicht.
+
+----
+
+Hinweis auf Verbraucherschlichtungsstelle bei Online-Geschäften mit Verbrauchern
+********************************************************************************
+
+Bei Online-Geschäften wird auf die Möglichkeit einer Streitbereinigung im Wege einer `Online-Streitbeilegungsplattform <https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=DE>`_ (Art 14 Abs 1 S 1 ODR-VO) und nationaler Verbraucherschlichtungsstellen hingewiesen, sofern es sich beim Kunden um einen Verbraucher handelt.
+
+Der Unternehmer ist zur Teilnahme an einem solchen Schlichtungsstellungsverfahren nicht bereit.
+
+Sie können allfällige Beschwerden auch an die oben angegebene E-Mail-Adresse richten.
