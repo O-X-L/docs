@@ -25,7 +25,7 @@ Durch Scannen von Request-Responses kann eine WAF Ihre Applikation auch weiterge
 
 Die beiden Hauptkategorien von WAFs sind **Cloud-Hosted** und **Self-Hosted** WAFs.
 
-Siehe auch: `Web application security <https://www.cloudflare.com/learning/security/what-is-web-application-security/>`_
+Siehe auch: `Web application security <https://www.cloudflare.com/learning/security/what-is-web-application-security/>`_, `ModSecurity Intro <https://www.feistyduck.com/library/modsecurity-handbook-free/online/ch01-introduction.html>`_
 
 Arbeiten mit einer WAF?
 ***********************
@@ -55,11 +55,13 @@ Self Hosted
 
 Da eine WAF Zugriff auf alle Informationen hat, die zwischen Benutzer:in und Applikation ausgetauscht werden - einschließlich sensibler Benutzerdaten, ist es für Ihr Unternehmen oder Projekt möglicherweise nicht akzeptabel, eine WAF auf einer Infrastruktur zu hosten, die Sie nicht kontrollieren.
 
-Einige Enterprise-Grade-Lösungen können teuer werden, aber Sie können immer mit einem Open-Source Produkt wie :ref:`HAProxy Community <proxy_reverse_haproxy>`, `SafeLine <https://github.com/chaitin/SafeLine>`_ oder `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_ beginnen und später aufrüsten.
+Einige Enterprise-Grade-Lösungen können teuer werden, aber Sie können immer mit einem Open-Source Produkt wie :ref:`HAProxy Community <proxy_reverse_haproxy>`, `SafeLine <https://github.com/chaitin/SafeLine>`_, `Coraza <https://github.com/corazawaf/coraza>`_ oder `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_ beginnen und später aufrüsten.
 
 Sie müssen sicherstellen, dass Sie über genügend interne Ressourcen oder einen Berater verfügen, um das Produkt zu warten.
 
 Es mag mehr Arbeit sein, eine fertige WAF einzurichten, aber auf diese Weise haben Sie ein unabhängiges System.
+
+Es gibt bereits `Sammlungen von Rulesets <https://coreruleset.org/>`_, die in vielen WAFs genutzt werden können.
 
 ----
 

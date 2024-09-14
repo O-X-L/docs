@@ -25,7 +25,7 @@ By scanning request responses, a WAF can also further protect your application a
 
 The major two categories of WAFs are **cloud-hosted and self-hosted** ones.
 
-See also: `Web application security <https://www.cloudflare.com/learning/security/what-is-web-application-security/>`_
+See also: `Web application security <https://www.cloudflare.com/learning/security/what-is-web-application-security/>`_, `ModSecurity Intro <https://www.feistyduck.com/library/modsecurity-handbook-free/online/ch01-introduction.html>`_
 
 Working with a WAF
 ******************
@@ -55,11 +55,13 @@ Self Hosted
 
 As a WAF has access to all information that passes through it, including sensitive user data, it might not be acceptable for your company or project to have it hosted by a third party.
 
-Some enterprise-grade solutions may get expensive, but you can always start-out with an Open-Source product like :ref:`HAProxy Community <proxy_reverse_haproxy>`, `SafeLine <https://github.com/chaitin/SafeLine>`_ or `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_ and upgrade later on.
+Some enterprise-grade solutions may get expensive, but you can always start-out with an Open-Source product like :ref:`HAProxy Community <proxy_reverse_haproxy>`, `SafeLine <https://github.com/chaitin/SafeLine>`_, `Coraza <https://github.com/corazawaf/coraza>`_ or `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_ and upgrade later on.
 
 You need to ensure that you have enough internal resources or a consultant to maintain it.
 
 It may be more work to get to a finished WAF setup, but that way you have an independent system.
+
+There are also `collections of rulesets <https://coreruleset.org/>`_, that can be used in such WAFs.
 
 ----
 
