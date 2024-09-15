@@ -43,7 +43,7 @@ APT Upgrade single package: :code:`sudo apt-get --only-upgrade install PKG`
 
 Create ssh keys: :code:`ssh-keygen -t ed25519 -C 'comment'`
 
-Get last 100 lines of systemd journal of service: :code:`journalctl -u SERVICE.service --no-pager -n 100`
+Get last 100 lines of a systemd-service: :code:`journalctl -u SERVICE.service --no-pager -n 100`
 
 Get nice postfix log overview: :code:`pflogsumm -u 50 -h 50 -i --verbose-msg-detail mail.log mail.log.? > mail_report.log`
 
@@ -62,7 +62,7 @@ Get size of sub-dirs of directory: :code:`du -h --max-depth=1 DIR | sort -hr`
 
 Get actual amount of data of directory: :code:`du -sh --apparent-size DIR`
 
-Get free RAM in MB and refresh every 5: :code:`free -m -s 5`
+Get free RAM in MB and refresh every 5s: :code:`free -m -s 5`
 
 List open files: :code:`lsof`
 
@@ -76,9 +76,9 @@ Get ram usage of specific processes in B: :code:`ps -eo rss,pid,user,command --s
 
 Get ram usage of specific process(es) in MB: :code:`ps -eo rss,pid,user,command --sort -rss | awk '{ hr=$1/1024 ; printf("%13.2f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | grep php-fpm`
 
-Log Read/Writes via iotop (process-level): :code:`iotop -P -o -t -a -d 10 -n 10 -b > iotop_output.txt `
+Log Disk I/O via iotop (process-level): :code:`iotop -P -o -t -a -d 10 -n 10 -b > iotop_output.txt `
 
-Log Read/Writes: :code:`iostat -d -k -t -N -x 10 10 > iostat_output.txt`
+Log Disk I/O: :code:`iostat -d -k -t -N -x 10 10 > iostat_output.txt`
 
 ----
 
@@ -106,32 +106,41 @@ Try to get all subdomains: :code:`dig @NAMESERVER DOMAIN.TLD AXFR`
 Certificates
 ************
 
-Openssl check server certificate: :code:`openssl s_client -showcerts -servername FQDN -connect IP/DNS:443 </dev/null`
+Check server certificate via OpenSSL: :code:`openssl s_client -showcerts -servername FQDN -connect IP/DNS:443 </dev/null`
 
 Check if OCSP is still valid (status-age = min runtime in seconds): :code:`openssl ocsp -no_nonce -issuer chain.pem -verify_other chain.pem -cert cert.pem -respin ocsp.der -status_age 432000`
 
 Get timestamp of OCSP update time: :code:`date -d "$(openssl ocsp -respin "${tfile}.ocsp" -text -noverify | grep "This Update" | cut -d ':' -f2-)" +"%s"`
 
-Openssl get server certificate (pem file content) from service: :code:`openssl s_client -connect IP/DNS:443 </dev/null 2>/dev/null | openssl x509`
+Get server certificate (pem file content) from service via OpenSSL: :code:`openssl s_client -connect IP/DNS:443 </dev/null 2>/dev/null | openssl x509`
 
 ----
 
 VPN & Tunnels
 *************
 
-Libreswan add tunnel for manual startup: :code:`ipsec auto --add TUNNEL`
+Libreswan IPSec
+===============
 
-Libreswan set tunnel manually up: :code:`ipsec auto --up TUNNEL`
+Add ipsec-tunnel for manual startup: :code:`ipsec auto --add TUNNEL`
+
+Set ipsec-tunnel up manually: :code:`ipsec auto --up TUNNEL`
 
 Show ipsec tunnel stati: :code:`ipsec trafficstatus`
 
 Check basic ipsec config/functionality: :code:`ipsec verify`
 
+SSH
+===
+
 SSH Tunnel (remote resource on local port): :code:`ssh -L localPort:targetIP:targetPort USER@HOST`
 
-Start wireguard VPN: :code:`sudo wg-quick up CONFIG`
+WireGuard
+=========
 
-Stop wireguard VPN: :code:`sudo wg-quick down CONFIG`
+Start WireGuard VPN: :code:`sudo wg-quick up CONFIG`
+
+Stop WireGuard VPN: :code:`sudo wg-quick down CONFIG`
 
 ----
 
@@ -170,11 +179,14 @@ Extract: :code:`tar -xzvf ARCHIVE -C DIR`
 File Encryption
 ***************
 
-Age download: `FiloSottile/age <https://github.com/FiloSottile/age/releases>`_
+Age
+===
 
-Age encrypt file: :code:`age -R $AGE_PUB_KEY -o $OUTPUT`
+Download: `FiloSottile/age <https://github.com/FiloSottile/age/releases>`_
 
-Age decrypt file: :code:`age -d -i $AGE_PRIV_KEY $INPUT`
+Encrypt file: :code:`age -R $AGE_PUB_KEY -o $OUTPUT`
+
+Decrypt file: :code:`age -d -i $AGE_PRIV_KEY $INPUT`
 
 ----
 
@@ -190,8 +202,8 @@ Ansible-Vault encrypt file: :code:`ansible-vault encrypt path/to/file.yml`
 Image Manipulation
 ##################
 
-JPG Compress Images
-*******************
+JPEG Compress Images
+********************
 
 Install: :code:`apt-get install imagemagick`
 
@@ -267,6 +279,6 @@ See: `CockroachDB Releases <https://www.cockroachlabs.com/docs/releases/>`_
 
 Download client: :code:`curl -s -L https://binaries.cockroachdb.com/cockroach-sql-v24.1.4.linux-amd64.tgz | tar -xz --strip-components=1 -C /tmp/ && sudo mv /tmp/cockroach /usr/local/bin/cockroach`
 
-Connect to db: :code:`cockroach-sql --url "postgres://root@servername:26257/mydb?sslmode=disable"`
+Connect: :code:`cockroach-sql --url "postgres://root@servername:26257/mydb?sslmode=disable"`
 
 .. include:: ../_include/user_rath.rst
