@@ -51,6 +51,8 @@ Get last logins: :code:`last`, :code:`lastlog`
 
 Get current open user sessions: :code:`w`
 
+Quick source-code overview: :code:`cd <REPO_BASE> && cloc`
+
 ----
 
 Resource Management
@@ -113,6 +115,8 @@ Check if OCSP is still valid (status-age = min runtime in seconds): :code:`opens
 Get timestamp of OCSP update time: :code:`date -d "$(openssl ocsp -respin "${tfile}.ocsp" -text -noverify | grep "This Update" | cut -d ':' -f2-)" +"%s"`
 
 Get server certificate (pem file content) from service via OpenSSL: :code:`openssl s_client -connect IP/DNS:443 </dev/null 2>/dev/null | openssl x509`
+
+Get information from PEM certificate: :code:`openssl x509 -in <PEM_FILE> -text`
 
 ----
 

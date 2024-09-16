@@ -51,6 +51,8 @@ Letzte Anmeldungen abrufen: :code:`last`, :code:`lastlog`
 
 Aktuelle offene Benutzersitzungen abrufen: :code:`w`
 
+Schneller Überblick über Source-Code: :code:`cd <REPO_BASE> && cloc`
+
 ----
 
 Ressourcenmanagement
@@ -113,6 +115,8 @@ Prüfen, ob OCSP noch gültig ist (status-age = Mindestlaufzeit in Sekunden): :c
 Timestamp der OCSP-Aktualisierungszeit abrufen: :code:`date -d "$(openssl ocsp -respin "${tfile}.ocsp" -text -noverify | grep "This Update" | cut -d ':' -f2-)" +"%s"`
 
 Serverzertifikat (pem-Dateiinhalt) vom Dienst via OpenSSL abrufen: :code:`openssl s_client -connect IP/DNS:443 </dev/null 2>/dev/null | openssl x509`
+
+Informationen aus PEM Zertifikat auslesen: :code:`openssl x509 -in <PEM_FILE> -text`
 
 ----
 
