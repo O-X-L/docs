@@ -1,4 +1,4 @@
-.. |logo| image:: ../_static/img/oxl3_xs.jpg
+.. |logo| image:: https://files.oxl.at/img/oxl3_xs.webp
    :class: oxl-head-logo
    :alt: OXL IT Services Website
    :target: https://www.o-x-l.com
