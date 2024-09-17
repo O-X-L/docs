@@ -108,6 +108,12 @@ Install
     systemctl start corosync-qdevice.service
     # if it fails => check 'corosync-cmapctl | grep quorum.device'
 
+After the installation, make sure the cluster-communication is not blocked by your firewalls. By default you have to check these ports:
+
+* :code:`UDP/5403` for qdevice/Qnetd
+* :code:`UDP/5404` for Corosync/crm cluster init
+* :code:`UDP/5405` for Corosync/Totem
+
 ----
 
 Configuration
@@ -300,7 +306,9 @@ To save your changes - :code:`commit` them.
 Floating IP
 ===========
 
-To configure a floating IP, you need to have NICs with the same names on all nodes. Maybe you can use NIC-aliases to workaround different hardware.
+To configure a floating IP, you need to have NICs with the same names on all nodes.
+
+If you have different NIC names, you can try to remove the :code:`nic=` parameter. LinuxHA will auto-assign the IP - make sure to test it! (*or change the NIC names using UDEV rules*)
 
 .. code-block::
 
