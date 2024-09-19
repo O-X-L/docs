@@ -15,7 +15,7 @@ Info
 
 **E-Mail**: `contact@oxl.at <mailto:contact@oxl.at>`_
 
-**Phone**: `+43 720 302 573 1 <tel:+437203025731>`_
+**Phone**: `+43 720 302 573 2 <tel:+437203025732>`_
 
 **Contact-Form**: `Contact <https://www.o-x-l.com/contact>`_
 
