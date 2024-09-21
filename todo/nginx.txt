@@ -1,0 +1,13 @@
+
+# force-refresh static content
+location ~* .(?:css|js)$ { add_header Cache-Control "max-age=3600, must-revalidate"; }
+location ~* .(?:html)$ { add_header Cache-Control "no-store, no-cache, must-revalidate"; }
+
+# fix content-type of specific file
+location = /sitemap.xml { types {application/xml xml;} }
+
+# redirect specific path
+location = /voip { return 302 https://www.oxl.at/technology#tech-voip; }
+
+# point specific path to a file
+location = /file/updated.svg {alias /var/www/geoip/updated.svg;}
