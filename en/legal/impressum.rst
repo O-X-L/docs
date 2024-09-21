@@ -11,7 +11,7 @@ Info
 
 **Company**: **OXL IT Services e.U.**
 
-**Owner**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
+**Owner**: Rath Pascal (Social Media: `LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
 
 **E-Mail**: `contact@oxl.at <mailto:contact@oxl.at>`_
 
@@ -38,6 +38,8 @@ Info
 **Corporate purpose**: Services in automatic data processing and information technology, Trade with machinery and technology
 
 **Commercial regulations**: Trade law (`www.ris.bka.gv.at <http://www.ris.bka.gv.at/>`_)
+
+**Memberships with the Chamber of Commerce organisation**: `Member of WKO <https://firmen.wko.at/oxl-it-services-eu/steiermark/?firmaid=7992d30b-2bd0-47c2-ad7e-48d6c33563c8>`_
 
 **Content orientation**: Providing information about products and technologies that we use as a company and promoting their sales.
 

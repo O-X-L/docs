@@ -11,7 +11,7 @@ Info
 
 **Firmenname**: **OXL IT Services e.U.**
 
-**Inhaber**: Rath Pascal (`LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
+**Inhaber**: Rath Pascal (Social Media: `LinkedIn <https://at.linkedin.com/in/6abb7d37-42f3-4a21-af43-60bc25e91bf0>`_)
 
 **E-Mail**: `kontakt@oxl.at <mailto:kontakt@oxl.at>`_
 
@@ -38,6 +38,8 @@ Info
 **Unternehmensgegenstand**: Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik, Handelsgewerbe Maschinen- und Technologiehandel
 
 **Gewerberechtliche Vorschriften**: Gewerbeordnung (`www.ris.bka.gv.at <http://www.ris.bka.gv.at/>`_)
+
+**Mitgliedschaften bei der Wirschaftskammerorganisation**: `Mitglied der WKO <https://firmen.wko.at/oxl-it-services-eu/steiermark/?firmaid=7992d30b-2bd0-47c2-ad7e-48d6c33563c8>`_
 
 **Blattlinie**: Information über Produkte und Technologien, die wir als Unternehmen einsetzen, sowie Förderung des Absatzes derselben.
 
