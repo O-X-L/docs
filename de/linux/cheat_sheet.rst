@@ -82,6 +82,15 @@ Disk I/O über iotop (Prozessebene) loggen: :code:`iotop -P -o -t -a -d 10 -n 10
 
 Disk I/O loggen: :code:`iostat -d -k -t -N -x 10 10 > iostat_output.txt`
 
+Weniger Swap nutzen:
+
+.. code-block::
+
+    sysctl vm.swappiness=1
+    # add 'vm.swappiness=1' to /etc/sysctl.conf
+    swapoff -a
+    swapon
+
 ----
 
 Netzwerk
