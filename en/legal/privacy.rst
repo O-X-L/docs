@@ -9,42 +9,44 @@ Privacy Policy
 Data Privacy Policy
 *******************
 
+You can find our full privacy policy, including details on business processing, here: `OXL IT Services - Datenschutzerklärung <https://files.oxl.at/doc/OXL-IT-Services-Datenschutzerklaerung-DE.pdf>`_ (*currently only available in german*)
+
 When you visit our websites, the following categories of your data may be processed:
 
-* Selected language
+* Browser type (User-Agent)
 
-* Browser type
+* Public IP address and pages visited on our website, including entry and exit pages
 
-* Type of end device used to access the site
+* Country
 
-* Operating system type
+* Operating system
+
+* Display resolution
+
+* Device data: We may store personal data from your device. Such data includes geolocation data, IP address, unique identifiers (e.g. MAC address)
 
 * Date, time and duration of access
 
-* IP address (indirect Country and Internet-Provider)
+* Data that you enter via a contact form (e-mail, name, message)
 
-* Pages visited on our website, including entry and exit pages
+The processing of this data is necessary to ensure the security of the operation of the website and to ensure the functionality of the website from a technical point of view. Some of this data is collected using technical cookies. These technical cookies are only used to the extent necessary (§ 165 para. 3 TKG). The processing of this data is justified by our legitimate interest in the operation of our website (`Art 6<https://gdpr-info.eu/art-6-gdpr/>`_ para. 1 lit f GDPR).
 
-* Data that you enter via a contact form
-
-These categories of data are processed only to the extent necessary in each case. The processing of this data is justified by our legitimate interest in operating our website (`Art 6 Para 1 lit f GDPR <https://gdpr-info.eu/art-6-gdpr/>`_).
+We store the data of people who visit our website for one year from the last contact.
 
 We may update this Privacy Policy from time to time to reflect, for example, changes to our practices or for other operational, legal or regulatory reasons.
 
 ----
 
-To operate our websites, it may be necessary for us to transmit your data to the following recipients:
+For the operation of our website, it may be necessary for us to disclose your data to the following recipients:
 
-* Service provider and data protection information of the provider:
+* Recipient of the data: `Hetzner Online GmbH <https://www.hetzner.com/legal/privacy-policy>`_
 
-  `Hetzner Online GmbH <https://www.hetzner.com/legal/privacy-policy>`_
+  **Purpose of data processing**: Hosting-Provider
 
-  **Description**: Website hosting
+  **Place of business**: Germany 🇩🇪
 
-  **Place of processing**: EU/EEA
-
-  **Legal basis for data transmission**:
-  Order processing as per `Art. 28 GDPR <https://gdpr-info.eu/art-28-gdpr/>`_
+  **Legal basis for data processing**:
+  Predominantly legitimate interest (`Art 6<https://gdpr-info.eu/art-6-gdpr/>`_ para. 1 lit. f GDPR), processor contract pursuant to `Art. 28 <https://gdpr-info.eu/art-28-gdpr/>`_ GDPR
 
 ----
 
