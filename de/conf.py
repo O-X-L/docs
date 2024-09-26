@@ -3,7 +3,7 @@ from datetime import datetime
 # pylint: disable=W0622
 
 project = 'OXL - Dokumentation'
-copyright = f'{datetime.now().year}, OXL IT Services e.U. (Lizenz: CC BY-NC-ND 4.0)'
+copyright = f'{datetime.now().year}, OXL IT Services (Lizenz: CC BY-NC-ND 4.0)'
 author = 'Rath Pascal'
 extensions = ['piccolo_theme']
 templates_path = ['_templates']
