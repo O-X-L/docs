@@ -288,9 +288,8 @@ See: `OpenWRT System Documentation <https://openwrt.org/docs/guide-user/base-sys
       # simple
       echo '30 2 * * * touch /etc/banner && reboot' > /etc/crontabs/root
 
-      # with a random delay (between 1 and 999 seconds)
-      echo '30 2 * * * sleep `head /dev/urandom | tr -dc \"0123456789\" |
-  head -c3` && touch /etc/banner && reboot' > /etc/crontabs/root
+      # or with a random delay (between 1 and 999 seconds)
+      echo '30 2 * * * sleep `head /dev/urandom | tr -dc \"0123456789\" | head -c3` && touch /etc/banner && reboot' > /etc/crontabs/root
 
       service cron restart
 
