@@ -15,7 +15,7 @@ Intro
 
 OpenWRT is an Operating System for network devices like routers, switches and wlan access points.
 
-See also: :ref:`OpenWRT Hardware & Firmware Flashing <net_openwrt_hardware>`
+See also: :ref:`OpenWRT Hardware & Firmware Flashing <net_openwrt_hw>`
 
 ----
 

@@ -22,7 +22,7 @@ For this to be done, you need to flash the hardware-specific firmware-image on t
 Firmware
 ########
 
-These images need are created by the community via `compiling <https://gist.github.com/chankruze/dee8c2ba31c338a60026e14e3383f981>`_ `OpenWRT source-code <https://www.github.com/openwrt/openwrt>`_ for specific hardware.
+These images need are created by the community via `compiling <https://gist.github.com/chankruze/dee8c2ba31c338a60026e14e3383f981>`_ the `OpenWRT source-code <https://www.github.com/openwrt/openwrt>`_ for specific hardware.
 
 You can easily find existing images using the `OpenWRT Firmware Selector <https://firmware-selector.openwrt.org/>`_.
 
@@ -162,7 +162,7 @@ See: `OpenWRT Documentation Unifi AP AC <https://openwrt.org/toh/ubiquiti/unifia
 Unbrick
 =======
 
-See: :ref:`net_openwrt_unifi_unbrick <Unifi AP Unbrick>`
+See: :ref:`Unifi AP Unbrick <net_openwrt_unifi_unbrick>`
 
 ----
 
