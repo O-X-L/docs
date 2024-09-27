@@ -15,6 +15,8 @@ Intro
 
 OpenWRT is an Operating System for network devices like routers, switches and wlan access points.
 
+This documentation is focusing on using it as WLAN access point.
+
 See also: :ref:`OpenWRT Hardware & Firmware Flashing <net_openwrt_hw>`
 
 ----
@@ -52,15 +54,36 @@ See: `OpenWRT UCI Documentation <https://openwrt.org/docs/guide-user/base-system
 
 We recommend to use the :code:`uci` command-line-interface to modify your systems configuration as it has some validation built-in.
 
-OpenWRT has a unsaved and running config.
+OpenWRT has a unsaved, saved and running config.
 
-Whenever you configure something using :code:`uci` it is unsaved. You need to :code:`apply` the changes for them to take effect. This allows you to rebuild your configuration and apply many changes at once when you're done.
+Unsaved Config
+**************
+
+Whenever you configure something using :code:`uci` it is **unsaved**.
+
+You need to :code:`apply` the changes for them to take effect.
+
+This allows you to rebuild your configuration and apply many changes at once when you're done.
 
 Changes can also just be applied for certain parts of configuration - like: :code:`uci apply network` or :code:`uci apply wireless`
 
 You can check the unsaved configuration using: :code:`uci show`. You can also limit the output: :code:`uci show network`
 
-The saved/running configuration can be seen in the config files: :code:`/etc/config/*`. You can check their content like this: :code:`cat /etc/config/network`
+Saved Config
+************
+
+The saved configuration can be seen in the config files: :code:`/etc/config/*`.
+
+You can check their content like this: :code:`cat /etc/config/network`
+
+Running Config
+**************
+
+In some cases you have to reload the saved configuration to take effect:
+
+* SSH: :code:`/etc/init.d/dropbear reload`
+* Network: :code:`/etc/init.d/network restart`
+* Wireless: :code:`wifi down & wifi up`
 
 ----
 
