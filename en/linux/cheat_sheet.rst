@@ -232,7 +232,11 @@ Multiple
 
 .. code-block::
 
-    for img in IMG_*.jpg; do convert "$img" -quality 70 "$img"; done
+    for img in *.jpg; do convert "$img" -quality 70 "$img"; done
+
+    # or from png
+    for img in *.png; do convert "$img" -quality 70 "${img%.png}.jpg"; done
+
 
 ----
 
@@ -249,6 +253,13 @@ Single
 .. code-block::
 
     cwebp -q 70 IMG.png -o IMG.webp
+
+Multiple
+========
+
+.. code-block::
+
+    for img in *.jpg; do cwebp -q 70 "$img" -o "${img%.jpg}.webp"; done
 
 ----
 

@@ -234,6 +234,10 @@ Mehrere
 
     for img in IMG_*.jpg; do convert "$img" -quality 70 "$img"; done
 
+    # oder von png
+    for img in *.png; do convert "$img" -quality 70 "${img%.png}.jpg"; done
+
+
 ----
 
 Webp Bilder komprimieren
@@ -249,6 +253,13 @@ Einzelnes
 .. code-block::
 
     cwebp -q 70 IMG.png -o IMG.webp
+
+Mehrere
+=======
+
+.. code-block::
+
+    for img in *.jpg; do cwebp -q 70 "$img" -o "${img%.jpg}.webp"; done
 
 ----
 
