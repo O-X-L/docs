@@ -54,10 +54,15 @@ See: `OpenWRT UCI Documentation <https://openwrt.org/docs/guide-user/base-system
 
 We recommend to use the :code:`uci` command-line-interface to modify your systems configuration as it has some validation built-in.
 
+----
+
+Config States
+*************
+
 OpenWRT has a unsaved, saved and running config.
 
 Unsaved Config
-**************
+==============
 
 Whenever you configure something using :code:`uci` it is **unsaved**.
 
@@ -70,20 +75,43 @@ Changes can also just be applied for certain parts of configuration - like: :cod
 You can check the unsaved configuration using: :code:`uci show`. You can also limit the output: :code:`uci show network`
 
 Saved Config
-************
+============
 
 The saved configuration can be seen in the config files: :code:`/etc/config/*`.
 
 You can check their content like this: :code:`cat /etc/config/network`
 
 Running Config
-**************
+==============
 
 In some cases you have to reload the saved configuration to take effect:
 
 * SSH: :code:`/etc/init.d/dropbear reload`
 * Network: :code:`/etc/init.d/network restart`
-* Wireless: :code:`wifi down & wifi up`
+* Wireless: :code:`wifi down && wifi up`
+
+----
+
+Operators
+*********
+
+UCI basically allows you to view, add, update, extend or remove settings:
+
+* View: :code:`uci show`
+* Add:
+
+  For sections: :code:`uci add <key>`
+
+  For options: :code:`uci set <key>=<value>`
+
+* Update: :code:`uci set <key>=<value>`
+* Remove: :code:`uci delete <key>`
+* Add entry to a list: :code:`uci add_list <key>=<value>`
+* Remove entry to a list: :code:`uci del_list <key>=<value>`
+
+The settings you are shown by :code:`uci show` can be copy-pasted and used in other uci commands.
+
+See also: `OpenWRT UCI Usage Documentation <https://openwrt.org/docs/guide-user/base-system/uci#usage>`_
 
 ----
 
@@ -114,7 +142,7 @@ See: `OpenWRT Network Documentation <https://openwrt.org/docs/guide-user/network
 
 The network interface naming might differ depending on your systems hardware.
 
-Also: Some hardware has an internal switch. If that is the case the vlan tagging is a little more complex. See: `OpenWRT Switch Documentation <https://openwrt.org/docs/guide-user/network/vlan/switch>`_
+Also: Some hardware has an internal switch. If that is the case the vlan tagging is a little more complex (see example below). See: `OpenWRT Switch Documentation <https://openwrt.org/docs/guide-user/network/vlan/switch>`_
 
 * Configure a Bridge management-interface:
 
@@ -139,12 +167,12 @@ Also: Some hardware has an internal switch. If that is the case the vlan tagging
 
   .. code-block::
 
-      uci set network.lan_intern=interface
-      uci set network.lan_intern.proto='none'
-      uci set network.lan_intern.device='br-intern'
-      uci set network.lan_intern.defaultroute='0'
-      uci set network.lan_intern.peerdns='0'
-      uci set network.lan_intern.delegate='0'
+      uci set network.vlan59_br=interface
+      uci set network.vlan59_br.proto='none'
+      uci set network.vlan59_br.device='br-intern'
+      uci set network.vlan59_br.defaultroute='0'
+      uci set network.vlan59_br.peerdns='0'
+      uci set network.vlan59_br.delegate='0'
       uci set network.vlan59=device
       uci set network.vlan59.name='br-intern'
       uci set network.vlan59.ports='eth0.59'
@@ -153,6 +181,30 @@ Also: Some hardware has an internal switch. If that is the case the vlan tagging
       uci set network.vlan59.sendredirects='0'
       uci set network.vlan59.bridge_empty='1'
       uci set network.vlan59.type='bridge'
+
+* Switch-config bridge to a tagged VLAN:
+
+  .. code-block::
+
+      uci set network.vlan59_br=device
+      uci set network.vlan59_br.type='bridge'
+      uci set network.vlan59_br.name='br-vlan59'
+      uci set network.vlan59_br.ports='eth0.59'
+      uci set network.vlan59_br.multicast='0'
+      uci set network.vlan59_br.sendredirects='0'
+      uci set network.vlan59_br.bridge_empty='0'
+      uci set network.vlan59=interface
+      uci set network.vlan59.proto='none'
+      uci set network.vlan59.device='br-vlan59'
+      uci set network.vlan59.defaultroute='0'
+      uci set network.vlan59.peerdns='0'
+      uci set network.vlan59.delegate='0'
+      uci set network.switch_vlan59=switch_vlan
+      uci set network.switch_vlan59.device='switch0'
+      uci set network.switch_vlan59.vlan='59'
+
+      # these ports might differ depending on your hardware
+      uci set network.switch_vlan59.ports='2t 3t 0t'
 
 * Save config: :code:`uci apply network`
 * Apply config: :code:`/etc/init.d/network restart`
@@ -205,7 +257,7 @@ See: `OpenWRT Wireless Documentation <https://openwrt.org/docs/guide-user/networ
       uci set wireless.intern5.mode='ap'
       uci set wireless.intern5.ssid='SuperWIFI'
       uci set wireless.intern5.key='<SECRET>'
-      uci set wireless.intern5.network='lan_intern'
+      uci set wireless.intern5.network='vlan59_br'
       uci set wireless.intern5.encryption='psk2+aes'
       uci set wireless.intern5.disabled='0'
 
@@ -218,7 +270,7 @@ See: `OpenWRT Wireless Documentation <https://openwrt.org/docs/guide-user/networ
       uci set wireless.intern2.mode='ap'
       uci set wireless.intern2.ssid='SuperWIFI'
       uci set wireless.intern2.key='<SECRET>'
-      uci set wireless.intern2.network='lan_intern'
+      uci set wireless.intern2.network='vlan59_br'
       uci set wireless.intern2.encryption='psk2+aes'
       uci set wireless.intern2.disabled='0'
 
@@ -250,9 +302,6 @@ See: `OpenWRT Wireless Documentation <https://openwrt.org/docs/guide-user/networ
       uci set wireless.intern5.disassoc_low_ack='0'
       uci set wireless.intern5.wpa_disable_eapol_key_retries='1'
 
-      # disable high-throughput (802.11n) if not stable on your hardware
-      uci set wireless.intern5.wmm='0'
-
       # 802.11k
       uci set wireless.intern5.ieee80211k='1'
       uci set wireless.intern5.rrm_neighbor_report='1'
@@ -271,8 +320,11 @@ See: `OpenWRT Wireless Documentation <https://openwrt.org/docs/guide-user/networ
       uci set wireless.intern5.pmk_r1_push='1'
       uci set wireless.intern5.ft_psk_generate_local='1'
 
+      # disable high-throughput (802.11n) if not stable on your hardware (not really recommended)
+      uci set wireless.intern5.wmm='0'
+
 * Save config: :code:`uci commit wireless`
-* Reload config: :code:`wifi down & wifi up`
+* Reload config: :code:`wifi down && wifi up`
 
 
 ----
@@ -315,6 +367,25 @@ See: `OpenWRT System Documentation <https://openwrt.org/docs/guide-user/base-sys
       echo '30 2 * * * sleep `head /dev/urandom | tr -dc \"0123456789\" | head -c3` && touch /etc/banner && reboot' > /etc/crontabs/root
 
       service cron restart
+
+* If you are using OpenWRT as WLAN AP - you might be able to free up some space and gain some security by removing default packages:
+
+  .. code-block:: bash
+
+      opkg remove ppp*
+      opkg remove dnsmasq
+
+      # if you are not using the Luci WebUI
+      opkg remove luci* --force-removal-of-dependent-packages
+      opkg remove uhttpd --force-removal-of-dependent-packages
+      opkg remove rpcd* --force-removal-of-dependent-packages
+
+      # if you are not managing the firewall
+      opkg remove firewall4
+      opkg remove nftables*
+
+      # check installed packages
+      opkg list-installed
 
 ----
 
@@ -444,7 +515,7 @@ We like to manage OpenWRT using the :code:`ansible.builtin.raw` module which is 
         ansible.builtin.raw: "uci set {{ setting }}"
         when: setting not in owrt_run.stdout
         vars:
-          setting: "network.lan_intern.{{ option.key }}='{{ option.value }}'"
+          setting: "network.vlan59_br.{{ option.key }}='{{ option.value }}'"
         loop_control:
           loop_var: option
         with_dict: "{{ vlan_settings.network }}"
@@ -455,6 +526,8 @@ We like to manage OpenWRT using the :code:`ansible.builtin.raw` module which is 
         ansible.builtin.raw: |
           uci commit network &&
           /etc/init.d/network restart
+
+* Make sure to add enclose the option-values inside single quotes if you use this way of comparing config! Else you will miss matches.
 
 Example Role for managing OpenWRT APs: `ansibleguy/net_openwrt_ap <https://github.com/ansibleguy/net_openwrt-ap>`_
 
