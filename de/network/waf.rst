@@ -4,4 +4,4 @@
 Web Application Firewalls
 =========================
 
-See: :ref:`WAF - Intro <waf_intro>`
+Siehe: :ref:`WAF - Intro <waf_intro>`

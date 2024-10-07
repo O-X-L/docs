@@ -11,4 +11,4 @@ Proxmox Virtual Environment
 Intro
 #####
 
-See: `Proxmox Virtual Environment <https://www.proxmox.com/en/proxmox-virtual-environment/overview>`_
+Siehe: `Proxmox Virtual Environment <https://www.proxmox.com/en/proxmox-virtual-environment/overview>`_

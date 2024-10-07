@@ -4,4 +4,4 @@
 Firewalls
 =========
 
-See: :ref:`Firewall - Intro <fw_intro>`
+Siehe: :ref:`Firewall - Intro <fw_intro>`

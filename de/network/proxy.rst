@@ -4,4 +4,4 @@
 Proxies
 =======
 
-See: :ref:`Proxies - Intro <proxy_intro>`
+Siehe: :ref:`Proxies - Intro <proxy_intro>`

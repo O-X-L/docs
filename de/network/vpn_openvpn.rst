@@ -9,6 +9,6 @@ VPN - OpenVPN
 Intro
 #####
 
-See: `OpenVPN <https://openvpn.net/>`_
+Siehe: `OpenVPN <https://openvpn.net/>`_
 
 Community vs Paid Version.

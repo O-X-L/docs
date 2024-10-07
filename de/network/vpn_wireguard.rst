@@ -9,4 +9,4 @@ VPN - WireGuard
 Intro
 #####
 
-See: `WireGuard <https://www.wireguard.com/>`_, `QuickStart <https://www.wireguard.com/quickstart/>`_
+Siehe: `WireGuard <https://www.wireguard.com/>`_, `QuickStart <https://www.wireguard.com/quickstart/>`_

@@ -181,7 +181,7 @@ Es gibt einige Libraries/Module, mit denen Sie NFTables direkt aus dem Code hera
 Ansible
 *******
 
-See: `NFTables Ansible-Role <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/Example.md>`_, `NFTables Ansible-Modules <https://github.com/ansibleguy/collection_nftables>`_
+Siehe: `NFTables Ansible-Role <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/Example.md>`_, `NFTables Ansible-Modules <https://github.com/ansibleguy/collection_nftables>`_
 
 ----
 
@@ -444,7 +444,7 @@ Examples
 Ansible
 *******
 
-See: `Ansible-basiertes Beispiel <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/UseCaseExamples.md>`_
+Siehe: `Ansible-basiertes Beispiel <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/UseCaseExamples.md>`_
 
 IPv4 Baseline
 *************
