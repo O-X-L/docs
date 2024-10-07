@@ -17,18 +17,48 @@ Intro
 
 Ihre Anwendung muss für viele Nutzer erreichbar sein - oft sogar weltweit. Deshalb müssen Sie dafür sorgen, dass sie gesichert ist.
 
-WAFs ergänzen herkömmliche (Netzwerk-)Firewalls beim Schutz Ihrer Systeme.
+**Web-Application-Firewalls** ergänzen herkömmliche (Netzwerk-)Firewalls beim Schutz Ihrer Systeme.
 
-Eine WAF muss speziell auf die Anwendungen, die sie schützten soll, abgestimmt sein. Dies ist keine einmalige Aufgabe! Sie muss **permanent gewartet** werden!
-
-Durch Scannen von Request-Responses kann eine WAF Ihre Applikation auch weitergehend vor Datenabfluss schützen.
-
-Die beiden Hauptkategorien von WAFs sind **Cloud-Hosted** und **Self-Hosted** WAFs.
+WAFs können grundlegend in **Cloud-Systeme** und **Eigenständige** kategorisiert werden.
 
 Siehe auch: `Web application security <https://www.cloudflare.com/learning/security/what-is-web-application-security/>`_, `ModSecurity Intro <https://www.feistyduck.com/library/modsecurity-handbook-free/online/ch01-introduction.html>`_
 
-Arbeiten mit einer WAF?
-***********************
+----
+
+Wie kann eine WAF Sie schützen?
+*******************************
+
+* Ihre Webseiten und Web-Applikationen sind eine der ersten Angriffsflächen, mit denen ein Angreifer interagiert.
+
+  Wer dort schon auf Widerstand stoßt - sucht sich meist gleich ein besseres/einfacheres Ziel.
+
+  Eine gut abgesicherte Web-Applikation spiegelt eine solide Haltung im Bezug auf IT-Security wieder und kann somit **für Hacker abschreckend** wirken.
+
+* Angriffe durch Bots konsumieren oft einiges an Server-Ressourcen. Dies kann im schlimmsten Fall zu einem Ausfall führen (DOS/DDOS).
+
+  Durch eine effektive Abwehr solcher Angriffen können Sie die **Performance** Ihrer Nutzer:innen **verbessern**.
+
+  Außerdem kann man sich einiges an Ressourcen einsparen.
+
+* Die Metadaten der WAF können sogar an Ihre Web-Applikation weitergeleitet werden.
+
+  Dies kann Ihnen erlauben diese Informationen in einem **Risiko-Score** zu erfassen, welcher wiederrum genutzt werden kann um Zugriffe für Bots oder 'böse User' einzuschränken
+
+  Praktisch kann dies zum Beispiel dazu genutzt werden um Captcha's nur für auffällige User anzeigen zu lassen, kritische Aktionen (Newsletter Anmeldung, Account Registration, ...) zu unterbinden oder die Anzahl von Zugriffen innerhalb gewisser Zeit einzuschränken (Rate-Limits).
+
+* Durch Scannen von Request-Responses kann eine WAF Ihre Applikation auch weitergehend **vor Datenabfluss schützen**.
+
+* Eine WAF ist meist mit einem Load-Balancer (*wie HAProxy*) verknüpft.
+
+  Dadurch können Sie mehrere Applikationsserver in einem **hochverfügbaren Verbund** vereinen.
+
+
+Das Regelwerk einer WAF muss speziell auf die Anwendungen, die sie schützten soll, abgestimmt sein. Dies kann initial etwas aufwendig sein - doch der Aufwand pendelt sich rasch ein.
+
+----
+
+Verwaltung eines WAF Regelwerks
+*******************************
 
 * **Definieren der 'Schnittstellen'**
 
@@ -48,38 +78,88 @@ Arbeiten mit einer WAF?
 
 Meist nutzt man einen 'Audit-Modus' um das Verhalten der WAF zu testen, bevor diese wirklich aktiv geschalten wird.
 
-----
-
-Self Hosted
-###########
-
-Da eine WAF Zugriff auf alle Informationen hat, die zwischen Benutzer:in und Applikation ausgetauscht werden - einschließlich sensibler Benutzerdaten, ist es für Ihr Unternehmen oder Projekt möglicherweise nicht akzeptabel, eine WAF auf einer Infrastruktur zu hosten, die Sie nicht kontrollieren.
-
-Einige Enterprise-Grade-Lösungen können teuer werden, aber Sie können immer mit einem Open-Source Produkt wie :ref:`HAProxy Community <proxy_reverse_haproxy>`, `SafeLine <https://github.com/chaitin/SafeLine>`_, `Coraza <https://github.com/corazawaf/coraza>`_ oder `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_ beginnen und später aufrüsten.
-
-Sie müssen sicherstellen, dass Sie über genügend interne Ressourcen oder einen Berater verfügen, um das Produkt zu warten.
-
-Es mag mehr Arbeit sein, eine fertige WAF einzurichten, aber auf diese Weise haben Sie ein unabhängiges System.
-
-Es gibt bereits `Sammlungen von Rulesets <https://coreruleset.org/>`_, die in vielen WAFs genutzt werden können.
+Dies ist keine einmalige Aufgabe! Sie **muss gewartet werden**! Vor allem bei Updates Ihrer Web-Anwendungen können Anpassungen nötig sein.
 
 ----
 
-Cloud Hosted
-############
+Eigenständige WAF
+#################
 
-In der WAF Cloud-Provider wie `Cloudflare <https://www.cloudflare.com/lp/ppc/waf-x/>`_ oder `Barracuda <https://de.barracuda.com/products/application-protection/web-application-firewall>`_ verfügen über zahlreiche Funktionen und sind in der Lage, Sie mit modernstem Schutz zu versorgen.
+Eine WAF benötigt zwingend Zugriff auf alle Informationen, die zwischen Nutzer:in und Applikation ausgetauscht werden. Einschließlich sensibler Benutzerdaten. Dies kann das outsourcing komplizieren.
+
+Wir empfehlen die Nutzung von Open-Source Produkten wie :ref:`HAProxy <proxy_reverse_haproxy>`, `Coraza <https://github.com/corazawaf/coraza>`_ oder `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_.
+
+Es gibt bereits `Sammlungen von Rulesets <https://coreruleset.org/>`_, die in solchen WAFs genutzt werden können.
+
+Hosten kann man diese auf der eigenen Infrastruktur oder in einem Rechenzentrum. (z.B. `Hetzner Deutschland <https://www.hetzner.com/cloud/>`_)
+
+**Vorteile**:
+
+* Datenschutz & Digitale Privatsphäre
+
+* Unabhängigkeit von einem Cloud-Provider
+
+* Hochgradig Anpassbar
+
+* Keine Lizenzkosten, wenn Open-Source genutzt wird
+
+
+**Nachteile**:
+
+* Keine AI-Basierte Erkennung (*zukünftig wird es auch möglich sein*)
+
+* Sie müssen sicherstellen, dass Sie über genügend interne Ressourcen oder einen Dienstleister verfügen, um das Produkt zu warten
+
+* Die initiale Einrichtung kann etwas aufwendiger sein
+
+* System zur Visualisierung und Analyse von Logs nötig (z.B. `Graylog <https://graylog.org/products/source-available/>`_)
+
+* Für Hoch-Verfügbarkeit muss gesorgt werden
+
+----
+
+Cloud Systeme
+#############
+
+WAF Cloud-Provider wie `Cloudflare <https://www.cloudflare.com/lp/ppc/waf-x/>`_ oder `Barracuda <https://de.barracuda.com/products/application-protection/web-application-firewall>`_ verfügen über zahlreiche Funktionen und sind in der Lage, Sie mit modernstem Schutz zu versorgen.
 
 Diese Anbieter haben viele Ressourcen für die ständige Weiterentwicklung ihrer Systeme zur Verfügung. Sie können Ihnen sogar Engines zur Verfügung stellen, die Zero-Day-Exploits blockieren, die Sie noch nicht patchen können.
 
 In diesem Fall kann es sinnvoll sein, auch andere Dienste dieses Anbieters zu nutzen, z. B. ein `CDN <https://www.cloudflare.com/de-de/lp/ppc/cdn-x>`_.
 
+**Vorteile**:
+
+* AI-Basierte Erkennung
+
+* Regelwerk wird ständig angepasst und erweitert
+
+* Weboberfläche zur Analyse von Logs
+
+* Dynamische Skalierung
+
+
+**Nachteile**:
+
+* Höherer Kostenpunkt
+
+* Cloud-Provider hat Zugriff auf Ihre Daten und die Daten Ihrer User
+
+* Anpassbarkeit ist eingeschränkt
+
+* Aufwand für Wartung des Regelwerks ist trotzdem nötig
+
+* Eigenes Monitoring nur begrenzt möglich
+
+* Logs können teilweise nicht zur Analyse/Archivierung weitergeleitet werden
+
 ----
 
-Self Developed Solutions
-########################
+Selbst Entwickelte Lösungen
+###########################
 
 Wenn Sie Entwickler sind, fragen Sie sich vielleicht: „Warum kann ich meine Codebasis nicht einfach um Sicherheitsprüfungen erweitern? Diese Frage ist berechtigt.
+
+Wir raten grundsätzlich davon ab.
 
 In der Praxis ist es empfehlenswert, die WAF von Ihrer Anwendung zu entkoppeln. Dies hat einige legitime Gründe:
 
