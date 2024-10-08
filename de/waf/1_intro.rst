@@ -52,6 +52,9 @@ Wie kann eine WAF Sie schützen?
 
   Dadurch können Sie mehrere Applikationsserver in einem **hochverfügbaren Verbund** vereinen.
 
+* Durch die Integration von Reputations-Datenbanken, können Sie das mögliche Risiko, das von einem Client/User ausgeht, besser einstufen.
+
+  Neben reinen Datenbanken und IP-/ASN-Listen können auch dynamische Lösungen wie `CrowdSec <https://www.crowdsec.net/>`_ integriert werden.
 
 Das Regelwerk einer WAF muss speziell auf die Anwendungen, die sie schützten soll, abgestimmt sein. Dies kann initial etwas aufwendig sein - doch der Aufwand pendelt sich rasch ein.
 
