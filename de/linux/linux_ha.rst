@@ -60,7 +60,7 @@ Package: :code:`corosync-qdevice`
 
 Service: :code:`corosync-qdevice.service`
 
-Dokumentation: :code:`Manpage qdevice <https://manpages.ubuntu.com/manpages/focal/en/man8/corosync-qdevice.8.html>`_
+Dokumentation: `Manpage qdevice <https://manpages.ubuntu.com/manpages/focal/en/man8/corosync-qdevice.8.html>`_
 
 Es stellt Stimmen für das Cluster-Quorum zur Verfügung
 

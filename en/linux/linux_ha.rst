@@ -60,7 +60,7 @@ Package: :code:`corosync-qdevice`
 
 Service: :code:`corosync-qdevice.service`
 
-Documentation: :code:`Manpage qdevice <https://manpages.ubuntu.com/manpages/focal/en/man8/corosync-qdevice.8.html>`_
+Documentation: `Manpage qdevice <https://manpages.ubuntu.com/manpages/focal/en/man8/corosync-qdevice.8.html>`_
 
 It provides votes to the cluster quorum.
 

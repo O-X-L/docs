@@ -78,7 +78,7 @@ Abfrage der Ram-Nutzung bestimmter Prozesse in B: :code:`ps -eo rss,pid,user,com
 
 Ermittelt die Speichernutzung bestimmter Prozesse in MB: :code:`ps -eo rss,pid,user,command --sort -rss | awk '{ hr=$1/1024 ; printf("%13.2f Mb ",hr) } { for ( x=4 ; x<=NF ; x++ ) { printf("%s ",$x) } print "" }' | grep php-fpm`
 
-Disk I/O über iotop (Prozessebene) loggen: :code:`iotop -P -o -t -a -d 10 -n 10 -b > iotop_output.txt `
+Disk I/O über iotop (Prozessebene) loggen: :code:`iotop -P -o -t -a -d 10 -n 10 -b > iotop_output.txt`
 
 Disk I/O loggen: :code:`iostat -d -k -t -N -x 10 10 > iostat_output.txt`
 

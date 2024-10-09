@@ -40,28 +40,32 @@ Wie kann eine WAF Sie schützen?
 
   Außerdem kann man sich einiges an Ressourcen einsparen.
 
-* Die Metadaten der WAF können sogar an Ihre Web-Applikation weitergeleitet werden.
+* Die Metadaten der WAF können auch an Ihre Web-Applikation weitergeleitet werden.
 
-  Dies kann Ihnen erlauben diese Informationen in einem **Risiko-Score** zu erfassen, welcher wiederrum genutzt werden kann um Zugriffe für Bots oder 'böse User' einzuschränken
+  Dies kann Ihnen erlauben, diese Informationen in einem **Risiko-Score** zu erfassen, welcher wiederum genutzt werden kann um Zugriffe für Bots oder 'böse User' einzuschränken.
 
-  Praktisch kann dies zum Beispiel dazu genutzt werden um Captcha's nur für auffällige User anzeigen zu lassen, kritische Aktionen (Newsletter Anmeldung, Account Registration, ...) zu unterbinden oder die Anzahl von Zugriffen innerhalb gewisser Zeit einzuschränken (Rate-Limits).
+  Praktisch kann dies zum Beispiel dazu genutzt werden, um Captcha's nur für auffällige User anzeigen zu lassen, kritische Aktionen (Newsletter Anmeldung, Account Registration, ...) zu unterbinden oder die Anzahl von Zugriffen innerhalb gewisser Zeit einzuschränken (Rate-Limits).
 
-* Durch Scannen von Request-Responses kann eine WAF Ihre Applikation auch weitergehend **vor Datenabfluss schützen**.
+* Durch Scannen von Server-Responses kann eine WAF Ihre Applikation auch weitergehend **vor Datenabfluss schützen**.
 
 * Eine WAF ist meist mit einem Load-Balancer (*wie HAProxy*) verknüpft.
 
   Dadurch können Sie mehrere Applikationsserver in einem **hochverfügbaren Verbund** vereinen.
 
-* Durch die Integration von Reputations-Datenbanken, können Sie das mögliche Risiko, das von einem Client/User ausgeht, besser einstufen.
+* Durch die Integration von Reputations-Datenbanken können Sie das mögliche Risiko, das von einem Client/User ausgeht, besser einstufen.
 
   Neben reinen Datenbanken und IP-/ASN-Listen können auch dynamische Lösungen wie `CrowdSec <https://www.crowdsec.net/>`_ integriert werden.
 
-Das Regelwerk einer WAF muss speziell auf die Anwendungen, die sie schützten soll, abgestimmt sein. Dies kann initial etwas aufwendig sein - doch der Aufwand pendelt sich rasch ein.
+Das Regelwerk einer WAF muss speziell auf die Anwendungen, die geschützt werden soll, abgestimmt sein. Dies kann initial etwas aufwendig sein - doch der Aufwand pendelt sich rasch ein.
 
 ----
 
 Verwaltung eines WAF Regelwerks
 *******************************
+
+Dies ist keine einmalige Aufgabe! Sie **muss gewartet werden**! Vor allem bei Updates Ihrer Web-Anwendungen können Anpassungen nötig sein.
+
+Meist nutzt man einen 'Audit-Modus' um das Verhalten der WAF zu testen, bevor diese wirklich aktiv geschalten wird.
 
 * **Definieren der 'Schnittstellen'**
 
@@ -79,16 +83,12 @@ Verwaltung eines WAF Regelwerks
 
   |waf_dev_flow|
 
-Meist nutzt man einen 'Audit-Modus' um das Verhalten der WAF zu testen, bevor diese wirklich aktiv geschalten wird.
-
-Dies ist keine einmalige Aufgabe! Sie **muss gewartet werden**! Vor allem bei Updates Ihrer Web-Anwendungen können Anpassungen nötig sein.
-
 ----
 
 Eigenständige WAF
 #################
 
-Eine WAF benötigt zwingend Zugriff auf alle Informationen, die zwischen Nutzer:in und Applikation ausgetauscht werden. Einschließlich sensibler Benutzerdaten. Dies kann das outsourcing komplizieren.
+Eine WAF benötigt zwingend Zugriff auf alle Informationen, die zwischen Nutzer:in und Applikation ausgetauscht werden. Einschließlich sensibler Benutzerdaten. Dies kann das Outsourcing komplizieren.
 
 Wir empfehlen die Nutzung von Open-Source Produkten wie :ref:`HAProxy <proxy_reverse_haproxy>`, `Coraza <https://github.com/corazawaf/coraza>`_ oder `ModSecurity <https://github.com/owasp-modsecurity/ModSecurity>`_.
 
