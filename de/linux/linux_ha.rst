@@ -222,17 +222,18 @@ Die Namen sollten mit den tatsächlichen Hostnamen der Nodes übereinstimmen.
 .. code-block::
 
     nodelist {
-    node {
-        name: <NODE1-SHORTNAME>
-        nodeid: 1
-        quorum_votes: 1
-        ring0_addr: <NODE1-IP>
-    }
-    node {
-        name: <NODE2-SHORTNAME>
-        nodeid: 2
-        quorum_votes: 1
-        ring0_addr: <NODE2-IP>
+        node {
+            name: <NODE1-SHORTNAME>
+            nodeid: 1
+            quorum_votes: 1
+            ring0_addr: <NODE1-IP>
+        }
+        node {
+            name: <NODE2-SHORTNAME>
+            nodeid: 2
+            quorum_votes: 1
+            ring0_addr: <NODE2-IP>
+        }
     }
 
 Der :code:`ring0` bezieht sich auf die Totem-Schnittstellen. Wenn Sie mehrere Netzwerke haben, über die corosync kommunizieren soll, können Sie :code:`ring1_addr` etc hinzufügen.

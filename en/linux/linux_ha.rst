@@ -222,17 +222,18 @@ Names should match the actual node's hostnames.
 .. code-block::
 
     nodelist {
-    node {
-        name: <NODE1-SHORTNAME>
-        nodeid: 1
-        quorum_votes: 1
-        ring0_addr: <NODE1-IP>
-    }
-    node {
-        name: <NODE2-SHORTNAME>
-        nodeid: 2
-        quorum_votes: 1
-        ring0_addr: <NODE2-IP>
+        node {
+            name: <NODE1-SHORTNAME>
+            nodeid: 1
+            quorum_votes: 1
+            ring0_addr: <NODE1-IP>
+        }
+        node {
+            name: <NODE2-SHORTNAME>
+            nodeid: 2
+            quorum_votes: 1
+            ring0_addr: <NODE2-IP>
+        }
     }
 
 The :code:`ring0` relates to the totem interfaces. If you have multiple networks for corosync to communicate over - you can add :code:`ring1_addr` and so on.
