@@ -159,7 +159,7 @@ Totem
 
 Das :code:`totem` beschreibt im Wesentlichen, wie die Nodes miteinander kommunizieren.
 
-Wenn Sie eine Verschlüsselung verwenden möchten, müssen Sie eine Schlüsseldatei mit :code:`corosync-keygen` erstellen und sie unter :code:`/etc/corosync/keyfile` auf allen Cluster-Nodes ablegen.
+Wenn Sie eine Verschlüsselung verwenden möchten, müssen Sie eine Schlüsseldatei mit :code:`corosync-keygen` erstellen und sie unter :code:`/etc/corosync/authkey` auf allen Cluster-Nodes ablegen.
 
 .. code-block::
 
@@ -175,7 +175,7 @@ Wenn Sie eine Verschlüsselung verwenden möchten, müssen Sie eine Schlüsselda
             linknumber: 0
         }
 
-        keyfile: '/etc/corosync/keyfile'  # default
+        keyfile: '/etc/corosync/authkey'  # default
         secauth: on  # sets cipher & hash as seen below
         # crypto_cipher: aes256
         # crypto_hash: sha256
