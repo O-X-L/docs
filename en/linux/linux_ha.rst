@@ -128,7 +128,7 @@ For 2-node clusters to function, you need to disable these features:
 
     crm configure
 
-    property set stonith-enabled=false
+    property stonith-enabled=false
     property no-quorum-policy=ignore
 
     commit
@@ -175,7 +175,7 @@ If you want to use encryption - you have to create a key-file using :code:`coros
             linknumber: 0
         }
 
-        keyfile: '/etc/corosync/authkey'  # default
+        keyfile: /etc/corosync/authkey  # default
         secauth: on  # sets cipher & hash as seen below
         # crypto_cipher: aes256
         # crypto_hash: sha256
@@ -394,11 +394,10 @@ Note: If you need a file-share & floating-IP to start with the :code:`resDRBDMou
 
     primitive resDRBDMount Filesystem \
         params device="/dev/drbd1" directory="/mnt/data" fstype=ext4 options=noatime \
-        op monitor interval=30s \
+        op monitor interval=10s \
         meta target-role=Started maintenance=false
 
-    ms msDRBD resDRBD \
-        meta notify=true target-role=Started
+    clone msDRBD resDRBD meta notify=true target-role=Started promotable=true
 
     colocation colDRBD inf: resDRBDMount:Started msDRBD:Master
     order ordDRBD Mandatory: msDRBD:promote resDRBDMount:start
