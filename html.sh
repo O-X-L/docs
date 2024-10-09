@@ -54,7 +54,8 @@ HTML_META_DE="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.com\
 HTML_LOGO_LINK_SRC='href=".*Go to homepage"'
 HTML_LOGO_LINK_DE='href="https://www.oxl.at" class="oxl-nav-logo" title="OXL IT Services Website"'
 HTML_LOGO_LINK_EN='href="https://www.o-x-l.com" class="oxl-nav-logo" title="OXL IT Services Website"'
-HTML_TITLE_BAD='OXL - Documentation  documentation'
+HTML_TITLE_BAD_DE='OXL - Dokumentation  documentation'
+HTML_TITLE_BAD_EN='OXL - Documentation  documentation'
 HTML_TITLE_OK='OXL Docs'
 HTML_LANG_NONE='<html'
 HTML_LANG_EN='html lang="en"'
@@ -68,8 +69,8 @@ sed -i "s|$HTML_LOGO_LINK_SRC|$HTML_LOGO_LINK_EN|g" *.html
 sed -i "s|$HTML_LOGO_LINK_SRC|$HTML_LOGO_LINK_EN|g" */*.html
 sed -i "s|$HTML_LANG_NONE|<$HTML_LANG_EN|g" *.html
 sed -i "s|$HTML_LANG_NONE|<$HTML_LANG_EN|g" */*.html
-sed -i "s|$HTML_TITLE_BAD|$HTML_TITLE_OK|g" *.html
-sed -i "s|$HTML_TITLE_BAD|$HTML_TITLE_OK|g" */*.html
+sed -i "s|$HTML_TITLE_BAD_EN|$HTML_TITLE_OK|g" *.html
+sed -i "s|$HTML_TITLE_BAD_EN|$HTML_TITLE_OK|g" */*.html
 
 cd "${TMP_DIR}/de/"
 
@@ -79,8 +80,8 @@ sed -i "s|$HTML_LOGO_LINK_SRC|$HTML_LOGO_LINK_DE|g" *.html
 sed -i "s|$HTML_LOGO_LINK_SRC|$HTML_LOGO_LINK_DE|g" */*.html
 sed -i "s|$HTML_LANG_NONE|<$HTML_LANG_DE|g" *.html
 sed -i "s|$HTML_LANG_NONE|<$HTML_LANG_DE|g" */*.html
-sed -i "s|$HTML_TITLE_BAD|$HTML_TITLE_OK|g" *.html
-sed -i "s|$HTML_TITLE_BAD|$HTML_TITLE_OK|g" */*.html
+sed -i "s|$HTML_TITLE_BAD_DE|$HTML_TITLE_OK|g" *.html
+sed -i "s|$HTML_TITLE_BAD_DE|$HTML_TITLE_OK|g" */*.html
 
 log 'ACTIVATING'
 cd "$SRC_DIR"
