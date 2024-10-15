@@ -125,6 +125,88 @@ Quick source-code overview:
 
 ----
 
+JSON Query
+**********
+
+Install:
+
+.. code-block:: bash
+
+    sudo apt install jq
+
+Example JSON:
+
+.. code-block:: bash
+
+    {
+        "test1": {
+            "ip": {
+                "ip4": [
+                    "192.168.1.2"
+                ],
+                "ip6": []
+            }
+        },
+        "test2": {
+            "ip": {
+                "ip4": [
+                    "192.168.5.4"
+                ],
+                "ip6": []
+            }
+        }
+    }
+
+Get keys as flat list:
+
+.. code-block:: bash
+
+    cat test.json | jq 'keys | .[]'
+    > "test1"
+    > "test2"
+
+Flatten data by one layer:
+
+.. code-block:: bash
+
+    cat test.json | jq '.[]'
+    > {
+    >   "ip": {
+    >     "ip4": [
+    >       "192.168.1.2"
+    >     ],
+    >     "ip6": []
+    >   }
+    > }
+    > {
+    >   "ip": {
+    >     "ip4": [
+    >       "192.168.5.4"
+    >     ],
+    >     "ip6": []
+    >   }
+    > }
+
+Get all values nested inside sub-keys:
+
+.. code-block:: bash
+
+    cat test.json | jq '.[] | .ip | .ip4 | .[]'
+    > 192.168.1.2
+    > 192.168.5.4
+
+Handle missing keys:
+
+.. code-block:: bash
+
+    # if '.ip' is missing for one+ entry
+    cat test.json | jq '.[] | .ip | .ip4 | .[]'
+    > Cannot iterate over null (null)
+
+    cat test.json | jq '.[] | try .ip | .ip4 | .[]'
+
+----
+
 Resource Management
 ###################
 
@@ -216,6 +298,9 @@ Interact with disk partitions:
     fdisk /dev/sdX
 
 ----
+
+Disks
+#####
 
 Logical Volume Manager (LVM)
 ****************************
