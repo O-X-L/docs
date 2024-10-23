@@ -22,7 +22,7 @@ html_theme_options = {
     'banner_text': '<a href="https://www.o-x-l.com">About OXL</a> | '
                    '<a href="https://blog.o-x-l.com">Blog</a> | '
                    '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a> | '
-                   '<a href="https://docs.o-x-l.at" title="Zur deutschsprachigen Version wechseln"><img loading="lazy" style="height: 12px; padding: 0; border-radius: 0;" src="https://files.oxl.at/img/flag_de.svg" alt="German Flag"> Deutsch</a>'
+                   '<a href="https://docs.o-x-l.at" title="Zur deutschsprachigen Version wechseln"><img loading="lazy" style="height: 10px; padding: 0; border-radius: 0;" src="https://files.oxl.at/img/flag_de.svg" alt="German Flag"> Deutsch</a>'
 }
 html_short_title = 'OXL Docs'
 html_js_files = ['js/main.js']
