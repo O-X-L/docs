@@ -25,5 +25,5 @@ html_theme_options = {
                    '<a href="https://docs.o-x-l.com" title="Switch to the english version"><img loading="lazy" style="height: 10px; padding: 0; border-radius: 0;" src="https://files.oxl.at/img/flag_gb.svg" alt="England Flag"> English</a>'
 }
 html_short_title = 'OXL Docs'
-html_js_files = ['js/main.js']
-html_css_files = ['css/main.css']
+html_js_files = ['js/main.js', 'https://files.oxl.at/js/feedback.js']
+html_css_files = ['css/main.css', 'https://files.oxl.at/css/feedback.css']
