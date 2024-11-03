@@ -818,19 +818,33 @@ Install:
 Single
 ======
 
-.. code-block::
+.. code-block:: bash
 
     convert IMG.png -quality 70 IMG.jpg
 
 Multiple
 ========
 
-.. code-block::
+.. code-block:: bash
 
     for img in *.jpg; do convert "$img" -quality 70 "$img"; done
 
     # or from png
     for img in *.png; do convert "$img" -quality 70 "${img%.png}.jpg"; done
+
+----
+
+Video Manipulation
+##################
+
+FFMPEG
+******
+
+Replace audio of a video:
+
+.. code-block:: bash
+
+    ffmpeg -i video_in.mp4 -i audio_in.wav -c:v copy -map 0:v:0 -map 1:a:0 video_out.mp4
 
 
 ----

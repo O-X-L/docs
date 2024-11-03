@@ -855,16 +855,30 @@ Alternativer Download:
 Einzelnes
 =========
 
-.. code-block::
+.. code-block:: bash
 
     cwebp -q 70 IMG.png -o IMG.webp
 
 Mehrere
 =======
 
-.. code-block::
+.. code-block:: bash
 
     for img in *.jpg; do cwebp -q 70 "$img" -o "${img%.jpg}.webp"; done
+
+----
+
+Video-Manipulation
+##################
+
+FFMPEG
+******
+
+Audio eines Videos ersetzen:
+
+.. code-block:: bash
+
+    ffmpeg -i video_in.mp4 -i audio_in.wav -c:v copy -map 0:v:0 -map 1:a:0 video_out.mp4
 
 ----
 
