@@ -1,5 +1,7 @@
 # OXL Documentation
 
+[![Uptime](https://status.oxl.at/api/v1/endpoints/1--oxl_documentation/uptimes/7d/badge.svg)](https://status.oxl.at/endpoints/1--oxl_documentation)
+
 DE 🇩🇪: [docs.o-x-l.at](https://docs.o-x-l.at)
 
 EN 🇬🇧: [docs.o-x-l.com](https://docs.o-x-l.com)
