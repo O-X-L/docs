@@ -33,7 +33,7 @@ Dieser Dienst erstellt einen benutzerspezifischen Socket, der von der Benutzerko
 Applikation
 ***********
 
-Wenn Sie mit Ubuntu oder Debian arbeiten, können Sie versuchen, die vorkompilierten ausführbaren Dateien von den `Github releases <https://github.com/ReimuNotMoe/ydotool/releases>`_ zu verwenden.
+Wenn Sie mit Ubuntu oder Debian arbeiten, können Sie versuchen, die vorkompilierten ausführbaren Dateien von den `Github releases <https://github.com/ReimuNotMoe/ydotool/releases>`_ zu verwenden. Achtung: Diese Version kann zur Zeit einige Bugs haben.
 
 Sonst muss man diese `manuell Kompilieren <https://gabrielstaples.com/ydotool-tutorial/#1-build-and-install-ydotool>`_.
 

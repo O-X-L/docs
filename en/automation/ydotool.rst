@@ -33,7 +33,7 @@ This service creates a user-specific socket that is utilized by the user-compone
 Executable
 **********
 
-If you are on Ubuntu or Debian - you can try to download the pre-compiled executables from the `Github releases <https://github.com/ReimuNotMoe/ydotool/releases>`_.
+If you are on Ubuntu or Debian - you can try to download the pre-compiled executables from the `Github releases <https://github.com/ReimuNotMoe/ydotool/releases>`_. Warning: That version might currently have some bugs.
 
 Else you might need to `manually compile <https://gabrielstaples.com/ydotool-tutorial/#1-build-and-install-ydotool>`_ them.
 
