@@ -39,6 +39,48 @@ Sonst muss man diese `manuell Kompilieren <https://gabrielstaples.com/ydotool-tu
 
 Installieren Sie es NICHT über den APT-Paketmanager - denn die Version ist SEHR alt!
 
+Kompilieren via Docker
+======================
+
+Dockerfile:
+
+.. code-block::
+
+    FROM ubuntu:latest
+    # FROM debian:latest
+
+    WORKDIR /tmp
+
+    RUN apt update && \
+        apt -y install cmake scdoc pkg-config git
+
+    RUN git clone https://github.com/ReimuNotMoe/ydotool.git
+
+    RUN cd /tmp/ydotool && \
+        mkdir -p build && \
+        cd build && \
+        cmake /tmp/ydotool && \
+        make -j "$(nproc)"
+
+Ausführen:
+
+.. code-block:: bash
+
+    docker build -f Dockerfile_ydotool -t build_ydotool .
+
+Applikation exportieren:
+
+.. code-block:: bash
+
+    docker run --rm -it -v /tmp:/tmp2 build_ydotool sh
+    cp /tmp/ydotool/build/ydotool* /tmp2/
+
+Säubern:
+
+.. code-block:: bash
+
+    docker image rm build_ydotool
+
 ----
 
 System Komponente
