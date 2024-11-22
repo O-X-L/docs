@@ -46,8 +46,8 @@ Dockerfile:
 
 .. code-block::
 
-    FROM ubuntu:latest
-    # FROM debian:latest
+    FROM debian:latest
+    # FROM ubuntu:latest
 
     WORKDIR /tmp
 
