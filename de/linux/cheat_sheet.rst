@@ -897,6 +897,19 @@ Video rotieren: (Transpose = Rotation)
 
     ffmpeg -i in.mp4 -c:a copy -vf "transpose=1" out.mp4
 
+Untertontes Video aus Bildern erstellen:
+
+* framerate = Dauer der Anzeige eines einzelnes Bildes (0.3 = 3sec)
+* loop = Endlos-Schleife für die Bilder
+* glob '*.jpg' = Nutze alle Bilder mit jpg Endung (Reihenfolge nach Namen sortiert)
+* ${IN_MUSIC} = Musik für die Untertonung
+* shortest = Beende das Video nachdem die Musik beendet wurde
+* -vf "scale=1920:1080..." = Stellt sicher, dass die Bilder nicht verzerrt werden
+
+.. code-block:: bash
+
+    ffmpeg -framerate 0.3 -loop 1 -pattern_type glob -i '*.jpg' -i ${IN_MUSIC} -shortest -c:v libx264 -vf "scale=1920:1080:force_original_aspect_ratio=decrease:eval=frame,pad=1920:1080:-1:-1:eval=frame" -r 30 -pix_fmt yuv420p out.mp4
+
 ----
 
 Datenbanken

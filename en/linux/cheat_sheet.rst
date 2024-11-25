@@ -863,6 +863,19 @@ Rotate Video: (Transpose = Rotation)
 
     ffmpeg -i in.mp4 -c:a copy -vf "transpose=1" out.mp4
 
+Create a slideshow-video with audio:
+
+* framerate = Duration of a single image (0.3 = 3sec)
+* loop = Endless-loop for the images
+* glob '*.jpg' = Use all images with jpg extension (ordered by filename)
+* ${IN_MUSIC} = Music track
+* shortest = End the video after the music has stopped
+* -vf "scale=1920:1080..." = Makes sure the images are not warped
+
+.. code-block:: bash
+
+    ffmpeg -framerate 0.3 -loop 1 -pattern_type glob -i '*.jpg' -i ${IN_MUSIC} -shortest -c:v libx264 -vf "scale=1920:1080:force_original_aspect_ratio=decrease:eval=frame,pad=1920:1080:-1:-1:eval=frame" -r 30 -pix_fmt yuv420p out.mp4
+
 
 ----
 
