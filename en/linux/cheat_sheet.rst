@@ -846,6 +846,23 @@ Replace audio of a video:
 
     ffmpeg -i video_in.mp4 -i audio_in.wav -c:v copy -map 0:v:0 -map 1:a:0 video_out.mp4
 
+Extract part of a video:
+
+.. code-block:: bash
+
+    ffmpeg -ss ${START_SEC} -i in.mp4 -t ${DURATION_SEC} -map 0 -c copy out.mp4
+
+Rotate Video: (Transpose = Rotation)
+
+* 0 = 90° counterclockwise and vertical flip (default)
+* 1 = 90° clockwise
+* 2 = 90° counterclockwise
+* 3 = 90° clockwise and vertical flip
+
+.. code-block:: bash
+
+    ffmpeg -i in.mp4 -c:a copy -vf "transpose=1" out.mp4
+
 
 ----
 
