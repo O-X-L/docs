@@ -1,30 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <url><loc>https://docs.o-x-l.at</loc></url>
+   <url><loc>https://docs.oxl.at</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/firewall/nftables.html</loc></url>
+   <url><loc>https://docs.oxl.at/firewall/nftables.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/proxy/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/proxy/forward_squid.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/proxy/reverse_haproxy.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/proxy/tls_interception.html</loc></url>
+   <url><loc>https://docs.oxl.at/proxy/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.at/proxy/forward_squid.html</loc></url>
+   <url><loc>https://docs.oxl.at/proxy/reverse_haproxy.html</loc></url>
+   <url><loc>https://docs.oxl.at/proxy/tls_interception.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/waf/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/waf/2_fingerprinting.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/waf/haproxy.html</loc></url>
+   <url><loc>https://docs.oxl.at/waf/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.at/waf/2_fingerprinting.html</loc></url>
+   <url><loc>https://docs.oxl.at/waf/haproxy.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/mail/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/mail/security.html</loc></url>
+   <url><loc>https://docs.oxl.at/mail/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.at/mail/security.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/security/certificates.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/security/encryption.html</loc></url>
+   <url><loc>https://docs.oxl.at/security/certificates.html</loc></url>
+   <url><loc>https://docs.oxl.at/security/encryption.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/automation/ansible.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/automation/ansible_setup.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/automation/ansible_webui.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/automation/ydotool.html</loc></url>
+   <url><loc>https://docs.oxl.at/automation/ansible.html</loc></url>
+   <url><loc>https://docs.oxl.at/automation/ansible_setup.html</loc></url>
+   <url><loc>https://docs.oxl.at/automation/ansible_webui.html</loc></url>
+   <url><loc>https://docs.oxl.at/automation/ydotool.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.at/linux/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/linux/linux_ha.html</loc></url>
-   <url><loc>https://docs.o-x-l.at/linux/cheat_sheet.html</loc></url>
+   <url><loc>https://docs.oxl.at/linux/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.at/linux/linux_ha.html</loc></url>
+   <url><loc>https://docs.oxl.at/linux/cheat_sheet.html</loc></url>
+
+   <url><loc>https://docs.oxl.at/software/odoo.html</loc></url>
 </urlset>

@@ -35,6 +35,78 @@ Note: Migrating from enterprise back to community edition is not easy as some fe
 
 ----
 
+Module Development
+##################
+
+We can develop **custom Odoo-Modules and functionality** for your business needs! See: `Odoo Module Development <https://www.o-x-l.com/odoo>`_
+
+Guide
+*****
+
+See: `Module-Development Guide <https://www.odoo.com/documentation/18.0/developer/tutorials/server_framework_101.html>`_
+
+Install Module/Addon
+********************
+
+1. Configure the :code:`addons_path` in your :code:`/etc/odoo/odoo.conf`
+
+    .. code-block::
+
+        [options]
+        ...
+        addons_path = /var/lib/odoo/addons
+
+2. Make sure the module/addon is supported for the installed Odoo version. Else you might run into an :code:`Internal Server Error` later on!
+
+    .. code-block:: bash
+
+        # get installed version on ubuntu/debian
+        apt policy odoo
+
+3. Copy the module archive to your Odoo server.
+
+    Per example - use :code:`scp` (*replace YOUR_ADDON*)
+
+    .. code-block:: bash
+
+        scp ~/Download/${YOUR_ADDON}.zip ${YOUR_SERVER}:/tmp/
+
+4. Add your module. (*replace YOUR_ADDON*)
+
+    .. code-block:: bash
+
+        cd /tmp
+        unzip "${YOUR_ADDON}.zip"
+        mv "$YOUR_ADDON" /var/lib/odoo/addons/
+        chown -R root:odoo /var/lib/odoo/addons/
+
+5. Restart Odoo:
+
+    .. code-block:: bash
+
+        systemctl restart odoo.service
+
+6. `Activate the developer mode <https://www.odoo.com/documentation/18.0/applications/general/developer_mode.html>`_
+
+7. `Update the App-List <https://www.odoo.com/documentation/18.0/applications/general/apps_modules.html#install-apps-and-modules>`_
+
+8. If you get an :code:`Internal Server Error` afterwards:
+
+    Your code may have an error!
+
+    Maybe the module is not supported for the installed odoo version.
+
+    Check your logs: :code:`tail -n 100 /var/log/odoo/odoo-server.log`
+
+9. If the module IS NOT showing in the App-List:
+
+    * Make sure the :code:`${YOUR_ADDON}/__manifest__.py` is named correctly and its `content is acceptable <https://www.odoo.com/documentation/18.0/developer/reference/backend/module.html>`_
+
+    * Remove the :code:`App` filter from the App-View (*related to the manifest setting* :code:`'application': true`)
+
+
+----
+
 Administration
 ##############
 
@@ -53,6 +125,7 @@ You need to backup the database and files:
 .. code-block:: bash
 
     set -euo pipefail
+    apt install xz-utils
 
     BACKUP_DIR='/var/backups/odoo'
 
@@ -64,7 +137,7 @@ You need to backup the database and files:
     sudo -u postgres pg_dumpall | xz > "${BACKUP_DIR}/odoo.sql.xz"
 
     # backup files
-    tar -cJvf "${BACKUP_DIR}/odoo.file.xz" '/var/lib/odoo/'
+    tar -cJvf "${BACKUP_DIR}/odoo.file.xz" /var/lib/odoo/ /etc/odoo/
 
     # limit access
     chmod 640 "${BACKUP_DIR}/odoo.sql.xz" "${BACKUP_DIR}/odoo.file.xz"
@@ -75,6 +148,8 @@ Full backup script example: `odoo_backup.sh <https://github.com/ansibleguy/sw_od
 
 Restore from WebUI
 ******************
+
+You can only restore the backup take from a WebUI - NOT the CLI-Backup!
 
 You can manage your databases from this URL: :code:`https://<YOUR-DOMAIN>/web/database/manager`
 
@@ -89,13 +164,22 @@ Make sure to create a backup before of your current state, before restoring anot
 
 .. code-block:: bash
 
+    apt install xz-utils
+
     # database
-    xzcat odoo.sql.xz | su --login postgres psql -d odoo
+    xzcat odoo.sql.xz | su --login postgres -c psql
 
     # files
     tar -xJvf /var/backups/odoo/odoo.file.xz -C /tmp/
+
+    ## remove default files
+    mv /var/lib/odoo/ /var/lib/odoo_new
+
+    ## restore your files
     mv /tmp/var/lib/odoo/ /var/lib/odoo/
+    mv /tmp/etc/odoo/ /etc/odoo/
     chown -R odoo:odoo /var/lib/odoo/
+    chown -R root:odoo /var/lib/odoo/addons /etc/odoo
 
 ----
 
@@ -109,8 +193,7 @@ Else you need to use the shell:
 .. code-block:: bash
 
     # generate password hash
-     export MYPWD='MY_PASSWORD'
-    python3 -c "from os import environ; from passlib.context import CryptContext; print(CryptContext(['pbkdf2_sha512']).hash(environ['MYPWD']))"
+     MYPWD='MY_PASSWORD' python3 -c "from os import environ; from passlib.context import CryptContext; print(CryptContext(['pbkdf2_sha512']).hash(environ['MYPWD']))"
 
     # update hash in DB
     su --login postgres
