@@ -894,8 +894,8 @@ Vorbereitung für CLI-Interaction mit S3-Buckets und Dateien darin:
 .. code-block:: bash
 
     apt install awscli
-    export AWS_ACCESS_KEY_ID="$S3_TOKEN"
-    export AWS_SECRET_ACCESS_KEY="$S3_SECRET"
+    export AWS_ACCESS_KEY_ID="<YOUR-TOKEN-KEY>"
+    export AWS_SECRET_ACCESS_KEY="<YOUR-SECRET>"
     S3_URL=https://s3.oxl.at
 
 Existierende Buckets auflisten:
