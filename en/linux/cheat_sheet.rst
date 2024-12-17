@@ -123,6 +123,45 @@ Quick source-code overview:
     # sudo apt install cloc
     cd <REPO_BASE> && cloc
 
+Create QR-Code:
+
+.. code-block:: bash
+
+    # sudo apt install qrencode
+    qrencode https://www.oxl.at -o qr.png
+
+Create QR business-card (`RFC6350 <https://datatracker.ietf.org/doc/html/rfc6350>`_):
+
+    # add a file with this content:
+    BEGIN:VCARD
+    VERSION:3.0
+    N:Rath;Pascal
+    FN:Pascal Rath
+    ORG:OXL IT Services
+    Tel;WORK;VOICE:+433115409000
+    EMAIL;TYPE=work:rath@oxl.at
+    URL:https://www.oxl.at
+    END:VCARD
+
+    # create qr
+    qrencode < vcard.txt -q vcard.png
+
+Show colored difference between two files:
+
+.. code-block:: bash
+
+    # sudo apt install git
+    git diff --word-diff=color <file1> <file2>
+
+Loop in Bash-Script:
+
+.. code-block:: bash
+    APPS=('main' 'test')
+    for app in "${APPS[@]}"
+    do
+      cp "./${app}"-*css "/var/random/app/${app}.css"
+    done
+
 ----
 
 JSON Query
@@ -348,6 +387,18 @@ Interact with disk partitions:
 .. code-block::
 
     fdisk /dev/sdX
+
+Disk-usage analysis:
+
+.. code-block::
+
+    # sudo apt install ncdu
+
+    # open interactive disk-usage browser
+    ncdu /var
+
+    # with excludes to save on time
+    ncdu / --exclude /var/
 
 ----
 
@@ -832,6 +883,43 @@ Decrypt file:
 
 ----
 
+S3-Storage
+**********
+
+Prepare for CLI-interation with S3-buckets and files that are saved in them:
+
+.. code-block:: bash
+
+    apt install awscli
+    export AWS_ACCESS_KEY_ID="$S3_TOKEN"
+    export AWS_SECRET_ACCESS_KEY="$S3_SECRET"
+    S3_URL=https://s3.oxl.at
+
+List existing buckets:
+
+.. code-block:: bash
+
+    aws --endpoint-url="$S3_URL" s3 ls
+
+List existing files inside a bucket:
+
+.. code-block:: bash
+
+    S3_BUCKET='test'
+    aws --endpoint-url="$S3_URL" s3 ls "s3://${S3_BUCKET}" --human-readable
+
+Sync full content of a bucket to a local path:
+
+.. code-block:: bash
+
+    S3_BUCKET='test'
+    SYNC_DIR='/data/s3/test'
+    mkdir -p "$SYNC_DIR"
+    aws --endpoint-url="$S3_URL" s3 sync "s3://${S3_BUCKET}" "$SYNC_DIR"
+
+
+----
+
 Ansible
 #######
 
@@ -928,6 +1016,21 @@ Create a slideshow-video with audio:
 
     ffmpeg -framerate 0.3 -loop 1 -pattern_type glob -i '*.jpg' -i ${IN_MUSIC} -shortest -c:v libx264 -vf "scale=1920:1080:force_original_aspect_ratio=decrease:eval=frame,pad=1920:1080:-1:-1:eval=frame" -r 30 -pix_fmt yuv420p out.mp4
 
+Extract part of a video:
+
+.. code-block:: bash
+
+    ffmpeg -i input.mp4 -ss 00:05:10 -to 00:15:30 -c:v copy -c:a copy output2.mp4
+
+Join multiple videos together:
+
+.. code-block:: bash
+
+    echo "file 'video1.mp4'" > concat.txt
+    echo "file 'video2.mp4'" >> concat.txt
+    echo "file 'video3.mp4'" >> concat.txt
+
+    ffmpeg -f concat -i concat.txt -c copy output.mp4
 
 ----
 
