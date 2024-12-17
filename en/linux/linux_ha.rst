@@ -402,6 +402,27 @@ Note: If you need a file-share & floating-IP to start with the :code:`resDRBDMou
     colocation colDRBD inf: resDRBDMount:Started msDRBD:Master
     order ordDRBD Mandatory: msDRBD:promote resDRBDMount:start
 
+Fix Split-Brain
+---------------
+
+If something went wrong and you run into a split-brain situation - it can be resolved like this:
+
+1. Just to be safe - you might want to create a backup from both nodes
+2. On the split-brain victim-server (*that one has NOT got the latest data*)
+
+.. code-block::
+
+    drbdadm disconnect <RES>
+    drbdadm secondary <RES>
+    drbdadm connect --discard-my-data <RES>
+
+3. On the split-brain survivor-server, which one was active after the split-brain occurred and thus has the latest data:
+
+.. code-block::
+
+    drbdadm primary <RES>
+    drbdadm connect <RES>
+
 ----
 
 Maintenance

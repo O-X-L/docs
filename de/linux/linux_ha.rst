@@ -401,6 +401,27 @@ Hinweis: Wenn Sie eine Dateifreigabe und eine floating-IP benötigen, welche mit
     colocation colDRBD inf: resDRBDMount:Started msDRBD:Master
     order ordDRBD Mandatory: msDRBD:promote resDRBDMount:start
 
+Split-Brain Lösen
+-----------------
+
+Sollte es zu einer Split-Brain Situation kommen - kann diese wie folgt gelöst werden:
+
+1. Wenn möglich zur Sicherheit eine Datensicherung beider Nodes erstellen
+2. Am Split-Brain Opfer-Server (*dieser hat veraltete Daten*)
+
+.. code-block::
+
+    drbdadm disconnect <RES>
+    drbdadm secondary <RES>
+    drbdadm connect --discard-my-data <RES>
+
+3. Am überlebenden Server, der bis zuletzt aktiv war und somit den neuesten Datenstand hat:
+
+.. code-block::
+
+    drbdadm primary <RES>
+    drbdadm connect <RES>
+
 ----
 
 Wartung
