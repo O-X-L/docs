@@ -1,0 +1,63 @@
+FROM python:3.12-slim-bookworm
+
+# BUILD: docker build --network=host . -f atm_ansible_dockerfile -t ansible
+# RUN: docker run --network=host --volume=/home/YOU/ansible:/play --rm -it ansible
+
+RUN apt update && \
+    mkdir /play && \
+    apt -y install sshpass git git-lfs openssh-client shellcheck && \
+    pip install --no-cache-dir --upgrade pip 2>/dev/null
+
+RUN pip install ansible && \
+    pip install jmespath netaddr passlib pywinrm requests cryptography && \
+    pip install ansible-lint yamllint pylint
+
+RUN ansible-galaxy collection install community.general ansible.utils ansible.netcommon
+
+WORKDIR /play
+
+RUN echo "#!/bin/sh \n\
+echo 'INSTALLING/UPGRADING DEFAULT ANSIBLE DEPENDENCIES..' \n\
+pip install --upgrade ansible ansible-lint yamllint pylint jmespath netaddr passlib pywinrm requests cryptography --root-user-action=ignore --no-warn-script-location >/dev/null \n\
+\n\
+if [ -f '/play/requirements.txt' ] \n\
+then \n\
+  echo 'INSTALLING/UPGRADING PYTHON MODULES..' \n\
+  pip install --upgrade -r '/play/requirements.txt' --root-user-action=ignore --no-warn-script-location >/dev/null \n\
+fi \n\
+\n\
+if [ -f '/play/requirements.yml' ] \n\
+then \n\
+  echo 'INSTALLING/UPGRADING ANSIBLE-COLLECTIONS..' \n\
+  ansible-galaxy collection install --upgrade -r /play/requirements.yml >/dev/null \n\
+  echo 'INSTALLING ANSIBLE-ROLES..' \n\
+  ansible-galaxy role install --force -r /play/requirements.yml  >/dev/null \n\
+fi \n\
+\n\
+if [ -f '/play/requirements_collections.yml' ] \n\
+then \n\
+  echo 'INSTALLING/UPGRADING ANSIBLE-COLLECTIONS..' \n\
+  ansible-galaxy collection install --upgrade -r /play/requirements_collections.yml >/dev/null \n\
+fi \n\
+\n\
+if [ -f '/play/collections/requirements.yml' ] \n\
+then \n\
+  echo 'INSTALLING/UPGRADING ANSIBLE-COLLECTIONS..' \n\
+  ansible-galaxy collection install --upgrade -r /play/collections/requirements.yml >/dev/null \n\
+fi \n\
+\n\
+if [ -f '/play/requirements_roles.yml' ] \n\
+then \n\
+  echo 'INSTALLING ANSIBLE-ROLES..' \n\
+  ansible-galaxy role install --force -r /play/requirements_roles.yml >/dev/null \n\
+fi \n\
+\n\
+if [ -f '/play/roles/requirements.yml' ] \n\
+then \n\
+  echo 'INSTALLING ANSIBLE-ROLES..' \n\
+  ansible-galaxy role install --force -r /play/roles/requirements.yml >/dev/null \n\
+fi \n\
+/bin/sh" > /ansible_requirements.sh && \
+    chmod +x /ansible_requirements.sh
+
+CMD ["/ansible_requirements.sh"]

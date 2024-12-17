@@ -40,7 +40,8 @@ Wenn Sie mit einem Windows-Client arbeiten, müssen Sie entweder:
 
   Sie wollen/brauchen vermutlich keine GUI-Installation von Linux. Eine reine Kommandozeilen-Installation ist ausreichend. Ein Beispiel: `Debian minimal <https://www.debian.org/CD/netinst/>`_ (*von uns empfohlen*) or `Ubuntu server <https://ubuntu.com/download/server>`_
 
-* Oder nutzen Sie `einen Docker container <https://hub.docker.com/r/ansible/ansible>`_
+* Oder nutzen Sie einen Docker container - `Beispiel Dockerfile <https://docs.o-x-l.com/_static/raw/atm_ansible_dockerfile>`_
+
 
 ----
 

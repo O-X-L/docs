@@ -40,7 +40,7 @@ If you are running on a Windows client-OS you will need to either:
 
   You might not want/need a GUI installation of linux. Commandline-only will do. Per example: `Debian minimal <https://www.debian.org/CD/netinst/>`_ (*what we recommend*) or `Ubuntu server <https://ubuntu.com/download/server>`_
 
-* Or `use a Docker container <https://hub.docker.com/r/ansible/ansible>`_
+* Or use a Docker container: `example Dockerfile <https://docs.o-x-l.com/_static/raw/atm_ansible_dockerfile>`_
 
 ----
 
