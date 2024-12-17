@@ -205,6 +205,58 @@ Fehlende Keys abfangen:
 
     cat test.json | jq '.[] | try .ip | .ip4 | .[]'
 
+Durch bestimmten tieferliegenden Wert filtern:
+
+.. code-block:: bash
+
+    cat test.json | jq '.[] | select(.ip.ip4[] == "192.168.5.4")'
+
+    > {
+    >   "ip": {
+    >     "ip4": [
+    >       "192.168.5.4"
+    >     ],
+    >     "ip6": []
+    >   }
+    > }
+
+Durch tieferliegnden Wert filtern, wenn dieser bei manchen Einträgen nicht gesetzt ist:
+
+.. code-block:: bash
+
+    # get list of interfaces that have at least one inactive IP
+
+    > {
+    >   "rows": [
+    >     {
+    >       "description": "LAN",
+    >       "carp": [
+    >         {"status": "ACTIVE", "ipaddr": "192.168.0.1"}
+    >       ]
+    >     },
+    >     {
+    >       "description": "WAN",
+    >       "carp": [
+    >         {"status": "ACTIVE", "ipaddr": "10.10.5.1"}
+    >       ]
+    >     },
+    >     {
+    >       "description": "TEST"
+    >     },
+    >     {
+    >       "description": "DMZ",
+    >       "carp": [
+    >         {"status": "ACTIVE", "ipaddr": "192.168.100.1"},
+    >         {"status": "BACKUP", "ipaddr": "192.168.100.10"}
+    >       ]
+    >     }
+    >   ]
+    > }
+
+    cat /tmp/test.json | jq '.rows[] | try select(.carp[].status == "BACKUP") | .description'
+
+    > "DMZ"
+
 ----
 
 Ressourcenmanagement
