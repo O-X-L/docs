@@ -57,6 +57,13 @@ Unterschiede mit Farben loggen:
 
    unbuffer diff --recursive --unified=3 --color before/vars/ vars/ | tee log.txt
 
+Unterschied zwischen zwei Dateien farbig anzeigen:
+
+.. code-block:: bash
+
+    # sudo apt install git
+    git diff --word-diff=color <file1> <file2>
+
 Datetime-String in Zeitstempel umwandeln:
 
 .. code-block:: bash
@@ -146,16 +153,10 @@ QR-Visitenkarte (`RFC6350 <https://datatracker.ietf.org/doc/html/rfc6350>`_) ers
     # create qr
     qrencode < vcard.txt -q vcard.png
 
-Unterschied zwischen zwei Dateien farbig anzeigen:
-
-.. code-block:: bash
-
-    # sudo apt install git
-    git diff --word-diff=color <file1> <file2>
-
 Loop im Bash-Script:
 
 .. code-block:: bash
+
     APPS=('main' 'test')
     for app in "${APPS[@]}"
     do

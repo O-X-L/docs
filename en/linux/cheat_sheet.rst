@@ -57,6 +57,13 @@ Log Difference with colors:
 
     unbuffer diff --recursive --unified=3 --color before/vars/ vars/ | tee log.txt
 
+Show colored difference between two files:
+
+.. code-block:: bash
+
+    # sudo apt install git
+    git diff --word-diff=color <file1> <file2>
+
 Convert Datetime string to timestamp:
 
 .. code-block:: bash
@@ -146,16 +153,10 @@ Create QR business-card (`RFC6350 <https://datatracker.ietf.org/doc/html/rfc6350
     # create qr
     qrencode < vcard.txt -q vcard.png
 
-Show colored difference between two files:
-
-.. code-block:: bash
-
-    # sudo apt install git
-    git diff --word-diff=color <file1> <file2>
-
 Loop in Bash-Script:
 
 .. code-block:: bash
+
     APPS=('main' 'test')
     for app in "${APPS[@]}"
     do
