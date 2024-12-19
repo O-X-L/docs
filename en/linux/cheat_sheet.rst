@@ -139,6 +139,8 @@ Create QR-Code:
 
 Create QR business-card (`RFC6350 <https://datatracker.ietf.org/doc/html/rfc6350>`_):
 
+.. code-block:: bash
+
     # add a file with this content:
     BEGIN:VCARD
     VERSION:3.0
