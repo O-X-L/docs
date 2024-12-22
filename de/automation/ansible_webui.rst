@@ -8,6 +8,8 @@ Ansible - WebUI
 
 .. include:: ../_include/wip.rst
 
+**Intro Videos:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VUgs7KZoS9GVJf67Qyarpc7>`_
+
 Intro
 #####
 

@@ -8,6 +8,8 @@ Ansible - Setup
 
 .. include:: ../_include/wip.rst
 
+**Intro Videos:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VUgs7KZoS9GVJf67Qyarpc7>`_
+
 Intro
 #####
 
@@ -30,18 +32,12 @@ Ansible `kann nur auf einem Linux/Unix-System ausgeführt werden <https://docs.a
 Windows
 =======
 
-`Microsoft WSL wird nicht unterstützt <https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#control-node-requirements>`_. Es kann funktionieren, aber es kann instabil sein.
+Unter Windows kann das `Subsystem-Linux <https://docs.microsoft.com/en-us/windows/wsl/about>`_ genutzt werden.
 
-Wenn Sie mit einem Windows-Client arbeiten, müssen Sie entweder:
+Container
+=========
 
-* Eine lokal Linux VM installieren (z. B. mit `VirtualBox <https://www.virtualbox.org/>`_)
-
-  Wenn Sie eine IDE/Editor zur Verwaltung Ihrer Ansible-Projekte verwenden, sollten Sie Ihre lokalen Projektverzeichnisse auf Ihre VM einbinden/umleiten.
-
-  Sie wollen/brauchen vermutlich keine GUI-Installation von Linux. Eine reine Kommandozeilen-Installation ist ausreichend. Ein Beispiel: `Debian minimal <https://www.debian.org/CD/netinst/>`_ (*von uns empfohlen*) or `Ubuntu server <https://ubuntu.com/download/server>`_
-
-* Oder nutzen Sie einen Docker container - `Beispiel Dockerfile <https://docs.o-x-l.com/_static/raw/atm_ansible_dockerfile>`_
-
+Docker: `Beispiel Dockerfile <https://docs.oxl.at/_static/raw/atm_ansible_dockerfile>`_
 
 ----
 

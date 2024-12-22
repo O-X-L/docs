@@ -12,6 +12,8 @@ RedHat Ansible
 
 .. include:: ../_include/wip.rst
 
+**Intro Videos:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VVjtK89CcwCEccT7KHah9Sh>`_
+
 Intro
 #####
 

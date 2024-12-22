@@ -11,4 +11,8 @@
 RedHat Ansible
 ##############
 
-See: :ref:`Ansible <atm_ansible>`
+**Intro Videos:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VVjtK89CcwCEccT7KHah9Sh>`_
+
+* :ref:`Ansible Intro <atm_ansible>`
+* :ref:`Ansible Setup <atm_ansible_setup>`
+* :ref:`Ansible WebUI <atm_ansible_webui>`
