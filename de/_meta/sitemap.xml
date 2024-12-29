@@ -3,6 +3,7 @@
    <url><loc>https://docs.oxl.at</loc></url>
 
    <url><loc>https://docs.oxl.at/firewall/nftables.html</loc></url>
+   <url><loc>https://docs.oxl.at/firewall/nftables_tproxy.html</loc></url>
 
    <url><loc>https://docs.oxl.at/proxy/1_intro.html</loc></url>
    <url><loc>https://docs.oxl.at/proxy/forward_squid.html</loc></url>
@@ -12,6 +13,7 @@
    <url><loc>https://docs.oxl.at/waf/1_intro.html</loc></url>
    <url><loc>https://docs.oxl.at/waf/2_fingerprinting.html</loc></url>
    <url><loc>https://docs.oxl.at/waf/haproxy.html</loc></url>
+   <url><loc>https://docs.oxl.at/waf/coraza.html</loc></url>
 
    <url><loc>https://docs.oxl.at/mail/1_intro.html</loc></url>
    <url><loc>https://docs.oxl.at/mail/security.html</loc></url>
