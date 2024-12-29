@@ -65,10 +65,10 @@ If you only want to read the Server-Name-Identifier from the TLS-Handshake - thi
 
     sudo apt install squid-openssl  # the package needs to have ssl-support enabled at compile-time
 
-    openssl dhparam -outform PEM -out /etc/squid/ssl_bump.dh.pem 2048
+    openssl dhparam -outform PEM -out /usr/share/squid/bump.dh.pem 2048
 
     # openssl create self-signed cert
-    openssl req -x509 -newkey rsa:4096 -keyout /etc/squid/ssl_bump.key -out /etc/squid/ssl_bump.crt -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=Forward Proxy"
+    openssl req -x509 -newkey rsa:4096 -keyout /usr/share/squid/bump.key -out /usr/share/squid/bump.crt -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=Forward Proxy"
 
     # create ssl cache DB
     sudo mkdir -p /var/lib/squid
@@ -189,14 +189,6 @@ It allows us to redirect traffic without modifying it. This solves the issue wit
 
 The major two integrations of TPROXY we will focus on are the ones in IPTables and NFTables.
 
-In both implementations this is how we will need to handle the three main traffic types:
-
-* **INPUT** traffic: can be redirected to TPROXY directly
-* **FORWARD** traffic: can be redirected to TPROXY directly
-* **OUTPUT** traffic: needs to be **routed to loopback** to be redirected to TPROXY
-
-Why do we need to send 'output' traffic to loopback? Because TPROXY is only available in the 'prerouting-filter' chain and 'output' traffic does not hit that one by default.
-
 NFTables
 ========
 
@@ -224,13 +216,23 @@ Know-How
 
   You may not all 'example.com' and '.example.com' as it will result in a syntax error
 
-* You may want to exclude Port-Probes from your logs:
+* You may want to exclude Port-Probes from your logs and change the log-format:
 
     .. code-block:: text
 
         acl hasRequest has request
-        access_log syslog:local2 squid hasRequest
 
+        # syslog usage:
+        logformat custom_log [%>a]:%>p %Ss/%03>Hs:%Sh "%rm %ru HTTP/%rv" %mt %>Hs %<st %tr "%{User-Agent}>h" "%{Referer}>h"
+        logfile_rotate 0
+        access_log syslog:local2 custom_log hasRequest
+
+        # log-file usage: (with timestamp)
+        # logformat custom_log %{%Y-%m-%d %H:%M:%S}tl [%>a]:%>p %Ss/%03>Hs:%Sh "%rm %ru HTTP/%rv" %mt %>Hs %<st %tr "%{User-Agent}>h" "%{Referer}>h"
+        access_log /var/log/squid/access.log custom_log hasRequest
+
+
+.. _proxy_forward_squid_cnf:
 
 Baseline
 ========
@@ -242,18 +244,19 @@ See also: `Squid documentation - http_port <http://www.squid-cache.org/Doc/confi
 .. code-block:: text
 
      # clients =HTTP[TCP]=> SQUID =TCP=> TARGET
-     http_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/etc/squid/ssl_bump.crt key=/etc/squid/ssl_bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/etc/squid/ssl_bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+     http_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
 
      # clients =HTTPS[TCP]=> SQUID =TCP=> TARGET
-     https_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/etc/squid/ssl_bump.crt key=/etc/squid/ssl_bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/etc/squid/ssl_bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+     https_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
 
      # clients =ROUTED TCP=> SQUID =TCP=> TARGET
      http_port 3129 intercept
-     https_port 3130 intercept ssl-bump tcpkeepalive=60,30,3 cert=/etc/squid/ssl_bump.crt key=/etc/squid/ssl_bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/etc/squid/ssl_bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+     https_port 3130 intercept ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
 
      # clients =TPROXY TCP=> SQUID (@127.0.0.1) =TCP=> TARGET
      http_port 3129 tproxy
-     https_port 3130 tproxy ssl-bump tcpkeepalive=60,30,3 cert=/etc/squid/ssl_bump.crt key=/etc/squid/ssl_bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/etc/squid/ssl_bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+     https_port 3130 tproxy ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+     spoof_client_ip deny all
 
 You can define the **IPs Squid should use for outbound traffic**. This can be useful to define specific firewall rules for those addresses:
 
@@ -261,6 +264,22 @@ You can define the **IPs Squid should use for outbound traffic**. This can be us
 
     tcp_outgoing_address 192.168.10.2
     tcp_outgoing_address 2001:db8::1:2
+
+These are some security-hardening settings:
+
+.. code-block:: text
+
+    httpd_suppress_version_string on
+    via off
+    reply_header_access X-Cache deny all
+    reply_header_access X-Cache-Lookup deny all
+    follow_x_forwarded_for allow localhost
+    follow_x_forwarded_for deny all
+    request_header_access X-Forwarded-For deny all
+    forwarded_for delete
+    http_access deny manager
+    tls_outgoing_options options=NO_SSLv3,NO_TLSv1 cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
+
 
 You may want to cover at least those basic filters:
 
@@ -410,9 +429,7 @@ Practical examples of this:
 * Network gateway (*router*) sends traffic to proxy for interception
 * 'Client' devices use the proxy as gateway instead of the actual router
 
-In this case we will need to set-up Squid listeners in **intercept** mode to process the traffic.
-
-You could also use the **tproxy** mode - but that might be more complicated to set-up when you want to check the traffic that enters at the 'forwarding' chain.
+In this case we will need to set-up Squid listeners in **intercept** or **tproxy** mode to process the traffic.
 
 Forwarded Traffic
 =================

@@ -10,15 +10,9 @@
    :class: wiki-img-lg
    :alt: OXL Docs - NFTables Chains & Hooks
 
-.. |nft_tproxy| image:: ../_static/img/fw_nftables_tproxy.png
-   :class: wiki-img-sm
-   :alt: OXL Docs - NFTables TProxy
-
 ========
 NFTables
 ========
-
-.. include:: ../_include/wip.rst
 
 ----
 
@@ -244,6 +238,7 @@ Example **monitor information**:
     > trace id a95ea7ef ip filter input packet: iif "enp0s25" ether saddr 00:0d:b9:4a:49:3d ether daddr 3c:97:0e:39:aa:20 ip saddr 8.8.8.8 ip daddr 192.168.2.118 ip dscp cs0 ip ecn not-ect ip ttl 115 ip id 0 ip length 84 icmp type echo-reply icmp code net-unreachable icmp id 9253 icmp sequence 1 @th,64,96 24106705117628271805883024640
     > trace id a95ea7ef ip filter input rule ct state established,related counter packets 168 bytes 53513 accept (verdict accept)
 
+----
 
 Translate IPTables
 ******************
@@ -345,93 +340,10 @@ Config
 
 `NFTables base-config example <https://docs.o-x-l.com/_static/raw/fw_nftables_base.txt>`_
 
-.. _fw_nftables_tproxy:
-
 TPROXY
 ******
 
-Quote from the `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
-
-.. note::
-
-    Transparent proxying often involves "intercepting" traffic on a router.
-    This is usually done with the iptables REDIRECT target; however, there are serious limitations of that method.
-    One of the major issues is that it actually modifies the packets to change the destination address -- which might not be acceptable in certain situations. (Think of proxying UDP for example: you won't be able to find out the original destination address. Even in case of TCP getting the original destination address is racy.)
-    The 'TPROXY' target provides similar functionality without relying on NAT.
-
-
-This functionality allows us to send traffic to an userspace process and read/modify it.
-
-This can **enable powerful solutions**! Per example see: `blog.cloudflare.com - Abusing Linux's firewall <https://blog.cloudflare.com/how-we-built-spectrum/>`_
-
-.. warning::
-
-    TPROXY seems to only support local targets.
-
-    As one can see in the kernel sources - there is a check if the target port is in use: `nft_tproxy.c <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c#n64>`_
-
-References
-----------
-
-* `Kernel - TPROXY <https://docs.kernel.org/networking/tproxy.html>`_
-* `PowerDNS - TPROXY <https://powerdns.org/tproxydoc/tproxy.md.html>`_
-* `Squid - TPROXY <http://wiki.squid-cache.org/Features/Tproxy4>`_
-* `Policy Routing - TPROXY <https://serverfault.com/questions/1052717/how-to-translate-ip-route-add-local-0-0-0-0-0-dev-lo-table-100-to-systemd-netw>`_
-* `NFTables source - TPROXY <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c>`_
-* `Kernel source - TPROXY <http://git.netfilter.org/nftables/commit/?id=2be1d52644cf77bb2634fb504a265da480c5e901>`_
-
-Usage
------
-
-One thing you'll need to know: The TPROXY operation can only be used in the **prerouting - filter (mangle)** chain!
-
-Traffic that passes this chain/hook by default can easily be proxied.
-
-**OUTPUT CHALLENGE:**
-
-Because of this - traffic that enters at the 'output' (*originating from the same host*) chain/hook can not be redirected directly.
-
-We need to route it to 'loopback' so it passes through 'prerouting'.
-
-NOTE: This image shows the problem we are facing in a very abstract way. It might not display the traffic-flow in a correct manner!
-
-|nft_tproxy|
-
-
-**REMOTE PROXY CHALLENGE:**
-
-You might want to target a remote proxy server. This does not work with this operation on its own as most proxies do not support DNAT forwarding.
-
-One would need to use a proxy-forwarder tool that can handle this for you.
-
-We have patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_
-
-With a tool like that you can wrap the plain traffic received from TPROXY and forward or tunnel it.
-
-.. code-block:: text
-
-    # NFTables =TCP=> TPROXY (forwarder @ 127.0.0.1) =HTTP[TCP]=> PROXY
-
-    > curl https://www.o-x-l.com
-    # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
-    # proxy (squid)
-    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
-
-    > curl http://www.o-x-l.com
-    # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
-    # proxy (squid)
-    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
-
-
-
-Examples
---------
-
-* `NFTables TPROXY example <https://gist.github.com/superstes/6b7ed764482e4a8a75334f269493ac2e>`_, `local NFTables TPROXY example <https://docs.o-x-l.com/_static/raw/fw_nftables_tproxy.txt>`_
-* `IPTables TPROXY example <https://gist.github.com/superstes/c4fefbf403f61812abf89165d7bc4000>`_, `local IPTables TPROXY example <https://docs.o-x-l.com/_static/raw/fw_iptables_tproxy.txt>`_
+See: :ref:`NFTables TProxy <fw_nftables_tproxy>`
 
 ----
 
@@ -442,41 +354,5 @@ Ansible
 *******
 
 See: `Ansible-based examples <https://github.com/ansibleguy/infra_nftables/blob/latest/docs/UseCaseExamples.md>`_
-
-IPv4 Baseline
-*************
-
-
-IPv6 Baseline
-*************
-
-
-Security Baseline
-*****************
-
-
-Docker host
-***********
-
-
-Proxmox host (PVE)
-******************
-
-
-Forwarder (Router, Network firewall, VPN Server)
-************************************************
-
-
-----
-
-Integrations
-############
-
-Fail2Ban
-********
-
-
-Squid
-*****
 
 .. include:: ../_include/user_rath.rst

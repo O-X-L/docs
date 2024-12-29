@@ -1,0 +1,261 @@
+.. _fw_nftables_tproxy:
+
+.. include:: ../_include/head.rst
+
+.. |nft_tproxy| image:: ../_static/img/fw_nftables_tproxy.png
+   :class: wiki-img-sm
+   :alt: OXL Docs - NFTables TProxy
+
+========
+NFTables
+========
+
+----
+
+Intro
+#####
+
+**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/watch?v=dnkuDjblI-k&t=41s>`_
+
+Quote from the `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
+
+.. note::
+
+    Transparent proxying often involves "intercepting" traffic on a router.
+    This is usually done with the iptables REDIRECT target; however, there are serious limitations of that method.
+    One of the major issues is that it actually modifies the packets to change the destination address -- which might not be acceptable in certain situations. (Think of proxying UDP for example: you won't be able to find out the original destination address. Even in case of TCP getting the original destination address is racy.)
+    The 'TPROXY' target provides similar functionality without relying on NAT.
+
+
+This functionality allows us to send traffic to an userspace process and read/modify it.
+
+This can **enable powerful solutions**! Per example see: `blog.cloudflare.com - Abusing Linux's firewall <https://blog.cloudflare.com/how-we-built-spectrum/>`_
+
+.. warning::
+
+    TPROXY seems to only support local targets.
+
+    As one can see in the kernel sources - there is a check if the target port is in use: `nft_tproxy.c <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c#n64>`_
+
+Links
+*****
+
+* `Kernel - TPROXY <https://docs.kernel.org/networking/tproxy.html>`_
+* `PowerDNS - TPROXY <https://powerdns.org/tproxydoc/tproxy.md.html>`_
+* `Squid - TPROXY <http://wiki.squid-cache.org/Features/Tproxy4>`_
+* `Policy Routing - TPROXY <https://serverfault.com/questions/1052717/how-to-translate-ip-route-add-local-0-0-0-0-0-dev-lo-table-100-to-systemd-netw>`_
+* `NFTables source - TPROXY <https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/tree/net/netfilter/nft_tproxy.c>`_
+* `Kernel source - TPROXY <http://git.netfilter.org/nftables/commit/?id=2be1d52644cf77bb2634fb504a265da480c5e901>`_
+
+----
+
+Usage
+#####
+
+Important: The TPROXY operation can only be used in the **prerouting -150 (mangle)** chain!
+
+Dataflow
+********
+
+* **Devices inside the Network**
+
+  * **Pre-Routing -150 (mangle)**
+  * Pre-Routing -100 (DNAT)
+  * Routing (auf Loopback)
+  * Input (TProxy)
+
+* **Outbound traffic** from the system (firewall) itself
+
+  * **Output -150 (mangle)**
+  * Output -100 (DNAT)
+  * Routing (auf Loopback)
+  * Pre-Routing -100 (DNAT)
+  * Routing
+  * Input (TProxy)
+
+
+We need to route traffic to 'loopback' so it passes through 'prerouting'.
+
+----
+
+Setup
+*****
+
+We need to configure the system to route the traffic to the loopback interface:
+
+.. code-block:: bash
+
+    # enable traffic forwarding
+    sysctl -w net.ipv4.ip_forward=1
+
+    # disable the RP-filter for internal interfaces
+    sysctl net.ipv4.conf.${IIF}.rp_filter=0
+
+    # create a routing table
+    echo "200 proxy_loopback" > /etc/iproute2/rt_tables.d/proxy.conf
+
+    # route specifically marked traffic to loopback
+    ip rule add fwmark 200 table proxy_loopback
+    ip -6 rule add fwmark 200 table proxy_loopback
+    ip route add local default dev lo table proxy_loopback
+    ip -6 route add local default dev lo table proxy_loopback
+
+In this case we use '200' as generic firewall-mark that will also be referenced by our NFTables rules.
+
+To make this routing-configuration persisten - we add those commands to the NFTables service:
+
+.. code-block:: text
+
+    # File: /etc/systemd/system/nftables.service.d/override.conf
+    [Service]
+    ExecStartPost=/bin/bash -c "ip rule add fwmark 200 table proxy_loopback || true && \
+                                ip -6 rule add fwmark 200 table proxy_loopback || true && \
+                                ip route add local default dev lo table proxy_loopback || true && \
+                                ip -6 route add local default dev lo table proxy_loopback || true &&"
+
+The sysctl settings need to be written to :code:`/etc/sysctl.conf` to make them persistent.
+
+----
+
+Configuration
+*************
+
+In this example only HTTP+S requests...
+
+* from devices inside our internal network
+* that have external targets
+* and are sent/routed over this network-firewall
+
+...are redirected to a local proxy (squid).
+
+This ruleset was simplified to be easier to understand!
+
+Note: When using the :ref:`Squid-Proxy <proxy_forward_squid_cnf>` we need to have different listeners and thus ports for HTTP & HTTPS.
+
+.. code-block:: text
+
+    define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
+    define NET_BOGONS_V4 = { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 127.0.53.53, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 };
+    define PROXY_PORT_HTTP = 3129;
+    define PROXY_PORT_HTTPS = 3130;
+    define PROXY_MARK = 200;
+    define PROXY_PROTOS = { tcp };
+    define PROXY_PORTS = { 80, 443 };
+
+    table inet default {
+      chain prerouting_mangle {
+        type filter hook prerouting priority -150; policy accept;
+
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 jump transparent_proxy
+      }
+
+      chain transparent_proxy {
+        # route traffic to local target
+        meta mark set $PROXY_MARK
+
+        # redirect routed traffic to proxy
+        tcp dport 80 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTP
+        tcp dport 80 tproxy ip6 to [::1]:$PROXY_PORT_HTTP
+        tcp dport 443 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTPS
+        tcp dport 443 tproxy ip6 to [::1]:$PROXY_PORT_HTTPS
+      }
+
+      chain input {
+        ...
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 accept comment "Transparent Proxy"
+        ...
+      }
+
+      ...
+
+----
+
+Output & Forward Traffic
+========================
+
+It gets a little more complicated if you also want/need to filter outbound traffic from the system, that is running NFTables directly.
+
+.. code-block:: text
+
+    define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
+    define NET_BOGONS_V4 = { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 127.0.53.53, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 };
+    define PROXY_PORT_HTTP = 3129;
+    define PROXY_PORT_HTTPS = 3130;
+    define PROXY_MARK = 200;
+    define PROXY_USER = proxy;
+    define PROXY_PROTOS = { tcp };
+    define PROXY_PORTS = { 80, 443 };
+
+    table inet default {
+      chain output_mangle {
+        type route hook output priority -150; policy accept;
+
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 jump transparent_proxy_loop
+      }
+
+      chain transparent_proxy_loop {
+        meta skuid != $PROXY_USER meta mark set $PROXY_MARK
+      }
+
+      chain prerouting_mangle {
+        type filter hook prerouting priority -150; policy accept;
+
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 jump transparent_proxy
+      }
+
+      chain transparent_proxy {
+        # route traffic to local target
+        meta mark set $PROXY_MARK
+
+        # redirect routed traffic to proxy
+        tcp dport 80 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTP
+        tcp dport 80 tproxy ip6 to [::1]:$PROXY_PORT_HTTP
+        tcp dport 443 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTPS
+        tcp dport 443 tproxy ip6 to [::1]:$PROXY_PORT_HTTPS
+      }
+
+      chain input {
+        type filter hook input priority 0; policy drop;
+        ...
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 accept comment "Transparent Proxy"
+        ...
+      }
+
+      chain output {
+        type filter hook output priority 0; policy drop;
+
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip daddr != $NET_BOGONS_V4 meta skuid $PROXY_USER accept comment "Proxy Outbound"
+        ...
+      }
+
+      ...
+
+----
+
+Remote-Proxy Problem
+********************
+
+You might want to target a remote proxy server. This does not work with this operation on its own as most proxies do not support DNAT forwarding.
+
+One would need to use a proxy-forwarder tool that can handle this for you.
+
+We have patched an existing tool for exactly this purpose: `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_
+
+With a tool like that you can wrap the plain traffic received from TPROXY and forward or tunnel it.
+
+.. code-block:: text
+
+    # NFTables =TCP=> TPROXY (forwarder @ 127.0.0.1) =HTTP[TCP]=> PROXY
+
+    > curl https://www.o-x-l.com
+    # proxy-forwarder
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
+    # proxy (squid)
+    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
+
+    > curl http://www.o-x-l.com
+    # proxy-forwarder
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
+    # proxy (squid)
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
