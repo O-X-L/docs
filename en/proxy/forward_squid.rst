@@ -27,6 +27,8 @@ Whenever we are referring to a 'client' - it will be a server, workstation or ne
 
 Note: Squid can also be used as a reverse proxy, but this documentation will focus on its forward-proxy functionality.
 
+**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VXwe0jaSggxvVw1diOfJ5bn>`_
+
 ----
 
 Setup
