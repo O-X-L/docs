@@ -16,7 +16,7 @@ Forward Proxy - Squid
 
   Mit dieser Anwendung können Sie den Netzwerkverkehr abfangen und verändern.
 
-  Das kann illegal sein => Sie werden gewarnt.
+  Das kann illegal sein => Sie sind gewarnt.
 
 ----
 
@@ -273,6 +273,8 @@ Einige Settings sind zur Security empfohlen:
 
     httpd_suppress_version_string on
     via off
+    reply_header_access Server deny all
+    reply_header_access X-Squid-Error deny all
     reply_header_access X-Cache deny all
     reply_header_access X-Cache-Lookup deny all
     follow_x_forwarded_for allow localhost
@@ -281,6 +283,16 @@ Einige Settings sind zur Security empfohlen:
     forwarded_for delete
     http_access deny manager
     tls_outgoing_options options=NO_SSLv3,NO_TLSv1 cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
+    http_access deny !localhost to_localhost
+
+IPv6 aktivieren:
+
+.. code-block:: text
+
+    acl src_proto_ip6 src ipv6
+    acl dst_proto_ip6 dst ipv6
+    http_access deny src_proto_ip6 !all
+    http_access deny dst_proto_ip6 !all
 
 Zumindest diese grundlegenden Filter sollten Sie abdecken:
 
