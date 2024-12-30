@@ -15,7 +15,7 @@ NFTables
 Intro
 #####
 
-**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/watch?v=dnkuDjblI-k&t=41s>`_
+**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VWm3atUEI-OwAcoxIXMtf3N>`_
 
 Zitat von den `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
 

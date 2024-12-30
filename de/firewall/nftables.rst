@@ -25,7 +25,7 @@ Sie kann als Host-Firewall oder sogar als Netzwerk-Firewall verwendet werden.
 
 Es ist die `Standard-Firewall in Debian 10+ <https://wiki.debian.org/nftables>`_.
 
-**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/watch?v=dnkuDjblI-k&t=41s>`_
+**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VWm3atUEI-OwAcoxIXMtf3N>`_
 
 
 Chain hooks/Table families

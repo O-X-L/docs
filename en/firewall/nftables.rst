@@ -25,7 +25,7 @@ It can be used as host-firewall or even network-firewall.
 
 It's the `default firewall in Debian 10+ <https://wiki.debian.org/nftables>`_.
 
-**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/watch?v=dnkuDjblI-k&t=41s>`_
+**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VWcwaOCuNI3mPZ8t6palQx5>`_
 
 
 Chain hooks/Table families
