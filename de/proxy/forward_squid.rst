@@ -67,16 +67,20 @@ Wenn Sie nur den Server-Name-Identifier aus dem TLS-Handshake auslesen möchte, 
 
     sudo apt install squid-openssl  # the package needs to have ssl-support enabled at compile-time
 
+    mkdir /usr/share/squid/ssl
+    chmod 750 /usr/share/squid/ssl
+
     openssl dhparam -outform PEM -out /usr/share/squid/bump.dh.pem 2048
 
     # openssl create self-signed cert
-    openssl req -x509 -newkey rsa:4096 -keyout /usr/share/squid/bump.key -out /usr/share/squid/bump.crt -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=Forward Proxy"
+    openssl ecparam -out /usr/share/squid/bump.key -name prime256v1 -genkey
+    openssl req -new -x509 -nodes -key /usr/share/squid/bump.key -out /usr/share/squid/bump.crt -days 3650 -subj "/CN=Forward Proxy"
+
+    chown -R root:proxy /usr/share/squid/ssl
 
     # create ssl cache DB
-    sudo mkdir -p /var/lib/squid
-    sudo rm -rf /var/lib/squid/ssl_db
-    sudo /usr/lib/squid/security_file_certgen -c -s /var/lib/squid/ssl_db -M 20MB
-    sudo chown -R proxy:proxy /var/lib/squid
+    /usr/lib/squid/security_file_certgen -c -s /usr/share/squid/ssl_db -M 20MB
+    chown -R proxy:proxy /usr/share/squid/ssl_db
 
 Wenn Sie SSL-Verbindungen abfangen wollen (*Man-in-the-middle-like*), müssen Sie einige weitere Schritte durchführen: `squid docs - ssl interception <https://wiki.squid-cache.org/ConfigExamples/Intercept/SslBumpExplicit>`_
 

@@ -65,16 +65,20 @@ If you only want to read the Server-Name-Identifier from the TLS-Handshake - thi
 
     sudo apt install squid-openssl  # the package needs to have ssl-support enabled at compile-time
 
-    openssl dhparam -outform PEM -out /usr/share/squid/bump.dh.pem 2048
+    mkdir /usr/share/squid/ssl
+    chmod 750 /usr/share/squid/ssl
+
+    openssl dhparam -outform PEM -out /usr/share/squid/ssl/bump.dh.pem 2048
 
     # openssl create self-signed cert
-    openssl req -x509 -newkey rsa:4096 -keyout /usr/share/squid/bump.key -out /usr/share/squid/bump.crt -sha256 -days 3650 -nodes -subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=Forward Proxy"
+    openssl ecparam -out /usr/share/squid/ssl/snakeoil.key -name prime256v1 -genkey
+    openssl req -new -x509 -nodes -key /usr/share/squid/ssl/snakeoil.key -out /usr/share/squid/ssl/snakeoil.crt -days 3650 -subj "/CN=Forward Proxy"
+
+    chown -R root:proxy /usr/share/squid/ssl
 
     # create ssl cache DB
-    sudo mkdir -p /var/lib/squid
-    sudo rm -rf /var/lib/squid/ssl_db
-    sudo /usr/lib/squid/security_file_certgen -c -s /var/lib/squid/ssl_db -M 20MB
-    sudo chown -R proxy:proxy /var/lib/squid
+    /usr/lib/squid/security_file_certgen -c -s /usr/share/squid/ssl_db -M 20MB
+    chown -R proxy:proxy /usr/share/squid/ssl_db
 
 If you want to intercept SSL connections (*Man-in-the-middle like*) - you will have to go through some more steps: `squid docs - ssl interception <https://wiki.squid-cache.org/ConfigExamples/Intercept/SslBumpExplicit>`_
 
