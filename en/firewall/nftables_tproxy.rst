@@ -6,16 +6,16 @@
    :class: wiki-img-sm
    :alt: OXL Docs - NFTables TProxy
 
-========
-NFTables
-========
+===============
+NFTables TProxy
+===============
 
 ----
 
 Intro
 #####
 
-**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VWcwaOCuNI3mPZ8t6palQx5>`_
+**Intro Videos:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VWcwaOCuNI3mPZ8t6palQx5>`_
 
 Quote from the `tproxy kernel docs <https://docs.kernel.org/networking/tproxy.html>`_:
 
@@ -62,16 +62,17 @@ Dataflow
   * **Pre-Routing -150 (mangle)**
   * Pre-Routing -100 (DNAT)
   * Routing (auf Loopback)
-  * Input (TProxy)
+  * Input Filter (TProxy Service)
 
 * **Outbound traffic** from the system (firewall) itself
 
   * **Output -150 (mangle)**
   * Output -100 (DNAT)
+  * Output Filter
   * Routing (auf Loopback)
   * Pre-Routing -100 (DNAT)
   * Routing
-  * Input (TProxy)
+  * Input Filter (TProxy Service)
 
 
 We need to route traffic to 'loopback' so it passes through 'prerouting'.
@@ -100,20 +101,66 @@ We need to configure the system to route the traffic to the loopback interface:
     ip route add local default dev lo table proxy_loopback
     ip -6 route add local default dev lo table proxy_loopback
 
-In this case we use '200' as generic firewall-mark that will also be referenced by our NFTables rules.
+In this case we use :code:`200` as generic firewall-mark that will also be referenced by our NFTables rules.
 
-To make this routing-configuration persisten - we add those commands to the NFTables service:
+To make this routing-configuration persistent - we create a script and add it to the NFTables service:
+
+.. code-block:: bash
+
+    #!/bin/bash
+    # File: /usr/local/sbin/proxy_loopback_routing.sh
+
+    set -u
+
+    TABLE='proxy_loopback'
+    MARK=200
+
+    if ! ip rule show | grep -q "$TABLE"
+    then
+      echo 'Adding TProxy IP4-rule'
+      ip rule add fwmark "$MARK" table "$TABLE"
+    fi
+
+    if ! ip -6 rule show | grep -q "$TABLE"
+    then
+      echo 'Adding TProxy IP6-rule'
+      ip -6 rule add fwmark "$MARK" table "$TABLE"
+    fi
+
+    if ! ip route show table all | grep -q "$TABLE"
+    then
+      echo 'Adding TProxy IP4-route'
+      ip route add local default dev lo table "$TABLE"
+    fi
+
+    if ! ip -6 route show table all | grep -q "$TABLE"
+    then
+      echo 'Adding TProxy IP6-route'
+      ip -6 route add local default dev lo table "$TABLE"
+    fi
 
 .. code-block:: text
 
     # File: /etc/systemd/system/nftables.service.d/override.conf
     [Service]
-    ExecStartPost=/bin/bash -c "ip rule add fwmark 200 table proxy_loopback || true && \
-                                ip -6 rule add fwmark 200 table proxy_loopback || true && \
-                                ip route add local default dev lo table proxy_loopback || true && \
-                                ip -6 route add local default dev lo table proxy_loopback || true &&"
+    ExecStartPost=/bin/bash /usr/local/sbin/proxy_loopback_routing.sh
+
+.. code-block:: text
+
+    # File: /etc/systemd/system/networking.service.d/override.conf
+    [Service]
+    ExecStartPost=/bin/bash /usr/local/sbin/proxy_loopback_routing.sh
 
 The sysctl settings need to be written to :code:`/etc/sysctl.conf` to make them persistent.
+
+You can check those routing-setting with the following commands:
+
+.. code-block:: bash
+
+    ip rule list
+    ip -6 rule list
+    ip route show table all | grep -q proxy
+    ip -6 route show table all | grep -q proxy
 
 ----
 
@@ -136,6 +183,9 @@ Note: When using the :ref:`Squid-Proxy <proxy_forward_squid_cnf>` we need to hav
 
     define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
     define NET_BOGONS_V4 = { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 127.0.53.53, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 };
+    # add all of your firewall-system's IPs:
+    define HOST_SELF = { 127.0.0.1 };
+
     define PROXY_PORT_HTTP = 3129;
     define PROXY_PORT_HTTPS = 3130;
     define PROXY_MARK = 200;
@@ -155,15 +205,22 @@ Note: When using the :ref:`Squid-Proxy <proxy_forward_squid_cnf>` we need to hav
 
         # redirect routed traffic to proxy
         tcp dport 80 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTP
-        tcp dport 80 tproxy ip6 to [::1]:$PROXY_PORT_HTTP
         tcp dport 443 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTPS
-        tcp dport 443 tproxy ip6 to [::1]:$PROXY_PORT_HTTPS
+        # tcp dport 80 tproxy ip6 to [::1]:$PROXY_PORT_HTTP
+        # tcp dport 443 tproxy ip6 to [::1]:$PROXY_PORT_HTTPS
       }
 
       chain input {
         ...
-        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 accept comment "Transparent Proxy"
+        jump input_transparent_proxy
         ...
+      }
+
+      chain input_transparent_proxy {
+        # do not handle 'real' input traffic
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip daddr $HOST_SELF return
+
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 accept
       }
 
       ...
@@ -179,9 +236,13 @@ It gets a little more complicated if you also want/need to filter outbound traff
 
     define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
     define NET_BOGONS_V4 = { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 127.0.53.53, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 };
+    # add all of your firewall-system's IPs:
+    define HOST_SELF = { 127.0.0.1 };
+
     define PROXY_PORT_HTTP = 3129;
     define PROXY_PORT_HTTPS = 3130;
-    define PROXY_MARK = 200;
+    define PROXY_MARK_IN = 200;
+    define PROXY_MARK_OUT = 201;
     define PROXY_USER = proxy;
     define PROXY_PROTOS = { tcp };
     define PROXY_PORTS = { 80, 443 };
@@ -190,45 +251,94 @@ It gets a little more complicated if you also want/need to filter outbound traff
       chain output_mangle {
         type route hook output priority -150; policy accept;
 
-        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 jump transparent_proxy_loop
+        meta l4proto $proxy_protos th dport $PROXY_PORTS ip saddr $HOST_SELF ip daddr != $NET_BOGONS_V4 jump transparent_proxy_loop
       }
 
       chain transparent_proxy_loop {
-        meta skuid != $PROXY_USER meta mark set $PROXY_MARK
+        meta skuid != $PROXY_USER meta mark set $PROXY_MARK_IN
       }
 
       chain prerouting_mangle {
         type filter hook prerouting priority -150; policy accept;
 
-        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 jump transparent_proxy
+        meta l4proto $proxy_protos th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 jump transparent_proxy
+        meta l4proto $proxy_protos th dport $PROXY_PORTS ip saddr $HOST_SELF ip daddr != $NET_BOGONS_V4 jump transparent_proxy
       }
 
       chain transparent_proxy {
+        # do not loop traffic that was already looped
+        meta mark $PROXY_MARK_IN meta mark set $PROXY_MARK_OUT
+
         # route traffic to local target
-        meta mark set $PROXY_MARK
+        meta mark != $PROXY_MARK_OUT meta mark set $PROXY_MARK_IN
 
         # redirect routed traffic to proxy
         tcp dport 80 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTP
-        tcp dport 80 tproxy ip6 to [::1]:$PROXY_PORT_HTTP
         tcp dport 443 tproxy ip to 127.0.0.1:$PROXY_PORT_HTTPS
-        tcp dport 443 tproxy ip6 to [::1]:$PROXY_PORT_HTTPS
+        # tcp dport 80 tproxy ip6 to [::1]:$PROXY_PORT_HTTP
+        # tcp dport 443 tproxy ip6 to [::1]:$PROXY_PORT_HTTPS
       }
 
       chain input {
-        type filter hook input priority 0; policy drop;
         ...
-        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 accept comment "Transparent Proxy"
+        jump input_transparent_proxy
         ...
+      }
+
+      chain input_transparent_proxy {
+        # do not handle 'real' input traffic
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip daddr $HOST_SELF return
+
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip saddr $NET_PRIVATE ip daddr != $NET_BOGONS_V4 accept
+        meta l4proto $proxy_protos th dport $PROXY_PORTS ip saddr $HOST_SELF ip daddr != $NET_BOGONS_V4 accept
       }
 
       chain output {
         type filter hook output priority 0; policy drop;
 
-        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip daddr != $NET_BOGONS_V4 meta skuid $PROXY_USER accept comment "Proxy Outbound"
+        jump output_transparent_proxy
         ...
       }
 
+      chain output_transparent_proxy {
+        # allow marked traffic to be proxied
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip daddr != $NET_BOGONS_V4 meta skuid != $PROXY_USER meta mark $PROXY_MARK_IN accept
+
+        # allow outbound traffic from proxy
+        meta l4proto $PROXY_PROTOS th dport $PROXY_PORTS ip daddr != $NET_BOGONS_V4 meta skuid $PROXY_USER accept
+      }
+
       ...
+
+----
+
+Test Proxy Script
+*****************
+
+As mentioned in `this Cloudflare Blog article <https://blog.cloudflare.com/how-we-built-spectrum/>`_.
+
+.. code-block:: python3
+
+    #!/usr/bin/env python3
+    import socket
+
+    IP_TRANSPARENT = 19
+    PORT = 3000
+
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.setsockopt(socket.IPPROTO_IP, IP_TRANSPARENT, 1)
+
+        s.bind(('127.0.0.1', PORT))
+        s.listen(32)
+        print(f"[+] Bound to tcp://127.0.0.1:{PORT}")
+
+        while True:
+            c, (r_ip, r_port) = s.accept()
+            l_ip, l_port = c.getsockname()
+            print(f"[ ] Connection from tcp://{r_ip}:{r_port} to tcp://{l_ip}:{l_port}")
+            c.send(b"hello world\n")
+            c.close()
 
 ----
 

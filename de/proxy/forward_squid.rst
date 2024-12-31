@@ -27,7 +27,7 @@ Wenn wir uns auf einen „Client“ beziehen, handelt es sich in den meisten Fä
 
 Hinweis: Squid kann auch als Reverse-Proxy verwendet werden, aber diese Dokumentation konzentriert sich auf seine Forward-Proxy-Funktionalität.
 
-**Intro Video:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VUrHgpqH4CCOYzLzQu0L_ze>`_
+**Intro Videos:** `YouTube @OXL-IT <https://www.youtube.com/playlist?list=PLsYMit2eI6VUrHgpqH4CCOYzLzQu0L_ze>`_
 
 ----
 
