@@ -2,9 +2,13 @@
 
 .. include:: ../_include/head.rst
 
-.. |nft_tproxy| image:: ../_static/img/fw_nftables_tproxy.png
-   :class: wiki-img-sm
-   :alt: OXL Docs - NFTables TProxy
+.. |nft_tproxy_full| image:: ../_static/img/fw_nftables_tproxy_full.svg
+   :class: wiki-img-lg
+   :alt: OXL Docs - NFTables TProxy Forward & Output
+
+.. |nft_tproxy_fwd| image:: ../_static/img/fw_nftables_tproxy_fwd.svg
+   :class: wiki-img-lg
+   :alt: OXL Docs - NFTables TProxy Forward
 
 ===============
 NFTables TProxy
@@ -179,6 +183,8 @@ This ruleset was simplified to be easier to understand!
 
 Note: When using the :ref:`Squid-Proxy <proxy_forward_squid_cnf>` we need to have different listeners and thus ports for HTTP & HTTPS.
 
+|nft_tproxy_fwd|
+
 .. code-block:: text
 
     define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
@@ -231,6 +237,8 @@ Output & Forward Traffic
 ========================
 
 It gets a little more complicated if you also want/need to filter outbound traffic from the system, that is running NFTables directly.
+
+|nft_tproxy_full|
 
 .. code-block:: text
 
