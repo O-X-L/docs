@@ -190,6 +190,7 @@ Notiz: Im Fall vom :ref:`Squid-Proxy <proxy_forward_squid_cnf>` muss man für HT
 .. code-block:: text
 
     define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
+    # source: https://ipinfo.io/bogon
     define NET_BOGONS_V4 = { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 127.0.53.53, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 };
     # add all of your firewall-system's IPs:
     define HOST_SELF = { 127.0.0.1 };
@@ -245,6 +246,7 @@ Wenn man nun aber auch den ausgehenden Datenverkehr von dem System, auf dem NFTa
 .. code-block:: text
 
     define NET_PRIVATE = { 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8 };
+    # source: https://ipinfo.io/bogon
     define NET_BOGONS_V4 = { 0.0.0.0/8, 10.0.0.0/8, 100.64.0.0/10, 127.0.0.0/8, 127.0.53.53, 169.254.0.0/16, 172.16.0.0/12, 192.0.0.0/24, 192.0.2.0/24, 192.168.0.0/16, 198.18.0.0/15, 198.51.100.0/24, 203.0.113.0/24, 224.0.0.0/4, 240.0.0.0/4, 255.255.255.255/32 };
     # add all of your firewall-system's IPs:
     define HOST_SELF = { 127.0.0.1 };
