@@ -422,6 +422,8 @@ Sometimes setting the environment-variables 'HTTP_PROXY', 'HTTPS_PROXY', 'http_p
 
 An attacker might also be able to modify the environmental variables once a vulnerability has been exploited.
 
+In :code:`inspection` and :code:`tproxy` mode you **NEED TO** implement a DNS-caching server: :ref:`DNS Cache Docs <net_dns_cache>`
+
 Destination NAT
 ===============
 
@@ -585,11 +587,13 @@ Known problems
 
 * **NONE_NONE/409 & SECURITY ALERT: Host header forgery detected**
 
-  This error can occur whenever the squid proxy runs in :code:`intercept` mode  and resolves the target hostname to another IP than the client.
+  This error can occur whenever the squid proxy runs in :code:`intercept` or :code:`tproxy` mode  and resolves the target hostname to another IP than the client.
 
   That check can help against attacks that can trick the proxy into allowing bad traffic.
 
   As today's DNS servers use very low TTLs it might happen that some traffic triggers this check as false-positive.
+
+  **You NEED to implement a DNS-caching server to solve this issue**: :ref:`DNS Cache Docs <net_dns_cache>`
 
   You can disable this check **for HTTP (plaintext) traffic** by setting :code:`host_verify_strict off` (*default*)
 

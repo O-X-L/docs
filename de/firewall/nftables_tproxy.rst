@@ -220,8 +220,11 @@ Notiz: Im Fall vom :ref:`Squid-Proxy <proxy_forward_squid_cnf>` muss man für HT
       }
 
       chain input {
+        type filter hook input priority 0; policy drop;
         ...
+
         jump input_transparent_proxy
+
         ...
       }
 
@@ -292,8 +295,11 @@ Wenn man nun aber auch den ausgehenden Datenverkehr von dem System, auf dem NFTa
       }
 
       chain input {
+        type filter hook input priority 0; policy drop;
         ...
+
         jump input_transparent_proxy
+
         ...
       }
 

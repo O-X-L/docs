@@ -219,8 +219,11 @@ Note: When using the :ref:`Squid-Proxy <proxy_forward_squid_cnf>` we need to hav
       }
 
       chain input {
+        type filter hook input priority 0; policy drop;
         ...
+
         jump input_transparent_proxy
+
         ...
       }
 
@@ -291,8 +294,11 @@ It gets a little more complicated if you also want/need to filter outbound traff
       }
 
       chain input {
+        type filter hook input priority 0; policy drop;
         ...
+
         jump input_transparent_proxy
+
         ...
       }
 

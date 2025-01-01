@@ -422,6 +422,8 @@ Manchmal kann das Setzen der Umgebungsvariablen 'HTTP_PROXY', 'HTTPS_PROXY', 'ht
 
 Ein Angreifer könnte auch in der Lage sein, die Umgebungsvariablen zu ändern, sobald eine Sicherheitslücke ausgenutzt wurde.
 
+Um den :code:`inspection` oder :code:`tproxy` Modus nutzen zu können **MUSS** ein DNS-caching Server implementiert werden: :ref:`DNS Cache Docs <net_dns_cache>`
+
 Destination NAT
 ===============
 
@@ -594,6 +596,8 @@ Bekannte Probleme
   Diese Prüfung kann gegen Angriffe helfen, die den Proxy austricksen, damit er bösen Datenverkehr zulässt.
 
   Da die heutigen DNS-Server sehr niedrige TTLs verwenden, kann es vorkommen, dass ein Teil des Verkehrs diesen Check als falsch-positiv auslöst.
+
+  **Um diese Problem zu lösen MUSS ein DNS-Caching Server implementiert werden**: :ref:`DNS Cache Docs <net_dns_cache>`
 
   Sie können diese Check **für HTTP (plaintext) Verkehr** deaktivieren, indem Sie :code:`host_verify_strict off` setzen (*Standard*)
 
