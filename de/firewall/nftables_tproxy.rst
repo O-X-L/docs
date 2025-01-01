@@ -95,6 +95,7 @@ Dies konfiguriert das Routing des Datenverkehrs zum Loopback Interface:
 
     # disable the RP-filter for internal interfaces
     sysctl net.ipv4.conf.${IIF}.rp_filter=0
+    sysctl net.ipv4.conf.lo.rp_filter=0
 
     # create a routing table
     echo "200 proxy_loopback" > /etc/iproute2/rt_tables.d/proxy.conf
@@ -156,7 +157,7 @@ Damit die Routing-Konfiguration persistent ist, werden wir ein Script erstellen 
     [Service]
     ExecStartPost=/bin/bash /usr/local/sbin/proxy_loopback_routing.sh
 
-Auch die Sysctl-Einstellung müssen wir unter :code:`/etc/sysctl.conf` hinzufügen, damit diese persistent ist.
+Auch die Sysctl-Einstellungen müssen wir unter :code:`/etc/sysctl.conf` hinzufügen, damit diese persistent sind.
 
 Die Routing-Setting könne über folgende Befehle geprüft werden:
 
@@ -164,8 +165,8 @@ Die Routing-Setting könne über folgende Befehle geprüft werden:
 
     ip rule list
     ip -6 rule list
-    ip route show table all | grep -q proxy
-    ip -6 route show table all | grep -q proxy
+    ip route show table all | grep proxy
+    ip -6 route show table all | grep proxy
 
 ----
 
@@ -346,7 +347,7 @@ Wie erwähnt in `diesem Cloudflare Blog-Artikel <https://blog.cloudflare.com/how
             c, (r_ip, r_port) = s.accept()
             l_ip, l_port = c.getsockname()
             print(f"[ ] Connection from tcp://{r_ip}:{r_port} to tcp://{l_ip}:{l_port}")
-            c.send(b"hello world\n")
+            c.send(b"HTTP/1.1 200 OK\nContent-Type: text/plain\n\nReceived by Proxy\n")
             c.close()
 
 ----

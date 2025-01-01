@@ -95,6 +95,7 @@ We need to configure the system to route the traffic to the loopback interface:
 
     # disable the RP-filter for internal interfaces
     sysctl net.ipv4.conf.${IIF}.rp_filter=0
+    sysctl net.ipv4.conf.lo.rp_filter=0
 
     # create a routing table
     echo "200 proxy_loopback" > /etc/iproute2/rt_tables.d/proxy.conf
@@ -163,8 +164,8 @@ You can check those routing-setting with the following commands:
 
     ip rule list
     ip -6 rule list
-    ip route show table all | grep -q proxy
-    ip -6 route show table all | grep -q proxy
+    ip route show table all | grep proxy
+    ip -6 route show table all | grep proxy
 
 ----
 
@@ -345,7 +346,7 @@ As mentioned in `this Cloudflare Blog article <https://blog.cloudflare.com/how-w
             c, (r_ip, r_port) = s.accept()
             l_ip, l_port = c.getsockname()
             print(f"[ ] Connection from tcp://{r_ip}:{r_port} to tcp://{l_ip}:{l_port}")
-            c.send(b"hello world\n")
+            c.send(b"HTTP/1.1 200 OK\nContent-Type: text/plain\n\nReceived by Proxy\n")
             c.close()
 
 ----
