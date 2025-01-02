@@ -98,7 +98,9 @@ The rules have been simplified to make them easier to understand!
       chain output_dnat {
         type nat hook output priority -100; policy accept;
 
-        jump dnat_dns_cache
+        ...
+
+        meta l4proto { tcp, udp } th dport 53 ip saddr $host_self meta skuid != $user_dns_cache redirect
 
         ...
       }
@@ -106,15 +108,11 @@ The rules have been simplified to make them easier to understand!
       chain prerouting_dnat {
         type nat hook prerouting priority -100; policy accept;
 
-        jump dnat_dns_cache
+        ...
+
+        meta l4proto { tcp, udp } th dport 53 ip saddr $net_private redirect
 
         ...
-      }
-
-      chain dnat_dns_cache {
-        meta l4proto { tcp, udp } th dport 53 ip saddr $host_self meta skuid != $user_dns_cache redirect
-        ip saddr $host_self return
-        meta l4proto { tcp, udp } th dport 53 ip saddr $net_private redirect
       }
 
       chain input {
