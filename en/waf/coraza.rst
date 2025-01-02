@@ -11,46 +11,44 @@ Coraza (OWASP)
 Intro
 #####
 
-Die `Coraza Open-Source Web-Application-Firewall <https://coraza.io/>`_ wird von der `OWASP Organisation <https://owasp.org/www-project-coraza-web-application-firewall/>`_ geführt.
+The `Coraza Open-Source Web-Application-Firewall <https://coraza.io/>`_ is managed by the `OWASP organization <https://owasp.org/www-project-coraza-web-application-firewall/>`_.
 
-Als Schutz gegen diverse praktisch eingesetzte Attacken, kann das `Kern-Regelwerk <https://coraza.io/docs/tutorials/coreruleset/>`_ eingesetzt werden. Siehe auch: `github.com/corazawaf/coraza-coreruleset <https://github.com/corazawaf/coraza-coreruleset>`_ & `Core-Ruleset Docs <https://coreruleset.org/docs/concepts/anomaly_scoring/>`_
+The `Core-Ruleset <https://coraza.io/docs/tutorials/coreruleset/>`_ can be used as protection against various practical attacks. See also: `github.com/corazawaf/coraza-coreruleset <https://github.com/corazawaf/coraza-coreruleset>`_ & `Core-Ruleset Docs <https://coreruleset.org/docs/concepts/anomaly_scoring/>`_
 
-Dieses Regelwerk kann recht schnell/leicht implementiert und Applikations-Spezifisch angepasst werden.
+This set of rules can be implemented quite quickly/easily and customized for specific applications.
 
-Diese WAF kann in existierende Load-Balancer eingebunden werden: `Caddy <https://github.com/corazawaf/coraza-caddy>`_, `Nginx <https://github.com/corazawaf/coraza-nginx>`_, `HAProxy <https://github.com/corazawaf/coraza-spoa>`_
+This WAF can be integrated into existing load balancers: `Caddy <https://github.com/corazawaf/coraza-caddy>`_, `Nginx <https://github.com/corazawaf/coraza-nginx>`_, `HAProxy <https://github.com/corazawaf/coraza-spoa>`_
 
 ----
 
 HAProxy Integration
 ###################
 
-**Info**: Die HAProxy Integration wird noch nicht als Production-Ready angesehen!
+**Info**: The HAProxy integration is not yet considered production-ready!
 
-Für die Integration wird die `HAProxy SPOE Schnittstelle <https://www.haproxy.com/blog/extending-haproxy-with-the-stream-processing-offload-engine>`_ genutzt.
+The `HAProxy SPOE interface <https://www.haproxy.com/blog/extending-haproxy-with-the-stream-processing-offload-engine>`_ is used to integrate it.
 
-Um diese WAF in HAProxy (Community) zu integrieren, muss folgendes am Zielsystem umgesetzt werden:
+To integrate this WAF into HAProxy (Community), the following must be implemented on the target system:
 
-Alternativ kann die Ansible Role genutzt werden: `HAProxy Coraza-WAF <https://github.com/ansibleguy/haproxy_waf_coraza>`_
-
-**Video:** `YouTube @OXL-IT <https://youtu.be/80Ckor6vQW0>`_
+Alternatively, the Ansible role can be used: `HAProxy Coraza-WAF <https://github.com/ansibleguy/haproxy_waf_coraza>`_
 
 ----
 
-HAProxy installieren
+HAProxy Installation
 ********************
 
-Installation von HAProxy >= 3.1 (*SPOE Refactor*)
+Install HAProxy in version >= 3.1 (*SPOE Refactor*)
 
 Debian: `haproxy.debian.net <https://haproxy.debian.net/>`_
 
 ----
 
-Coraza-SPOE installieren
+Coraza-SPOE Installation
 ************************
 
-Zur Zeit muss man es (via `Golang <https://go.dev/doc/install>`_) von Source-Code kompilieren.
+Currently you have to compile it from source-code (by using `Golang <https://go.dev/doc/install>`_).
 
-Alternativ kann der `von uns vor-kompilierte <https://github.com/O-X-L/coraza-spoa/releases>`_ genutzt werden.
+Alternatively you could use `the pre-compiled binary <https://github.com/O-X-L/coraza-spoa/releases>`_ from our repository.
 
 
 .. code-block:: bash
@@ -75,7 +73,7 @@ Alternativ kann der `von uns vor-kompilierte <https://github.com/O-X-L/coraza-sp
 Service-User
 ************
 
-Einen Service-Benutzer hinzufügen:
+Add a service user:
 
 .. code-block:: bash
 
@@ -86,21 +84,21 @@ Einen Service-Benutzer hinzufügen:
 Service
 *******
 
-Den Service hinzufügen:
+Add the service:
 
 .. code-block:: bash
 
     wget https://raw.githubusercontent.com/corazawaf/coraza-spoa/refs/heads/main/contrib/coraza-spoa.service -O /etc/systemd/system/coraza-spoa.service
 
 
-Optional - Service-settings via override anpassen:
+Optional - Service-Einstellungen per Override anpassen:
 
 .. code-block:: bash
 
     mkdir /etc/systemd/system/coraza-spoa.service.d
     nano /etc/systemd/system/coraza-spoa.service.d/override.conf
 
-Override Inhalt (z.B.):
+Override content (e.g.):
 
 .. code-block:: text
 
@@ -119,7 +117,7 @@ Override Inhalt (z.B.):
     Restart=on-failure
     RestartSec=5s
 
-Service aktivieren:
+Activate it:
 
 .. code-block:: bash
 
@@ -128,8 +126,8 @@ Service aktivieren:
 
 ----
 
-Haupt-Konfiguration
-*******************
+Main Configuration
+******************
 
 .. code-block:: bash
 
@@ -138,7 +136,7 @@ Haupt-Konfiguration
     chown root:coraza-spoa /etc/coraza-spoa
     nano /etc/coraza-spoa/config.yaml
 
-Beispiel:
+Example:
 
 .. code-block:: yaml
 
@@ -217,13 +215,13 @@ Core-Ruleset
 HAProxy SPOE
 ************
 
-Die standard SPOE-Konfiguration herunterladen:
+Download the standard SPOE configuration:
 
 .. code-block:: bash
 
     wget https://raw.githubusercontent.com/corazawaf/coraza-spoa/refs/heads/main/example/haproxy/coraza.cfg -O /etc/haproxy/coraza-spoe.cfg
 
-In diesem Setup werden wir einige Optionen ändern:
+We will change some options in this setup:
 
 .. code-block:: text
 
@@ -257,10 +255,10 @@ In diesem Setup werden wir einige Optionen ändern:
 
 ----
 
-HAProxy Konfiguration
+HAProxy Configuration
 *********************
 
-Das Backend hinzufügen:
+Add the backend:
 
 .. code-block:: text
 
@@ -269,7 +267,7 @@ Das Backend hinzufügen:
         server coraza-waf 127.0.0.1:9000 check
 
 
-Wir können die :code:`txn.waf_app` Variable setzen, um zwischen den WAF-Applikationen zu wechseln.
+We can use the :code:`txn.waf_app` variable to switch between multiple WAF-applications:
 
 .. code-block:: text
 
@@ -279,7 +277,7 @@ Wir können die :code:`txn.waf_app` Variable setzen, um zwischen den WAF-Applika
     filter spoe engine coraza config /etc/haproxy/coraza-spoe.cfg
     http-request send-spoe-group coraza coraza-req
 
-Folgenderweise können wir die Coraza-Infos loggen:
+We can log the coraza information as follows:
 
 .. code-block:: text
 
@@ -288,7 +286,7 @@ Folgenderweise können wir die Coraza-Infos loggen:
     http-request capture var(txn.coraza.error) len 1
     http-request capture var(txn.coraza.action) len 8
 
-Folgenderweise können wir Aktionen durchführen:
+We can perform the following actions:
 
 .. code-block:: text
 
@@ -304,18 +302,18 @@ Folgenderweise können wir Aktionen durchführen:
 
 ----
 
-Coraza Konfiguration
+Coraza Configuration
 ********************
 
-In der :code:`/etc/coraza-spoa/apps/<APP>/@coraza.conf` kann/muss man `die Funktionen der Coraza-WAF konfigurieren <https://coraza.io/docs/seclang/directives/>`_.
+Inside the :code:`/etc/coraza-spoa/apps/<APP>/@coraza.conf` config you can `configure the Coraza-WAF functionalities <https://coraza.io/docs/seclang/directives/>`_.
 
-Um WAF scharf zu schalten, muss zumindest das Setting :code:`SecRuleEngine On` gesetzt werden!
+To enable blocking of bad traffic - you have to at least set :code:`SecRuleEngine On`!
 
 ----
 
-Ruleset Konfiguration
+Ruleset Configuration
 *********************
 
-Siehe: `Core-Ruleset Docs <https://coreruleset.org/docs/concepts/anomaly_scoring/>`_
+See: `Core-Ruleset Docs <https://coreruleset.org/docs/concepts/anomaly_scoring/>`_
 
-Es können natürlich auch zusätzliche Regeln konfiguriert werden, die speziell auf die Applikationen zugeschnitten sind.
+Of course, additional rules can also be configured that are specifically tailored to the applications.
