@@ -187,6 +187,18 @@ Beispiel:
         log_file: '/var/log/coraza-spoa/default.log'
         log_format: 'json'
 
+Notiz: Statt mehrere App-Spezifische Ruleset-Directories, kann man auch ein generisches nutzen und danach Config-Overrides zu den 'directives' hinzufügen:
+
+.. code-block::
+
+      - name: 'app'
+        directives: |
+          Include /etc/coraza-spoa/crs/coraza-coreruleset-4.7.0/rules/@coraza.conf
+          Include /etc/coraza-spoa/crs/coraza-coreruleset-4.7.0/rules/@crs-setup.conf
+          Include /etc/coraza-spoa/crs/coraza-coreruleset-4.7.0/rules/@owasp_crs/*.conf
+          SecRuleEngine On
+          <add-other-overrides-here>
+
 ----
 
 Core-Ruleset
