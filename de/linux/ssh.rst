@@ -22,6 +22,20 @@ Server
 
 Dokumentation: `sshd_config <https://manpages.debian.org/unstable/manpages-de/sshd_config.5.de.html>`_
 
+Listeners
+*********
+
+Folgenderweise kann man SSH auf alle IPs hören lassen:
+
+.. code-block::
+
+    # ipv4
+    ListenAddress 0.0.0.0
+    # ipv6
+    ListenAddress \::
+
+----
+
 Authentifizierung
 *****************
 

@@ -22,6 +22,20 @@ Server
 
 Documentation: `sshd_config <https://manpages.debian.org/unstable/manpages-de/sshd_config.5.de.html>`_
 
+Listeners
+*********
+
+This is how you can make SSH listen on all available IPs:
+
+.. code-block::
+
+    # ipv4
+    ListenAddress 0.0.0.0
+    # ipv6
+    ListenAddress \::
+
+----
+
 Authentication
 **************
 
