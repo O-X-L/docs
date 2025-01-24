@@ -36,6 +36,19 @@ Folgenderweise kann man SSH auf alle IPs hören lassen:
 
 ----
 
+Hostkeys
+********
+
+Neu generieren
+==============
+
+.. code-block::
+
+    rm -f /etc/ssh/ssh_host_*
+    dpkg-reconfigure -f noninteractive openssh-server
+
+----
+
 Authentifizierung
 *****************
 

@@ -36,6 +36,19 @@ This is how you can make SSH listen on all available IPs:
 
 ----
 
+Hostkeys
+********
+
+Regenerate
+==========
+
+.. code-block::
+
+    rm -f /etc/ssh/ssh_host_*
+    dpkg-reconfigure -f noninteractive openssh-server
+
+----
+
 Authentication
 **************
 
