@@ -151,6 +151,6 @@ Analyse
 
     resolvectl status
     resolvectl statistics
-    resolvectl query oxl.at
+    resolvectl query OXL.at
     resolvectl flush-caches
     resolvectl monitor

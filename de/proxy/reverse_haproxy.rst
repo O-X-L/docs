@@ -61,10 +61,10 @@ Daten können auf unterschiedliche Weise verglichen werden:
 .. code-block:: bash
 
     # match as string (hast to be full-match)
-    acl domain1 req.hdr(host) -m str oxl.at
+    acl domain1 req.hdr(host) -m str OXL.at
 
     # match case-insensitive
-    acl domain1 req.hdr(host) -m str -i oxl.at
+    acl domain1 req.hdr(host) -m str -i OXL.at
 
     # match an integer
     acl some_digit req.hdr(some-hdr) -m int 1000
@@ -88,8 +88,8 @@ Sie können ACLs mit AND/OR/NOT-Bedingungen kombinieren:
 
 .. code-block:: bash
 
-    acl domains_adm req.hdr(host) -m str -i admin.example.oxl.at
-    acl domains_test req.hdr(host) -m str -i test.oxl.at
+    acl domains_adm req.hdr(host) -m str -i admin.example.OXL.at
+    acl domains_test req.hdr(host) -m str -i test.OXL.at
     acl src_privileged src 192.168.0.48
     acl src_internal src 172.16.0.0/12
 
@@ -100,7 +100,7 @@ Sie können ACLs mit AND/OR/NOT-Bedingungen kombinieren:
     http-request deny status 401 if domains_adm !src_privileged
 
     # OR condition
-    http-request redirect code 302 location https://www.oxl.at domains_test || src_internal
+    http-request redirect code 302 location https://www.OXL.at domains_test || src_internal
 
     # with inline ACLs
     http-request deny status 400 if { path -m sub -i /.env/ /.git/ } ||
@@ -139,9 +139,9 @@ Verwenden Sie die Aktion :code:`use_backend`, um die Route zu wählen, die der V
 
     frontend fe_web:
         ...
-        acl domains_adm req.hdr(host) -m str -i admin.example.oxl.at
+        acl domains_adm req.hdr(host) -m str -i admin.example.OXL.at
         acl src_privileged src 192.168.0.48
-        acl domains_test req.hdr(host) -m str -i test.oxl.at
+        acl domains_test req.hdr(host) -m str -i test.OXL.at
 
         use_backend be_admin if domains_adm src_privileged
         use_backend be_test if domains_test
@@ -170,7 +170,7 @@ Verwenden Sie die Aktion :code:`use_backend`, um die Route zu wählen, die der V
 
     backend be_fallback
         mode http
-        http-request redirect code 302 location https://www.oxl.at
+        http-request redirect code 302 location https://www.OXL.at
 
 Siehe: `HAProxy Backends <https://www.haproxy.com/documentation/haproxy-configuration-tutorials/core-concepts/backends/>`_
 

@@ -375,15 +375,15 @@ Mit einem solchen Tool können Sie den von TPROXY empfangenen reinen Datenverkeh
 
     # NFTables =TCP=> TPROXY (forwarder @ 127.0.0.1) =HTTP[TCP]=> PROXY
 
-    > curl https://www.oxl.at
+    > curl https://www.OXL.at
     # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.oxl.at:443/tcp | connection established
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.OXL.at:443/tcp | connection established
     # proxy (squid)
-    NONE_NONE/200 0 CONNECT www.oxl.at:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT www.oxl.at:443 - HIER_DIRECT/www.oxl.at -
+    NONE_NONE/200 0 CONNECT www.OXL.at:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.OXL.at:443 - HIER_DIRECT/www.OXL.at -
 
-    > curl http://www.oxl.at
+    > curl http://www.OXL.at
     # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.oxl.at:80/tcp | connection established
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.OXL.at:80/tcp | connection established
     # proxy (squid)
-    TCP_REFRESH_MODIFIED/301 477 GET http://www.oxl.at/ - HIER_DIRECT/www.oxl.at text/html
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.OXL.at/ - HIER_DIRECT/www.OXL.at text/html

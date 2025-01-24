@@ -135,7 +135,7 @@ QR-Code erstellen:
 .. code-block:: bash
 
     # sudo apt install qrencode
-    qrencode https://www.oxl.at -o qr.png
+    qrencode https://www.OXL.at -o qr.png
 
 QR-Visitenkarte (`RFC6350 <https://datatracker.ietf.org/doc/html/rfc6350>`_) erstellen:
 
@@ -148,8 +148,8 @@ QR-Visitenkarte (`RFC6350 <https://datatracker.ietf.org/doc/html/rfc6350>`_) ers
     FN:Pascal Rath
     ORG:OXL IT Services
     Tel;WORK;VOICE:+433115409000
-    EMAIL;TYPE=work:rath@oxl.at
-    URL:https://www.oxl.at
+    EMAIL;TYPE=work:rath@OXL.at
+    URL:https://www.OXL.at
     END:VCARD
 
     # create qr
@@ -656,7 +656,7 @@ Alle Werte eines DNS-Eintragstyps abrufen:
 
 .. code-block:: bash
 
-    dig +noall +answer +multiline _dmarc.oxl.at TXT
+    dig +noall +answer +multiline _dmarc.OXL.at TXT
 
 Versuchen, alle Subdomains abzufragen: (*wird in der Regel blockiert*)
 
@@ -899,7 +899,7 @@ Vorbereitung für CLI-Interaction mit S3-Buckets und Dateien darin:
     apt install awscli
     export AWS_ACCESS_KEY_ID="<YOUR-TOKEN-KEY>"
     export AWS_SECRET_ACCESS_KEY="<YOUR-SECRET>"
-    S3_URL=https://s3.oxl.at
+    S3_URL=https://s3.OXL.at
 
 Existierende Buckets auflisten:
 

@@ -48,7 +48,7 @@ Wenn ein Dienst über TLS zugänglich ist, erfolgt der Zugriff entweder über ei
 
 Das SAN ist eine Liste von DNS/IP/EMAIL-Werten, die für dieses spezifische Zertifikat gültig sind. Das SAN ist eine Sicherheitsmaßnahme, die sicherstellt, dass ein geleakter privater Schlüssel nicht für irgendeinen Dienst missbraucht werden kann.
 
-Beispiel: :code:`DNS:www.oxl.at,DNS:www.o-x-l.com,IP:1.1.1.1`
+Beispiel: :code:`DNS:www.OXL.at,DNS:www.O-X-L.com,IP:1.1.1.1`
 
 Es ist wichtig, dieses Attribut korrekt zu setzen, da es validiert wird!
 

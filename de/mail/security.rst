@@ -57,7 +57,7 @@ Dies sind die zulässigen Attribute: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`
 
     .. code-block:: bash
 
-        Record: o-x-l.com
+        Record: O-X-L.com
         Type:   TXT
         Value:  v=spf1 mx -all
 
@@ -65,7 +65,7 @@ Dies sind die zulässigen Attribute: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`
 
     .. code-block:: bash
 
-      Record: o-x-l.com
+      Record: O-X-L.com
       Type:   TXT
       Value:  v=spf1 mx include:amazonses.com -all
 
@@ -74,7 +74,7 @@ Dies sind die zulässigen Attribute: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`
 
     .. code-block:: bash
 
-        Record: *.o-x-l.com
+        Record: *.O-X-L.com
         Type:   TXT
         Value:  v=spf1 -all
 
@@ -82,11 +82,11 @@ Dies sind die zulässigen Attribute: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`
 
     .. code-block:: bash
 
-        Record: www.o-x-l.com
+        Record: www.O-X-L.com
         Type:   A
         Value:  <IP OF WEB SERVICE>
 
-        Record: www.o-x-l.com
+        Record: www.O-X-L.com
         Type:   TXT
         Value:  v=spf1 -all
 
@@ -122,7 +122,7 @@ DKIM Examples
 
     .. code-block:: bash
 
-        Record: mail123._domainkey.o-x-l.com
+        Record: mail123._domainkey.O-X-L.com
         Type:   TXT
         Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
 
@@ -130,7 +130,7 @@ DKIM Examples
 
     .. code-block:: bash
 
-        test._domainkey.oxl.at TXT "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0BtDBbXYRNcft4d6LeTGkybsxc1JVXxZ2hJHDteHhU7TUfQGq2MqcsegVU97l6THb8VZxv7hWKCFSXwLh1QHRAVB9bxVFbu08cI9OMPpfvjq2XyVdY6D1lRD36emn4Mk9F6kIb5apP6QQtFPvMsX/15NZLZ/pr+G2DHl3TfG7vQIDAQAB"
+        test._domainkey.OXL.at TXT "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC0BtDBbXYRNcft4d6LeTGkybsxc1JVXxZ2hJHDteHhU7TUfQGq2MqcsegVU97l6THb8VZxv7hWKCFSXwLh1QHRAVB9bxVFbu08cI9OMPpfvjq2XyVdY6D1lRD36emn4Mk9F6kIb5apP6QQtFPvMsX/15NZLZ/pr+G2DHl3TfG7vQIDAQAB"
 
 
 Generate Key-Pair
@@ -166,7 +166,7 @@ Sie können :code:`rua` (aggregiert) und :code:`ruf` (forensisch) zu Ihrem DMARC
 
 Dies ist sehr nützlich, um Einblicke in den Zustand Ihrer E-Mail-Flüsse zu erhalten. Es zeigt Ihnen auch, ob jemand Ihre E-Mail-Domäne fälscht.
 
-**Beispiel**: :code:`rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc@o-x-l.com`
+**Beispiel**: :code:`rua=mailto:dmarc@O-X-L.com; ruf=mailto:dmarc@O-X-L.com`
 
 Sie können Tools wie `parsedmarc <https://github.com/O-X-L/dmarc-analyzer>`_ verwenden, um Statistiken über mögliche Mailing-Probleme zu erhalten, die Sie haben.
 
@@ -179,32 +179,32 @@ Mögliche **Richtlinien**: :code:`none` (reporting/warning), :code:`quarantine`,
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.O-X-L.com
         Type:   TXT
-        Value:  v=DMARC1; p=none; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
+        Value:  v=DMARC1; p=none; rua=mailto:dmarc@O-X-L.com; ruf=mailto:dmarc.O-X-L.com; fo=1;
 
 * Erzwingen Sie den DMARC-Abgleich und verschieben Sie alle anderen Nachrichten aus dieser Domäne in die Quarantäne des Empfängers.
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.O-X-L.com
         Type:   TXT
-        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@O-X-L.com; ruf=mailto:dmarc.O-X-L.com; fo=1;
 
 * Stellen Sie den SPF- und DKIM-Abgleich auf streng ein.
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.O-X-L.com
         Type:   TXT
-        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s;
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@O-X-L.com; ruf=mailto:dmarc.O-X-L.com; fo=1; adkim=s; aspf=s;
 
 * Hinzufügen einer Subdomain-Richtlinie.
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.O-X-L.com
         Type:   TXT
-        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@O-X-L.com; ruf=mailto:dmarc.O-X-L.com; fo=1; adkim=s; aspf=s; sp=quarantine;
 
 .. include:: ../_include/user_rath.rst

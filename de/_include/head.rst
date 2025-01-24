@@ -5,8 +5,8 @@
 
 .. tip::
 
-    Melde fehlende oder inkorrekte Informationen und veraltete Links: `Formular 📝 <https://github.com/O-X-L/blog/issues/new>`_ | `E-Mail ✉️ <mailto:kontakt+docs@oxl.at>`_
+    Melde fehlende oder inkorrekte Informationen und veraltete Links: `Formular 📝 <https://github.com/O-X-L/blog/issues/new>`_ | `E-Mail ✉️ <mailto:kontakt+docs@OXL.at>`_
 
-    Professioneller Support: `E-Mail ✉️ <mailto:kontakt@oxl.at>`_ | `Formular 📝 <https://www.oxl.at/contact>`_ | `Tel 📞 <tel:+433115409000>`_
+    Professioneller Support: `E-Mail ✉️ <mailto:kontakt@OXL.at>`_ | `Formular 📝 <https://www.OXL.at/contact>`_ | `Tel 📞 <tel:+433115409000>`_
 
     |logo|

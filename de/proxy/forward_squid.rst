@@ -340,7 +340,7 @@ Zumindest diese grundlegenden Filter sollten Sie abdecken:
       .. code-block:: text
 
           acl domains_allowed dstdomain example.com
-          acl domains_allowed dstdomain www.o-x-l.com
+          acl domains_allowed dstdomain www.O-X-L.com
           http_access allow domains_allowed
           http_access deny all
 
@@ -476,18 +476,18 @@ In diesem Fall benötigen wir möglicherweise andere Tools wie `proxy-forwarder 
 
 .. code-block:: text
 
-    > curl https://www.o-x-l.com
+    > curl https://www.O-X-L.com
     # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.O-X-L.com:443/tcp | connection established
     # squid
-    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
+    NONE_NONE/200 0 CONNECT www.O-X-L.com:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.O-X-L.com:443 - HIER_DIRECT/www.O-X-L.com -
 
     > curl http://superstes.eu
     # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.O-X-L.com:80/tcp | connection established
     # squid
-    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.O-X-L.com/ - HIER_DIRECT/www.O-X-L.com text/html
 
 
 |squid_remote|
