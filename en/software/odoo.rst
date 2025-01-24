@@ -33,6 +33,8 @@ See: `Odoo Migration Docs <https://www.odoo.com/documentation/17.0/administratio
 
 Note: Migrating from enterprise back to community edition is not easy as some features are not supported!
 
+Please note: If you have more users than licences, you have a few days to purchase the additional licence or delete the user account - but important functions such as ‘scheduled tasks’ will be deactivated during this period!
+
 ----
 
 Module Development
@@ -109,6 +111,30 @@ Install Module/Addon
 
 Administration
 ##############
+
+Database Queries
+****************
+
+It can be useful to perform manual queries to analyze the data of odoo.
+
+This works even without an addition user-account. That is important in case you use the enterprise-version and do not want to allocate an additional license.
+
+.. code-block:: bash
+
+    QUERY="<QUERY-HERE>"
+    su --login postgres -c "psql -d odoo -c '${QUERY}'" | cat
+
+    # query examples:
+    ## show tables
+    QUERY="\dt"
+
+    ## get last 20 entries of some table (creation time)
+    QUERY="SELECT * FROM <TABLE> ORDER BY id DESC LIMIT 20;
+
+    ## get last 20 entries of some table (modification time)
+    QUERY="SELECT * FROM <TABLE> ORDER BY write_date DESC LIMIT 20;
+
+----
 
 Backup from WebUI
 *****************
@@ -218,3 +244,5 @@ If you want to limit outbound connections you might need to allow HTTP+S connect
 * partner-autocomplete.odoo.com
 * www.odoo.com
 * services.odoo.com
+
+.. include:: ../_include/user_rath.rst

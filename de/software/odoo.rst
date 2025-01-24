@@ -33,6 +33,8 @@ Siehe: `Odoo Migration Docs <https://www.odoo.com/documentation/17.0/administrat
 
 Hinweis: Die Migration von der Enterprise Edition zurück zur Community Edition ist nicht einfach, da einige Funktionen nicht unterstützt werden!
 
+Achtung: Wenn ihr mehr Benutzer als Lizenzen habt, habt ihr zwar einige Tage Zeit, die zusätzliche Lizenz zu kaufen oder das Benutzerkonto zu löschen - doch werden während dieses Zeitraums wichtige Funktionen wie die 'geplanten Aufgaben' deaktiviert!
+
 ----
 
 Modul-Entwicklung
@@ -108,6 +110,31 @@ Modul/Erweiterung installieren
 
 Administration
 ##############
+
+Datenbank Abfragen
+******************
+
+Dies kann nützlich sein, um die Daten des Odoo zu Analysieren.
+
+Dazu benötigt man auch kein zusätzliches Benutzerkonto. Das kann nütulich sein, sofern die Enterprise-Version genutzt wird und keine weitere Lizenz verbraucht werden soll.
+
+
+.. code-block:: bash
+
+    QUERY="<QUERY-HERE>"
+    su --login postgres -c "psql -d odoo -c '${QUERY}'" | cat
+
+    # query examples:
+    ## show tables
+    QUERY="\dt"
+
+    ## get last 20 entries of some table (creation time)
+    QUERY="SELECT * FROM <TABLE> ORDER BY id DESC LIMIT 20;
+
+    ## get last 20 entries of some table (modification time)
+    QUERY="SELECT * FROM <TABLE> ORDER BY write_date DESC LIMIT 20;
+
+----
 
 Sicherung via Weboberfläche
 ***************************
@@ -217,3 +244,5 @@ Wenn Sie ausgehende Verbindungen einschränken möchten, müssen Sie möglicherw
 * partner-autocomplete.odoo.com
 * www.odoo.com
 * services.odoo.com
+
+.. include:: ../_include/user_rath.rst
