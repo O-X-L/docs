@@ -470,6 +470,8 @@ See: `HAProxy Logging Formats <https://www.haproxy.com/blog/introduction-to-hapr
 JSON
 ====
 
+Note: You can change the JSON-keys by modifying the :code:`%(<KEY>)`.
+
 .. code-block:: bash
 
     global
@@ -481,7 +483,7 @@ JSON
         log-format "${HTTPLOG_JSON} %(unique_id)[unique-id]"
         unique-id-format %{+X}o\ %Ts-%fi%fp%pid-%rt
 
-Siehe: `HAProxy JSON & CBOR Log-Formats <https://www.haproxy.com/blog/encoding-haproxy-logs-in-machine-readable-json-or-cbor>`_
+See: `HAProxy JSON & CBOR Log-Formats <https://www.haproxy.com/blog/encoding-haproxy-logs-in-machine-readable-json-or-cbor>`_
 
 ----
 
