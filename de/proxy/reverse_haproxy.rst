@@ -469,6 +469,8 @@ Siehe: `HAProxy Logging Formats <https://www.haproxy.com/blog/introduction-to-ha
 JSON
 ====
 
+Diese Funtionalität wurde mit HAProxy Version **3.0** eingebaut!
+
 Notiz: Die JSON-keys können geändert werden, indem man :code:`%(<KEY>)` anpasst.
 
 .. code-block:: bash
