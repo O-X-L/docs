@@ -466,6 +466,25 @@ Siehe: `HAProxy Logging Formats <https://www.haproxy.com/blog/introduction-to-ha
 
 ----
 
+JSON
+====
+
+.. code-block:: bash
+
+    global
+        ...
+        setenv HTTPLOG_JSON "%{+json}o %(client)ci %(client_port)cp %(request_date)tr %(frontend)ft %(backend)b %(backend_server)s %(time_request)TR %(time_wait)Tw %(time_connect)Tc %(time_response)Tr/%(time_active)Ta %(status)ST %(bytes_read)B %(termination_state)tsc %(actconn)ac %(feconn)fc %(beconn)bc %(srv_conn)sc %(retries)rc %(srv_queue)sq %(backend_queue)bq %(capture_request)hr %(capture_response)hs %(http_request){+Q}r"
+        ...
+
+    defaults
+        log-format "${HTTPLOG_JSON} %(unique_id)[unique-id]"
+        unique-id-format %{+X}o\ %Ts-%fi%fp%pid-%rt
+
+Siehe: `HAProxy JSON & CBOR Log-Formats <https://www.haproxy.com/blog/encoding-haproxy-logs-in-machine-readable-json-or-cbor>`_
+
+
+----
+
 Capture
 =======
 
