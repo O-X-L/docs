@@ -165,6 +165,12 @@ Loop im Bash-Script:
       cp "./${app}"-*css "/var/random/app/${app}.css"
     done
 
+Bash-History für mehrere parallele Terminal-Sessions konfigurieren:
+
+.. code-block:: bash
+
+    echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc
+
 ----
 
 JSON Query
@@ -673,6 +679,14 @@ Live-Datenverkehr sehen:
 
     # record to file (for wireshark)
     tcpdump -i <INTERFACE> host <IP> port <PORT> -w <FILE>.pcap
+
+Das gesamte Layer2-Netzwerk informieren, dass eine IP-Adresse nun auf diesem System aktiv ist: (GARP/unsolicited ARP broadcast)
+
+.. code-block:: bash
+
+    # sudo apt install iputils-arping
+    arping -U -I <INTERFACE> <IP>
+
 
 ----
 

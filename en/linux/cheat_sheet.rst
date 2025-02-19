@@ -165,6 +165,12 @@ Loop in Bash-Script:
       cp "./${app}"-*css "/var/random/app/${app}.css"
     done
 
+Activate bash-history to handle multiple simultaneous terminal-sessions:
+
+.. code-block:: bash
+
+    echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc
+
 ----
 
 JSON Query
@@ -671,6 +677,13 @@ Watch live-traffic:
 
     # record to file (for wireshark)
     tcpdump -i <INTERFACE> host <IP> port <PORT> -w <FILE>.pcap
+
+Inform the whole Layer2-network that an IP-address is now on this system: (GARP/unsolicited ARP broadcast)
+
+.. code-block:: bash
+
+    # sudo apt install iputils-arping
+    arping -U -I <INTERFACE> <IP>
 
 ----
 
