@@ -171,6 +171,12 @@ Bash-History für mehrere parallele Terminal-Sessions konfigurieren:
 
     echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc
 
+History der Aktiv- und Offline-zeiten des systems ausgeben lassen:
+
+.. code-block:: bash
+
+    last -x shutdown reboot
+
 ----
 
 JSON Query

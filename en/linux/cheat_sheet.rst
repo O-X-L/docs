@@ -171,6 +171,12 @@ Activate bash-history to handle multiple simultaneous terminal-sessions:
 
     echo "export PROMPT_COMMAND='history -a'" >> ~/.bashrc
 
+Get a history of the systems active and offline times:
+
+.. code-block:: bash
+
+    last -x shutdown reboot
+
 ----
 
 JSON Query
