@@ -39,7 +39,7 @@ Info
 
 **Commercial regulations**: Trade law (`www.ris.bka.gv.at <http://www.ris.bka.gv.at/>`_)
 
-**Memberships with the Chamber of Commerce organisation**: `Member of WKO <https://firmen.wko.at/oxl-it-services-eu/steiermark/?firmaid=7992d30b-2bd0-47c2-ad7e-48d6c33563c8>`_
+**Memberships with the Chamber of Commerce organisation**: `Member of WKO <https://firmen.wko.at/oxl-it-services/>`_
 
 **Content orientation**: Providing information about products and technologies that we use as a company and promoting their sales.
 
