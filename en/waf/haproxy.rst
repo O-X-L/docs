@@ -40,18 +40,18 @@ Basic Filters
 Rate Limits / Anti DDOS
 =======================
 
-Siehe: :ref:`proxy_reverse_haproxy_rate`
+See: :ref:`proxy_reverse_haproxy_rate`
 
 ----
 
 GeoIP Filtering
 ===============
 
-Siehe: :ref:`proxy_reverse_haproxy_geoip`
+See: :ref:`proxy_reverse_haproxy_geoip`
 
 ----
 
 TLS Client Fingerprinting
 =========================
 
-Siehe: :ref:`proxy_reverse_haproxy_tls_fp`
+See: :ref:`proxy_reverse_haproxy_tls_fp`
