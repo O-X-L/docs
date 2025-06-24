@@ -85,6 +85,12 @@ Search and replace strings in files with usage of variables:
 
     sed -i "s|$FIND_REGEX|$REPLACE|g" FILE
 
+Remove all empty lines from a file:
+
+.. code-block::
+
+    sed -i '/^$/d' FILE
+
 APT Upgrade single package:
 
 .. code-block:: bash

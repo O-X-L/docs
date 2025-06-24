@@ -9,37 +9,7 @@ Impressum
 Info
 ****
 
-**Company**: **OXL IT Services e.U.**
-
-**Owner**: Rath Pascal (Social Media: `LinkedIn <https://www.linkedin.com/in/rath-pascal>`_)
-
-**E-Mail**: `contact@oxl.at <mailto:contact@oxl.at>`_
-
-**Phone**: `+43 3115 40 900 10 <tel:+4331154090010>`_
-
-**Contact-Form**: `Contact <https://www.o-x-l.com/contact>`_
-
-**Company register number**: `FN 635245i <https://justizonline.gv.at/jop/web/firmenbuchabfrage/635245i_1>`_
-
-**VAT**: ATU81010549
-
-**Banking Account Information**:
-
-* IBAN: AT95 3807 5000 0206 3295
-* BIC: RZSTAT2G075
-* Bank Name: Raiffeisenbank Mittlere Südoststeiermark
-
-**Site**: Berndorf 30, 8324 Kirchberg an der Raab, AT 🇦🇹
-
-**Commercial register court**: Regional court Graz
-
-**Regulatory authority**: Bezirkshauptmannschaft Südoststeiermark
-
-**Corporate purpose**: Services in automatic data processing and information technology, Trade with machinery and technology
-
-**Commercial regulations**: Trade law (`www.ris.bka.gv.at <http://www.ris.bka.gv.at/>`_)
-
-**Memberships with the Chamber of Commerce organisation**: `Member of WKO <https://firmen.wko.at/oxl-it-services/>`_
+See: `www.O-X-L.com/impressum <https:/www.o-x-l.com/impressum>`_
 
 **Content orientation**: Providing information about products and technologies that we use as a company and promoting their sales.
 
