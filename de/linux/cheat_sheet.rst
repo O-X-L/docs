@@ -85,6 +85,12 @@ Suchen und Ersetzen von Zeichenfolgen in Dateien unter Verwendung von Variablen:
 
     sed -i "s|$FIND_REGEX|$REPLACE|g" FILE
 
+Alle leeren Zeilen aus einer Datei entfernen:
+
+.. code-block::
+
+    sed -i '/^$/d' FILE
+
 APT Update eines einzelnen Paketes: 
 
 .. code-block:: bash
