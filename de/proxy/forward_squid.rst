@@ -80,11 +80,23 @@ Wenn Sie nur den Server-Name-Identifier aus dem TLS-Handshake auslesen möchte, 
 
     chown -R root:proxy /usr/share/squid/ssl
 
+Wenn Sie SSL-Verbindungen abfangen wollen (*Man-in-the-middle-like*), müssen Sie einige weitere Schritte durchführen: `squid docs - ssl interception <https://wiki.squid-cache.org/ConfigExamples/Intercept/SslBumpExplicit>`_
+
+Unter anderem muss man für eine volle TLS-Interception eine Sub-CA und Zertifikats-Cache/-DB erstellen:
+
+.. code-block:: bash
+
+    # todo: replace self-signed certs with a Sub-CA your clients and network devices trust - as the proxy needs to spoof the destination certificates
+
     # create ssl cache DB
     /usr/lib/squid/security_file_certgen -c -s /usr/share/squid/ssl_db -M 20MB
     chown -R proxy:proxy /usr/share/squid/ssl_db
+    chmod 700 /usr/share/squid/ssl_db
 
-Wenn Sie SSL-Verbindungen abfangen wollen (*Man-in-the-middle-like*), müssen Sie einige weitere Schritte durchführen: `squid docs - ssl interception <https://wiki.squid-cache.org/ConfigExamples/Intercept/SslBumpExplicit>`_
+    # inside the squid config:
+    # add the parameters 'generate-host-certificates=on dynamic_cert_mem_cache_size=20MB' to your listeners
+    sslcrtd_program /usr/lib/squid/security_file_certgen -s /usr/share/squid/ssl_db -M 20MB
+    sslcrtd_children 5 startup=5 idle=1
 
 ----
 
@@ -252,18 +264,18 @@ Siehe auch: `Squid Dokumentation - http_port <http://www.squid-cache.org/Doc/con
 .. code-block:: text
 
     # clients =HTTP[TCP]=> SQUID =TCP=> TARGET
-    http_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+    http_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1
 
     # clients =HTTPS[TCP]=> SQUID =TCP=> TARGET
-    https_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+    https_port 3128 ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1
 
     # clients =ROUTED TCP=> SQUID =TCP=> TARGET
     http_port 3129 intercept
-    https_port 3130 intercept ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+    https_port 3130 intercept ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1
 
     # clients =TPROXY TCP=> SQUID (@127.0.0.1) =TCP=> TARGET
     http_port 3129 tproxy
-    https_port 3130 tproxy ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE
+    https_port 3130 tproxy ssl-bump tcpkeepalive=60,30,3 cert=/usr/share/squid/bump.crt key=/usr/share/squid/bump.key cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS tls-dh=prime256v1:/usr/share/squid/bump.dh.pem options=NO_SSLv3,NO_TLSv1
     spoof_client_ip deny all
 
 Sie können die **IPs definieren, die Squid für den ausgehenden Verkehr verwenden soll**. Dies kann nützlich sein, um spezifische Firewall-Regeln für diese Adressen zu definieren:
@@ -361,7 +373,7 @@ Zumindest diese grundlegenden Filter sollten Sie abdecken:
 
   .. code-block:: text
 
-      tls_outgoing_options options=NO_SSLv3,NO_TLSv1,SINGLE_DH_USE,SINGLE_ECDH_USE cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
+      tls_outgoing_options options=NO_SSLv3,NO_TLSv1 cipher=HIGH:MEDIUM:!RC4:!aNULL:!eNULL:!LOW:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS
       acl ssl_exclude_verify dstdomain .example.com
       sslproxy_cert_error allow ssl_exclude_verify
       sslproxy_cert_error deny all
@@ -370,7 +382,7 @@ Zumindest diese grundlegenden Filter sollten Sie abdecken:
 
   .. code-block:: text
 
-      sslcrtd_program /usr/lib/squid/security_file_certgen -s /var/lib/squid/ssl_db -M 20MB
+      # add the parameter 'generate-host-certificates=off' to your listeners
 
       acl CONNECT method CONNECT
       acl ssl_ports port 443
@@ -577,7 +589,7 @@ Bekannte Probleme
 
     * Den ssl cache erweitern (*wenn du SSL aufbrichst*)
 
-      ssl_db => :code:`sslcrtd_program /usr/lib/squid/security_file_certgen -s /var/lib/squid/ssl_db -M 256M`
+      ssl_db => :code:`sslcrtd_program /usr/lib/squid/security_file_certgen -s /usr/share/squid/ssl_db -M 256M`
 
     * Das SSL session timeout erhöhen
 
@@ -606,5 +618,23 @@ Bekannte Probleme
   Siehe auch: `Squid wiki - host_verify_strict <http://www.squid-cache.org/Doc/config/host_verify_strict/>`_ & `Squid wiki - host header forgery <https://wiki.squid-cache.org/KnowledgeBase/HostHeaderForgery>`_
 
   Sie können natürlich den `proxy-forwarder <https://github.com/O-X-L/proxy-forwarder>`_ nutzen um den abgefangenen TCP-Verkehr in HTTP- und HTTPS-Anfragen zu übersetzen, die Sie an den 'Forward-Proxy'-Port von Squid senden können. (*diese Prüfung wird ignoriert...*)
+
+* **NONE_NONE/500:HIER_NONE** auf Squid <=5.7 || **NONE_NONE/503:HIER_NONE** auf Squid >=6.13
+
+  Beispiel Logs:
+
+  .. code-block:: bash
+
+      # Squid v5.7
+      [<CLIENT-IP>]:43586 NONE_NONE/200:HIER_NONE "CONNECT deb.debian.org:443 HTTP/1.1" - 200 0 36 "Debian APT-HTTP/1.3 (2.6.1)" "-"
+      [<CLIENT-IP>]:43586 NONE_NONE/500:HIER_NONE "CONNECT deb.debian.org:443 HTTP/1.1" - 500 0 0 "-" "-"
+
+      # Squid v6.13
+      [<CLIENT-IP>]:51454 NONE_NONE/200:HIER_NONE "CONNECT deb.debian.org:443 HTTP/1.1" - 200 0 29 "Debian APT-HTTP/1.3 (2.6.1)" "-"
+      [<CLIENT-IP>]:51454 TCP_TUNNEL/503:HIER_NONE "CONNECT deb.debian.org:443 HTTP/1.1" - 503 0 0 "-" "-"
+
+  Diese Fehler weisen auf Verbindungsprobleme vom Proxy ausgehen hin.
+
+  In unserem Fall machte der :ref:`lokale DNS-Resolver/-Cache <net_dns_cache>` Probleme, da wir dort DNSSEC aktiviert hatten. Dies führte teilweise zu Fehlern beim Verbindungsaufbau.
 
 .. include:: ../_include/user_rath.rst
