@@ -1198,7 +1198,42 @@ Interaktive shell in temporärem container starten:
 
 .. code-block:: bash
 
-    docker run --rm -it alpine sh
+    docker run --rm -it alpine /bin/sh
 
+Container-Logs zum Systemd-Journal senden und als Application-Name den Container-Name nutzen:
+
+.. code-block:: bash
+
+    docker run --log-driver=journald --log-opt tag="{{.Name}}" ...
+
+Ports vom Host zum Container durchreichen:
+
+.. code-block:: bash
+
+    docker run -p <host-port>:<container-port> ...
+
+    docker run -p 8888:8080 ...
+
+    # only listen on localhost
+    docker run -p 127.0.0.1:8888:8080 ...
+
+    # udp
+    docker run -p 1053:1053/udp ...
+
+Directory vom Host in den Container einbinden:
+
+.. code-block:: bash
+
+    docker run -v <host-path>:<container-path> ...
+
+    docker run -v /etc/oxl-riskdb/dnsbl/:/app/ ...
+
+    # WARNING: the permissions between host and container are simply matching the user- and group-id's => so if the container runs unprivileged you will have to match the user-id and give that user permissions on the host-directory
+
+Bei jedem start das Image auf den neuesten Stand des Tags updaten:
+
+.. code-block:: bash
+
+    docker run --pull=always ... <image>:<tag>
 
 .. include:: ../_include/user_rath.rst
