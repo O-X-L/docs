@@ -738,9 +738,18 @@ Informationen aus PEM Zertifikat auslesen:
 
     openssl x509 -in <PEM_FILE> -text
 
+Selbst-Signiertes Zertifikat erstellen (EC):
+
+.. code-block:: bash
+
+    openssl ecparam -out /etc/ssl/private/app.key -name prime256v1 -genkey
+    openssl req -new -x509 -nodes -days 3650 -key /etc/ssl/private/app.key -out /etc/ssl/certs/app.crt -subj "/CN=Super App" -addext "subjectAltName = DNS:app.template.oxl.app,IP:192.168.0.1,IP:127.0.0.1"
+
 Script zum validieren von aktiven Zertifikaten: `ssl-validate.sh <https://gist.github.com/superstes/8e369be2c86bbbcbd1e64c57d34905f1>`_
 
 Script zum validieren von OCSP: `ssl-ocsp-check.sh <https://gist.github.com/superstes/5ca4f4c346ea18703f716307a05d286b>`_
+
+Um eine interne PKI/CA zu erstellen, würden wir empfehlen das Projekt `EasyRSA <https://easy-rsa.readthedocs.io/en/latest/>`_ anzusehen.
 
 ----
 
