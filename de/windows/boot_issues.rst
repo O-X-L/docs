@@ -49,7 +49,7 @@ Hier testet das BIOS des Computers die Hardware (CPU, Arbeitsspeicher, Grafikkar
 
 **Problembehebung**:
 
-* Wenn es bereits hier einen Fehler gibt, müssen die physischen Komponenten des System geprüft werden. Meist durch Testweisen Austausch oder Ausbau.
+* Wenn es bereits hier einen Fehler gibt, müssen die physischen Komponenten des System geprüft werden. Meist durch testweisen Austausch oder Ausbau.
 
 ----
 
@@ -85,7 +85,7 @@ Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ih
 
   Hier befindet sich der Boot-Prozess nun auf der 100MB großen Windows EFI-Partition.
 
-  Es wird die Datei :code:`\EFI\Microsoft\Boot\bootmgfw.efi` geladen.
+  Es wird die Datei :code:`\\EFI\\Microsoft\\Boot\\bootmgfw.efi` geladen.
 
   **Fehlerbild**:
 
@@ -106,7 +106,7 @@ Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ih
 4. BCD - Boot Configuration Data
 ================================
 
-  Es wird die Datei :code:`\EFI\Microsoft\Boot\BCD` geladen.
+  Es wird die Datei :code:`\\EFI\\Microsoft\\Boot\\BCD` geladen.
 
   Diese beinhaltet die Information, auf welcher Partition sich das Windows-System befindet, welches gestartet werden soll.
 
@@ -131,7 +131,7 @@ Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ih
 
   Hier befindet sich der Boot-Prozess nun auf der Windows-System-Partition.
 
-  Es wird die Datei :code:`C:\Windows\System32\winload.efi` geladen.
+  Es wird die Datei :code:`C:\\Windows\\System32\\winload.efi` geladen.
 
   **Fehlerbild**:
 
@@ -146,7 +146,7 @@ Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ih
 6. Windows OS Loader
 ====================
 
-  Es wird die Datei :code:`C:\Windows\System32\ntoskrnl.exe` (das wirkliche Windows-Betriebssystem) geladen.
+  Es wird die Datei :code:`C:\\Windows\\System32\\ntoskrnl.exe` (das wirkliche Windows-Betriebssystem) geladen.
 
   **Fehlerbild**:
 
@@ -163,7 +163,7 @@ Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ih
 
   Bis zu diesem Zeitpunkt nutzte der Boot-Prozess generische Treiber.
 
-  Nun werden die spezifischen Treiber, die innerhalb des Windows-Betriebssystems installiert wurden, laut Windows-Registry und :code:`C:\Windows\system32\drivers\` geladen.
+  Nun werden die spezifischen Treiber, die innerhalb des Windows-Betriebssystems installiert wurden, laut Windows-Registry und :code:`C:\\Windows\\system32\\drivers\\` geladen.
 
   **Fehlerbild**:
   * Falls die Storage-/Festplatten-Treiber für die System-Festplatte nicht korrekt geladen werden sieht man ein: `INACCESSIBLE_BOOT_DEVICE`
