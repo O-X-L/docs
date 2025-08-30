@@ -83,100 +83,100 @@ Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ih
 3. Windows Boot Manager
 =======================
 
-  Hier befindet sich der Boot-Prozess nun auf der 100MB großen Windows EFI-Partition.
+Hier befindet sich der Boot-Prozess nun auf der 100MB großen Windows EFI-Partition.
 
-  Es wird die Datei :code:`\\EFI\\Microsoft\\Boot\\bootmgfw.efi` geladen.
+Es wird die Datei :code:`\\EFI\\Microsoft\\Boot\\bootmgfw.efi` geladen.
 
-  **Fehlerbild**:
+**Fehlerbild**:
 
-  * Windows startet direkt in das Recovery-Environment
+* Windows startet direkt in das Recovery-Environment
 
-  * Windows startet in die EFI-Shell
+* Windows startet in die EFI-Shell
 
-  **Problembehebung**:
+**Problembehebung**:
 
-  * Über das `Windows Recovery-Environment <windows_boot_issues_action_winre>`_ die System-Start-Problembehebung ausführen (*funktioniert leider meist nicht*)
+* Über das `Windows Recovery-Environment <windows_boot_issues_action_winre>`_ die System-Start-Problembehebung ausführen (*funktioniert leider meist nicht*)
 
-  * :ref:`Die EFI-Daten aktualisieren <windows_boot_issues_action_efi_bcd>`
+* :ref:`Die EFI-Daten aktualisieren <windows_boot_issues_action_efi_bcd>`
 
-  * :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
+* :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
 
 ----
 
 4. BCD - Boot Configuration Data
 ================================
 
-  Es wird die Datei :code:`\\EFI\\Microsoft\\Boot\\BCD` geladen.
+Es wird die Datei :code:`\\EFI\\Microsoft\\Boot\\BCD` geladen.
 
-  Diese beinhaltet die Information, auf welcher Partition sich das Windows-System befindet, welches gestartet werden soll.
+Diese beinhaltet die Information, auf welcher Partition sich das Windows-System befindet, welches gestartet werden soll.
 
-  **Fehlerbild**:
+**Fehlerbild**:
 
-  * Windows startet direkt in das Recovery-Environment
+* Windows startet direkt in das Recovery-Environment
 
-  * Windows startet in die EFI-Shell
+* Windows startet in die EFI-Shell
 
-  **Problembehebung**:
+**Problembehebung**:
 
-  * Über das `Windows Recovery-Environment <windows_boot_issues_action_winre>`_ die System-Start-Problembehebung ausführen (*funktioniert leider meist nicht*)
+* Über das `Windows Recovery-Environment <windows_boot_issues_action_winre>`_ die System-Start-Problembehebung ausführen (*funktioniert leider meist nicht*)
 
-  * :ref:`Die EFI-Daten aktualisieren <windows_boot_issues_action_efi_bcd>`
+* :ref:`Die EFI-Daten aktualisieren <windows_boot_issues_action_efi_bcd>`
 
-  * :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
+* :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
 
 ----
 
 5. Windows OS Loader
 ====================
 
-  Hier befindet sich der Boot-Prozess nun auf der Windows-System-Partition.
+Hier befindet sich der Boot-Prozess nun auf der Windows-System-Partition.
 
-  Es wird die Datei :code:`C:\\Windows\\System32\\winload.efi` geladen.
+Es wird die Datei :code:`C:\\Windows\\System32\\winload.efi` geladen.
 
-  **Fehlerbild**:
+**Fehlerbild**:
 
-  * Windows startet direkt in das Recovery-Environment
+* Windows startet direkt in das Recovery-Environment
 
-  **Problembehebung**:
+**Problembehebung**:
 
-  * Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
+* Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
 
 ----
 
 6. Windows OS Loader
 ====================
 
-  Es wird die Datei :code:`C:\\Windows\\System32\\ntoskrnl.exe` (das wirkliche Windows-Betriebssystem) geladen.
+Es wird die Datei :code:`C:\\Windows\\System32\\ntoskrnl.exe` (das wirkliche Windows-Betriebssystem) geladen.
 
-  **Fehlerbild**:
+**Fehlerbild**:
 
-  * Windows startet direkt in das Recovery-Environment
+* Windows startet direkt in das Recovery-Environment
 
-  **Problembehebung**:
+**Problembehebung**:
 
-  * Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
+* Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
 
 ----
 
 7. Laden der Treiber
 ====================
 
-  Bis zu diesem Zeitpunkt nutzte der Boot-Prozess generische Treiber.
+Bis zu diesem Zeitpunkt nutzte der Boot-Prozess generische Treiber.
 
-  Nun werden die spezifischen Treiber, die innerhalb des Windows-Betriebssystems installiert wurden, laut Windows-Registry und :code:`C:\\Windows\\system32\\drivers\\` geladen.
+Nun werden die spezifischen Treiber, die innerhalb des Windows-Betriebssystems installiert wurden, laut Windows-Registry und :code:`C:\\Windows\\system32\\drivers\\` geladen.
 
-  **Fehlerbild**:
-  * Falls die Storage-/Festplatten-Treiber für die System-Festplatte nicht korrekt geladen werden sieht man ein: `INACCESSIBLE_BOOT_DEVICE`
-  * Es wird angezeigt, dass gewisse System-Treiber nicht gefunden wurden
+**Fehlerbild**:
+* Falls die Storage-/Festplatten-Treiber für die System-Festplatte nicht korrekt geladen werden sieht man ein: `INACCESSIBLE_BOOT_DEVICE`
+* Es wird angezeigt, dass gewisse System-Treiber nicht gefunden wurden
 
-  **Problembehebung**:
-  * Im Fall von `INACCESSIBLE_BOOT_DEVICE` kann die BIOS-Einstellung zur Umschaltung zwischen **RAID und AHCI** Storage-Modus schuld sein!
-    Das Windows-System kann nur in dem Storage-Modus gebootet werden, in dem es installiert wurde.
-    Klassischerweise sieht man diese Meldung, wenn man eine Vollsicherung eines Computers auf einen anderen wiederherstellt.
+**Problembehebung**:
+* Im Fall von `INACCESSIBLE_BOOT_DEVICE` kann die BIOS-Einstellung zur Umschaltung zwischen **RAID und AHCI** Storage-Modus schuld sein!
+Das Windows-System kann nur in dem Storage-Modus gebootet werden, in dem es installiert wurde.
+Klassischerweise sieht man diese Meldung, wenn man eine Vollsicherung eines Computers auf einen anderen wiederherstellt.
 
-  * Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
+* Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
 
-  * Wenn andere Treiber nicht gefunden werden, kann es komplizierter werden.. :(
+* Wenn andere Treiber nicht gefunden werden, kann es komplizierter werden.. :(
 
 ----
 
