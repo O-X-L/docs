@@ -166,13 +166,17 @@ Bis zu diesem Zeitpunkt nutzte der Boot-Prozess generische Treiber.
 Nun werden die spezifischen Treiber, die innerhalb des Windows-Betriebssystems installiert wurden, laut Windows-Registry und :code:`C:\\Windows\\system32\\drivers\\` geladen.
 
 **Fehlerbild**:
+
 * Falls die Storage-/Festplatten-Treiber für die System-Festplatte nicht korrekt geladen werden sieht man ein: `INACCESSIBLE_BOOT_DEVICE`
+
 * Es wird angezeigt, dass gewisse System-Treiber nicht gefunden wurden
 
 **Problembehebung**:
+
 * Im Fall von `INACCESSIBLE_BOOT_DEVICE` kann die BIOS-Einstellung zur Umschaltung zwischen **RAID und AHCI** Storage-Modus schuld sein!
-Das Windows-System kann nur in dem Storage-Modus gebootet werden, in dem es installiert wurde.
-Klassischerweise sieht man diese Meldung, wenn man eine Vollsicherung eines Computers auf einen anderen wiederherstellt.
+
+  Das Windows-System kann nur in dem Storage-Modus gebootet werden, in dem es installiert wurde.
+  Klassischerweise sieht man diese Meldung, wenn man eine Vollsicherung eines Computers auf einen anderen wiederherstellt.
 
 * Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
 
