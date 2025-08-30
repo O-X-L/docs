@@ -203,7 +203,7 @@ Manchmal kann der Zugriff auf diese jedoch nicht möglich sein. In solchen Fäll
 * `Windows 10 <https://www.microsoft.com/software-download/windows10>`_
 * `Windows Server <https://www.microsoft.com/en-us/evalcenter/download-windows-server-2022>`_
 
-Zur Erstellung eines **bootbaren USB-Sticks** empfehlen wir das :ref:`Multi-Boot-Tool Ventoy <windows_ventoy_bootable_usb>`
+Zur Erstellung eines **bootbaren USB-Sticks** empfehlen wir das :ref:`Multi-Boot-Tool Ventoy <windows_ventoy_bootable_usb>`.
 
 ----
 
@@ -394,7 +394,7 @@ Sicherung einer Festplatte auf Block-Ebene
 
 2. Ein Linux Live-ISO herunterladen - Beispeil: `Debian Live (standard) <https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/>`_
 
-3. Einen bootbaren USB-Stick erstellen - wir empfehlen das :ref:`Multi-Boot-Tool Ventoy <windows_ventoy_bootable_usb>`
+3. Einen bootbaren USB-Stick erstellen - wir empfehlen das :ref:`Multi-Boot-Tool Ventoy <windows_ventoy_bootable_usb>`.
 
 4. Linux-ISO auf den USB-Stick kopieren
 

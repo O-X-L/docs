@@ -23,12 +23,13 @@ Zusätzlich zu dieser nützlichen Funktionalität ist die Installation sehr einf
 Nutzung
 #######
 
-Zur Erstellung eines bootbaren USB-Sticks empfehlen wir das Multi-Boot-Tool 'Ventoy':
 * `Download Ventoy <https://sourceforge.net/projects/ventoy/files/>`_
 * `Getting-Started Documentation <https://www.ventoy.net/en/doc_start.html>`_
 * `GitHub - Project <https://github.com/ventoy/Ventoy>`_
 
-Installation:
+Installation
+============
+
 * Installations-Anwendung herunterladen
 * Entpacken
 * Einen USB-Stick anstecken, **dessen Inhalt gelöscht** werden kann!
