@@ -38,45 +38,48 @@ In der Regel nutzen aktuelle System UEFI!
 UEFI Boot-Vorgang
 =================
 
-1. **Computer POST**
+1. Computer POST
+----------------
 
-  Hier testet das BIOS des Computers die Hardware (CPU, Arbeitsspeicher, Grafikkarte) auf Fehler.
+Hier testet das BIOS des Computers die Hardware (CPU, Arbeitsspeicher, Grafikkarte) auf Fehler.
 
-  **Fehlerbild**:
+**Fehlerbild**:
 
-  * Bei einem POST-Fehler wird meist kein Bild angezeigt - mache Geräte biepsen auch.
+* Bei einem POST-Fehler wird meist kein Bild angezeigt - mache Geräte biepsen auch.
 
-  * Das genaue Verhalten hängt vom Mainboard-Hersteller ab.
+* Das genaue Verhalten hängt vom Mainboard-Hersteller ab.
 
-  **Problembehebung**:
+**Problembehebung**:
 
-  * Wenn es bereits hier einen Fehler gibt, müssen die physischen Komponenten des System geprüft werden. Meist durch Testweisen Austausch oder Ausbau.
+* Wenn es bereits hier einen Fehler gibt, müssen die physischen Komponenten des System geprüft werden. Meist durch Testweisen Austausch oder Ausbau.
 
-2. **BIOS Boot / UEFI Firmware Initialization**
+2. BIOS Boot / UEFI Firmware Initialization
+-------------------------------------------
 
-  Es wird nach Bootoptionen gesucht und diese werden laut konfigurierter Priorität probiert.
+Es wird nach Bootoptionen gesucht und diese werden laut konfigurierter Priorität probiert.
 
-  Wenn der Windows-Boot richtig funktioniert wird von der Option :code:`Windows Boot Manager` gestartet.
+Wenn der Windows-Boot richtig funktioniert wird von der Option :code:`Windows Boot Manager` gestartet.
 
-  Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ihres Computers zu wechseln. Meist müssen dazu Funktions-Tasten in schneller Abfolge gedrückt werden (Bsp: Dell = F12, HP = F9)
+Zu diesem Zeitpunkt haben Sie die Möglichkeit ins BIOS-Bootmenü oder -Setup Ihres Computers zu wechseln. Meist müssen dazu Funktions-Tasten in schneller Abfolge gedrückt werden (Bsp: Dell = F12, HP = F9)
 
-  **Fehlerbild**:
+**Fehlerbild**:
 
-  * Es wird angezeigt, dass keine Bootoptionen verfügbar sind
+* Es wird angezeigt, dass keine Bootoptionen verfügbar sind
 
-  * Der Computer startet in eine andere Boot-Option, wie den Netzwerk-Boot
+* Der Computer startet in eine andere Boot-Option, wie den Netzwerk-Boot
 
-  **Problembehebung**:
+**Problembehebung**:
 
-  * Die System-Festplatte sollte auf Fehler geprüft werden - möglicherweise ist diese komplett defekt (*wie z.B. im August 2025 durch die Windows-Updates KB5063878 und/oder KB5062660 ausgelöst*; siehe: `Reddit <https://www.reddit.com/r/msp/comments/1n1sgxx/windows_11_update_kb5063878_causing_ssd_failures/>`_)
+* Die System-Festplatte sollte auf Fehler geprüft werden - möglicherweise ist diese komplett defekt (*wie z.B. im August 2025 durch die Windows-Updates KB5063878 und/oder KB5062660 ausgelöst*; siehe: `Reddit <https://www.reddit.com/r/msp/comments/1n1sgxx/windows_11_update_kb5063878_causing_ssd_failures/>`_)
 
-  * Über das `Windows Recovery-Environment <windows_boot_issues_action_winre>`_ die System-Start-Problembehebung ausführen (*funktioniert leider meist nicht*)
+* Über das `Windows Recovery-Environment <windows_boot_issues_action_winre>`_ die System-Start-Problembehebung ausführen (*funktioniert leider meist nicht*)
 
-  * :ref:`Die EFI-Daten aktualisieren <windows_boot_issues_action_efi_bcd>`
+* :ref:`Die EFI-Daten aktualisieren <windows_boot_issues_action_efi_bcd>`
 
-  * :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
+* :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
 
-3. **Windows Boot Manager**
+3. Windows Boot Manager
+-----------------------
 
   Hier befindet sich der Boot-Prozess nun auf der 100MB großen Windows EFI-Partition.
 
@@ -96,7 +99,8 @@ UEFI Boot-Vorgang
 
   * :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
 
-4. **BCD - Boot Configuration Data**
+4. BCD - Boot Configuration Data
+--------------------------------
 
   Es wird die Datei :code:`\EFI\Microsoft\Boot\BCD` geladen.
 
@@ -116,7 +120,8 @@ UEFI Boot-Vorgang
 
   * :ref:`Die EFI-Partition neu erstellen <windows_boot_issues_action_efi_partition>`
 
-5. **Windows OS Loader**
+5. Windows OS Loader
+--------------------
 
   Hier befindet sich der Boot-Prozess nun auf der Windows-System-Partition.
 
@@ -130,7 +135,8 @@ UEFI Boot-Vorgang
 
   * Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
 
-6. **Windows OS Loader**
+6. Windows OS Loader
+--------------------
 
   Es wird die Datei :code:`C:\Windows\System32\ntoskrnl.exe` (das wirkliche Windows-Betriebssystem) geladen.
 
@@ -142,7 +148,8 @@ UEFI Boot-Vorgang
 
   * Das :ref:`Windows-System über das Recovery-Environment auf Fehler prüfen <windows_boot_issues_action_sfc_chkdsk>`
 
-7. **Laden der System-Treibern**
+7. Laden der Treiber
+--------------------
 
   Bis zu diesem Zeitpunkt nutzte der Boot-Prozess generische Treiber.
 

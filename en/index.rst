@@ -82,6 +82,14 @@ Software Applications
 
    index_software
 
+Windows
+#######
+
+.. toctree::
+   :maxdepth: 2
+
+   index_windows
+
 Legal
 #####
 
