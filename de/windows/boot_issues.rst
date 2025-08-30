@@ -444,3 +444,5 @@ Sicherung einer Festplatte auf Block-Ebene
 
     # Erstellung eines Abbildes der Festplatte (/dev/sdX auf Ihre Festplatte ändern)
     dd if=/dev/sdX of="/mnt/backup/$(date +%Y-%m-%d_%H-%M)_backup.bin" bs=100M status=progress
+
+.. include:: ../_include/user_rath.rst

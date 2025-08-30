@@ -10,6 +10,14 @@ Bootbarer USB-Stick via Ventoy
 Intro
 #####
 
+Für einige technische Tätigkeiten muss ein Computer/Server von einem spezifischen ISO gestartet/-bootet werden.
+
+In der Regel nutzt man bootbare USB-Sticks für einen solchen Zweck.
+
+Das Tool `Ventoy <https://github.com/ventoy/Ventoy>`_ kann dazu genutzt werden um mehrere ISO-Dateien und gegebenenfalls zusätzliche Daten auf einem USB-Stick abzulegen.
+
+Zusätzlich zu dieser nützlichen Funktionalität ist die Installation sehr einfach.
+
 ----
 
 Nutzung
@@ -32,3 +40,5 @@ Installation:
 Nun sollte es beim Neustart des Computers möglich sein über das BIOS-Bootmenü den USB-Stick auszuwählen.
 
 Ventoy zeigt danach eine Liste der verfügbaren ISO-Dateien an. Einfach via Tastatur auswählen und 'normal' starten auswählen.
+
+.. include:: ../_include/user_rath.rst

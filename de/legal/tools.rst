@@ -11,7 +11,7 @@ Von der Dokumentation verwendete Tools
 
 * Der Text **wurde NICHT von AI generiert**. Alles von Menschenhand gemacht.
 
-  * Wir verwenden nur `deepl.com <https://www.deepl.com/en/translator>`_, um die Übersetzung von Inhalten zu beschleunigen (EN=>DE).
+  * Wir verwenden nur `deepl.com <https://www.deepl.com/en/translator>`_, um die Übersetzung von Inhalten zu beschleunigen (EN<=>DE).
 
 * Die Dokumentation ist in `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html>`_ geschrieben und mit `Sphinx <https://www.sphinx-doc.org>`_ in HTML umgewandelt.
 
