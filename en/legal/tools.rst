@@ -17,8 +17,8 @@ Tools used by the Documentation
 
   * Source repository: `github.com/O-X-L/docs <https://github.com/O-X-L/docs>`_
 
-* The modern styling is provided by `github.com/piccolo-orm/piccolo_theme <https://github.com/piccolo-orm/piccolo_theme>`_
+* The modern styling is provided by `https://github.com/jbms/sphinx-immaterial <https://https://github.com/jbms/sphinx-immaterial>`_
 
-* The documentation is served using `nginx <https://nginx.org/en/>`_, proxied using `HAProxy <https://www.haproxy.com/>`_, secured by the `Coraza WAF <https://coraza.io>`_, firewalled using `NFTables <https://netfilter.org/projects/nftables/>`_ and running on `Proxmox VE <https://www.proxmox.com/en/proxmox-virtual-environment/overview>`_.
+* The documentation is served using `nginx <https://nginx.org/en/>`_, proxied using `HAProxy <https://www.haproxy.com/>`_, secured by the `Coraza WAF <https://coraza.io>`_ and firewalled using `NFTables <https://netfilter.org/projects/nftables/>`_.
 
 * Charts are created using `lucid.app <https://lucid.app>`_ (alternatively `draw.io <https://draw.io>`_)

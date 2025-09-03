@@ -1,4 +1,7 @@
 build/
+.venv/
+.idea/
+.vscode/
 
 de/_static/css/main.css
 de/_static/img/*
