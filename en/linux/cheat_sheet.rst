@@ -1010,6 +1010,17 @@ Multiple
     # or from png
     for img in *.png; do convert "$img" -quality 70 "${img%.png}.jpg"; done
 
+Create animated GIF
+===================
+
+.. code-block::
+
+    # place images into a directory and give them numeric names
+    # optionally set 'resize' to make sure all images are the same size
+    # delay 200 = 2s
+    convert -resize 1125x812 -delay 200 *.png out.gif
+
+
 ----
 
 Video Manipulation

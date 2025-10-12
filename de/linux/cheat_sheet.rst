@@ -1012,6 +1012,16 @@ Mehrere
     # oder von png
     for img in *.png; do convert "$img" -quality 70 "${img%.png}.jpg"; done
 
+Animiertes GIF erstellen
+========================
+
+.. code-block::
+
+    # place images into a directory and give them numeric names
+    # optionally set 'resize' to make sure all images are the same size
+    # delay 200 = 2s
+    convert -resize 1125x812 -delay 200 *.png out.gif
+
 ----
 
 Webp Bilder komprimieren
