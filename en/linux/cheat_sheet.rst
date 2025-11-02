@@ -1020,6 +1020,15 @@ Create animated GIF
     # delay 200 = 2s
     convert -resize 1125x812 -delay 200 *.png out.gif
 
+Crop image
+==========
+
+.. code-block::
+
+    # gravity defines what to cut:South=bottom, North=top
+    # chop defines the amount to cut (in pixels)
+    convert IN.png -gravity North -chop 0x100 OUT.png
+
 
 ----
 
@@ -1111,6 +1120,33 @@ Multiple
 .. code-block::
 
     for img in *.jpg; do cwebp -q 70 "$img" -o "${img%.jpg}.webp"; done
+
+----
+
+Working with Documentation
+##########################
+
+Convert Documentation Format
+****************************
+
+You can use the tool `pandoc <https://pandoc.org/>`_ to do so:
+
+.. code-block::
+
+    sudo apt install pandoc
+
+    # convert mediawiki (wikipedia format) to markdown
+    pandoc --from mediawiki --to markdown IN.mw -o OUT.md
+
+    # convert markdown to reStructuredText
+    # tip: if you run into issues with code-blocks when converting TO rst - try to add this argument: '--columns=500'
+    pandoc --from markdown --to rst IN.md -o OUT.rst
+
+    # convert reStructuredText to GitHub-flavor Markdown
+    pandoc --from rst --to gfm IN.rst -o OUT.md
+
+    # convert markdown to HTML
+    pandoc --from markdown --to html IN.md -o OUT.html
 
 ----
 

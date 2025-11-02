@@ -1022,6 +1022,15 @@ Animiertes GIF erstellen
     # delay 200 = 2s
     convert -resize 1125x812 -delay 200 *.png out.gif
 
+Bild schneiden
+==============
+
+.. code-block::
+
+    # gravity defines what to cut:South=bottom, North=top
+    # chop defines the amount to cut (in pixels)
+    convert IN.png -gravity North -chop 0x100 OUT.png
+
 ----
 
 Webp Bilder komprimieren
@@ -1112,6 +1121,34 @@ Videos zusammenfassen:
     echo "file 'video3.mp4'" >> concat.txt
 
     ffmpeg -f concat -i concat.txt -c copy output.mp4
+
+----
+
+Mit Dokumentation arbeiten
+##########################
+
+Format von Dokumentation konvertieren
+*************************************
+
+Dazu kann das Tool `pandoc <https://pandoc.org/>`_ genutzt werden:
+
+.. code-block::
+
+    sudo apt install pandoc
+
+    # convert mediawiki (wikipedia format) to markdown
+    pandoc --from mediawiki --to markdown IN.mw -o OUT.md
+
+    # convert markdown to reStructuredText
+    # tip: if you run into issues with code-blocks when converting TO rst - try to add this argument: '--columns=500'
+    pandoc --from markdown --to rst IN.md -o OUT.rst
+
+    # convert reStructuredText to GitHub-flavor Markdown
+    pandoc --from rst --to gfm IN.rst -o OUT.md
+
+    # convert markdown to HTML
+    pandoc --from markdown --to html IN.md -o OUT.html
+
 
 ----
 
