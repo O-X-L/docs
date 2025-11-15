@@ -50,10 +50,10 @@ HTML_META_SRC="<meta charset=\"utf-8\" />"
 HTML_META="${HTML_META_SRC}<meta http-equiv=\"Content-Security-Policy\" content=\"default-src 'self'; img-src 'self' https://files.oxl.at data:; style-src 'self' https://files.oxl.at 'unsafe-inline'; script-src 'self' https://files.oxl.at 'unsafe-inline' 'unsafe-eval'; connect-src 'self' https://api.github.com;\">"
 HTML_META="${HTML_META}<link rel=\"icon\" type=\"image/webp\" href=\"https://files.oxl.at/img/oxl3_sm.webp\">"
 HTML_META_EN="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.at\" hreflang=\"de\">"
-HTML_META_DE="${HTML_META}<link rel=\"alternate\" href=\"https://docs.o-x-l.com\" hreflang=\"en\">"
+HTML_META_DE="${HTML_META}<link rel=\"alternate\" href=\"https://docs.oxl.app\" hreflang=\"en\">"
 HTML_LOGO_LINK_SRC='href=".*Go to homepage"'
 HTML_LOGO_LINK_DE='href="https://www.oxl.at" class="oxl-nav-logo" title="OXL IT Services Website"'
-HTML_LOGO_LINK_EN='href="https://www.o-x-l.com" class="oxl-nav-logo" title="OXL IT Services Website"'
+HTML_LOGO_LINK_EN='href="https://www.oxl.app" class="oxl-nav-logo" title="OXL IT Services Website"'
 HTML_LANG_NONE='<html'
 HTML_LANG_EN='html lang="en"'
 HTML_LANG_DE='html lang="de"'

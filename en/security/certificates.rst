@@ -49,7 +49,7 @@ Whenever a service is access over TLS, it will be access over either a DNS-name 
 
 The SAN is a list of DNS/IP/EMAIL values that are valid for this specific certificate. The SAN is a security measure, that makes sure a leaked private-key cannot be abused for just any service.
 
-Example: :code:`DNS:www.oxl.at,DNS:www.o-x-l.com,IP:1.1.1.1`
+Example: :code:`DNS:www.oxl.at,DNS:www.oxl.app,IP:1.1.1.1`
 
 It is important to set this attribute correctly, as it will be validated!
 

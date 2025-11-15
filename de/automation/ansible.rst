@@ -63,7 +63,7 @@ Notiz: IaC wie dieses erfordert auch eine Art von `Versionskontrollsystem (wie G
 
 .. tip::
 
-    Wir können Sie bei der `Implementierung von Ansible und Infrastructure-as-Code unterstützen <https://www.o-x-l.com/automation>`_!
+    Wir können Sie bei der `Implementierung von Ansible und Infrastructure-as-Code unterstützen <https://www.oxl.app/automation>`_!
 
 ----
 

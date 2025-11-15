@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-   <url><loc>https://docs.o-x-l.com</loc></url>
+   <url><loc>https://docs.oxl.app</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/firewall/nftables</loc></url>
-   <url><loc>https://docs.o-x-l.com/firewall/nftables_tproxy</loc></url>
+   <url><loc>https://docs.oxl.app/firewall/nftables</loc></url>
+   <url><loc>https://docs.oxl.app/firewall/nftables_tproxy</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/proxy/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/proxy/forward_squid.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/proxy/reverse_haproxy.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/proxy/tls_interception.html</loc></url>
+   <url><loc>https://docs.oxl.app/proxy/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.app/proxy/forward_squid.html</loc></url>
+   <url><loc>https://docs.oxl.app/proxy/reverse_haproxy.html</loc></url>
+   <url><loc>https://docs.oxl.app/proxy/tls_interception.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/waf/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/waf/2_fingerprinting.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/waf/haproxy.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/waf/coraza.html</loc></url>
+   <url><loc>https://docs.oxl.app/waf/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.app/waf/2_fingerprinting.html</loc></url>
+   <url><loc>https://docs.oxl.app/waf/haproxy.html</loc></url>
+   <url><loc>https://docs.oxl.app/waf/coraza.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/mail/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/mail/security.html</loc></url>
+   <url><loc>https://docs.oxl.app/mail/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.app/mail/security.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/security/certificates.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/security/encryption.html</loc></url>
+   <url><loc>https://docs.oxl.app/security/certificates.html</loc></url>
+   <url><loc>https://docs.oxl.app/security/encryption.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/automation/ansible.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/automation/ansible_setup.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/automation/ansible_webui.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/automation/ydotool.html</loc></url>
+   <url><loc>https://docs.oxl.app/automation/ansible.html</loc></url>
+   <url><loc>https://docs.oxl.app/automation/ansible_setup.html</loc></url>
+   <url><loc>https://docs.oxl.app/automation/ansible_webui.html</loc></url>
+   <url><loc>https://docs.oxl.app/automation/ydotool.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/linux/1_intro.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/linux/linux_ha.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/linux/cheat_sheet.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/linux/ssh.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/linux/grub.html</loc></url>
+   <url><loc>https://docs.oxl.app/linux/1_intro.html</loc></url>
+   <url><loc>https://docs.oxl.app/linux/linux_ha.html</loc></url>
+   <url><loc>https://docs.oxl.app/linux/cheat_sheet.html</loc></url>
+   <url><loc>https://docs.oxl.app/linux/ssh.html</loc></url>
+   <url><loc>https://docs.oxl.app/linux/grub.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/network/openwrt.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/network/openwrt_hardware.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/network/dns_cache.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/network/hetzner.html</loc></url>
+   <url><loc>https://docs.oxl.app/network/openwrt.html</loc></url>
+   <url><loc>https://docs.oxl.app/network/openwrt_hardware.html</loc></url>
+   <url><loc>https://docs.oxl.app/network/dns_cache.html</loc></url>
+   <url><loc>https://docs.oxl.app/network/hetzner.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/software/odoo.html</loc></url>
-   <url><loc>https://docs.o-x-l.com/software/bmd.html</loc></url>
+   <url><loc>https://docs.oxl.app/software/odoo.html</loc></url>
+   <url><loc>https://docs.oxl.app/software/bmd.html</loc></url>
 
-   <url><loc>https://docs.o-x-l.com/windows/ventoy_bootable_usb.html</loc></url>
+   <url><loc>https://docs.oxl.app/windows/ventoy_bootable_usb.html</loc></url>
 </urlset>

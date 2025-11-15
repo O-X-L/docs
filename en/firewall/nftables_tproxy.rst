@@ -374,15 +374,15 @@ With a tool like that you can wrap the plain traffic received from TPROXY and fo
 
     # NFTables =TCP=> TPROXY (forwarder @ 127.0.0.1) =HTTP[TCP]=> PROXY
 
-    > curl https://www.o-x-l.com
+    > curl https://www.oxl.app
     # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.oxl.app:443/tcp | connection established
     # proxy (squid)
-    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
+    NONE_NONE/200 0 CONNECT www.oxl.app:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.oxl.app:443 - HIER_DIRECT/www.oxl.app -
 
-    > curl http://www.o-x-l.com
+    > curl http://www.oxl.app
     # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.oxl.app:80/tcp | connection established
     # proxy (squid)
-    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.oxl.app/ - HIER_DIRECT/www.oxl.app text/html

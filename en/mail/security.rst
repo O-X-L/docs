@@ -57,7 +57,7 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
     .. code-block:: bash
 
-        Record: o-x-l.com
+        Record: oxl.app
         Type:   TXT
         Value:  v=spf1 mx -all
 
@@ -65,7 +65,7 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
     .. code-block:: bash
 
-      Record: o-x-l.com
+      Record: oxl.app
       Type:   TXT
       Value:  v=spf1 mx include:amazonses.com -all
 
@@ -74,7 +74,7 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
     .. code-block:: bash
 
-        Record: *.o-x-l.com
+        Record: *.oxl.app
         Type:   TXT
         Value:  v=spf1 -all
 
@@ -82,11 +82,11 @@ These are the allowed statements: :code:`ip4:<IP>`, :code:`ip6:<IP>`, :code:`mx`
 
     .. code-block:: bash
 
-        Record: www.o-x-l.com
+        Record: www.oxl.app
         Type:   A
         Value:  <IP OF WEB SERVICE>
 
-        Record: www.o-x-l.com
+        Record: www.oxl.app
         Type:   TXT
         Value:  v=spf1 -all
 
@@ -122,7 +122,7 @@ DKIM Examples
 
     .. code-block:: bash
 
-        Record: mail123._domainkey.o-x-l.com
+        Record: mail123._domainkey.oxl.app
         Type:   TXT
         Value:  v=DKIM1;k=rsa;t=s;s=<SERVICE>;p=<PUBLIC-KEY-B64>
 
@@ -166,7 +166,7 @@ You can add :code:`rua` (aggregate) and :code:`ruf` (forensic) to your DMARC rec
 
 This is very useful to gain insights into the health of your email flows. It also shows you if someońe is spoofing your email domain.
 
-**Example**: :code:`rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc@o-x-l.com`
+**Example**: :code:`rua=mailto:dmarc@oxl.app; ruf=mailto:dmarc@oxl.app`
 
 You can use tools like `parsedmarc <https://github.com/O-X-L/dmarc-analyzer>`_ to get statistics regarding possible mailing issues you have.
 
@@ -179,32 +179,32 @@ Possible **policies**: :code:`none` (reporting/warning), :code:`quarantine`, :co
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.oxl.app
         Type:   TXT
-        Value:  v=DMARC1; p=none; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
+        Value:  v=DMARC1; p=none; rua=mailto:dmarc@oxl.app; ruf=mailto:dmarc.oxl.app; fo=1;
 
 * Enforce DMARC alignment and move all other messages from this domain into the receivers quarantine.
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.oxl.app
         Type:   TXT
-        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1;
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@oxl.app; ruf=mailto:dmarc.oxl.app; fo=1;
 
 * Set SPF & DKIM matching to be strict.
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.oxl.app
         Type:   TXT
-        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s;
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@oxl.app; ruf=mailto:dmarc.oxl.app; fo=1; adkim=s; aspf=s;
 
 * Add a subdomain-policy.
 
     .. code-block:: bash
 
-        Record: _dmarc.o-x-l.com
+        Record: _dmarc.oxl.app
         Type:   TXT
-        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@o-x-l.com; ruf=mailto:dmarc.o-x-l.com; fo=1; adkim=s; aspf=s; sp=quarantine;
+        Value:  v=DMARC1; p=quarantine; rua=mailto:dmarc@oxl.app; ruf=mailto:dmarc.oxl.app; fo=1; adkim=s; aspf=s; sp=quarantine;
 
 .. include:: ../_include/user_rath.rst

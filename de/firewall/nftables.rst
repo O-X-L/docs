@@ -339,7 +339,7 @@ Siehe: `NFTables Addon Failover <https://github.com/O-X-L/nftables_addon_failove
 Konfiguration
 #############
 
-`NFTables Grundkonfiguration Beispiel <https://docs.o-x-l.com/_static/raw/fw_nftables_base.txt>`_
+`NFTables Grundkonfiguration Beispiel <https://docs.oxl.app/_static/raw/fw_nftables_base.txt>`_
 
 TPROXY
 ******

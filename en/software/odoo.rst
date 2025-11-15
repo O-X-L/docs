@@ -40,7 +40,7 @@ Please note: If you have more users than licences, you have a few days to purcha
 Module Development
 ##################
 
-We can develop **custom Odoo-Modules and functionality** for your business needs! See: `Odoo Module Development <https://www.o-x-l.com/odoo>`_
+We can develop **custom Odoo-Modules and functionality** for your business needs! See: `Odoo Module Development <https://www.oxl.app/odoo>`_
 
 Guide
 *****

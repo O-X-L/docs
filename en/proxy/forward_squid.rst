@@ -223,7 +223,7 @@ See: `IPTables TPROXY <https://gist.github.com/superstes/c4fefbf403f61812abf8916
 Config
 ######
 
-`Config options <https://docs.o-x-l.com/_static/raw/proxy_squid_config_options.txt>`_
+`Config options <https://docs.oxl.app/_static/raw/proxy_squid_config_options.txt>`_
 
 Know-How
 ========
@@ -351,7 +351,7 @@ You may want to cover at least those basic filters:
       .. code-block:: text
 
           acl domains_allowed dstdomain example.com
-          acl domains_allowed dstdomain www.o-x-l.com
+          acl domains_allowed dstdomain www.oxl.app
           http_access allow domains_allowed
           http_access deny all
 
@@ -484,18 +484,18 @@ In this case we might need other tools like `proxy-forwarder <https://github.com
 
 .. code-block:: text
 
-    > curl https://www.o-x-l.com
+    > curl https://www.oxl.app
     # proxy-forwarder
-    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.o-x-l.com:443/tcp | connection established
+    2023-08-29 20:49:10 | INFO | handler | 192.168.11.104:36386 <=> www.oxl.app:443/tcp | connection established
     # squid
-    NONE_NONE/200 0 CONNECT www.o-x-l.com:443 - HIER_NONE/- -
-    TCP_TUNNEL/200 6178 CONNECT www.o-x-l.com:443 - HIER_DIRECT/www.o-x-l.com -
+    NONE_NONE/200 0 CONNECT www.oxl.app:443 - HIER_NONE/- -
+    TCP_TUNNEL/200 6178 CONNECT www.oxl.app:443 - HIER_DIRECT/www.oxl.app -
 
     > curl http://superstes.eu
     # proxy-forwarder
-    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.o-x-l.com:80/tcp | connection established
+    2023-08-29 20:49:07 | INFO | handler | 192.168.11.104:50808 <=> www.oxl.app:80/tcp | connection established
     # squid
-    TCP_REFRESH_MODIFIED/301 477 GET http://www.o-x-l.com/ - HIER_DIRECT/www.o-x-l.com text/html
+    TCP_REFRESH_MODIFIED/301 477 GET http://www.oxl.app/ - HIER_DIRECT/www.oxl.app text/html
 
 
 |squid_remote|

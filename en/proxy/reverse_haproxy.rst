@@ -334,9 +334,9 @@ This flag can be used to put stricter rules for those clients in-place:
 
 Example List-Files:
 
-* `badbot-ua-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_badbot-ua-sub.lst>`_
-* `bot-ua-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_bot-ua-sub.lst>`_
-* `crawler-ua-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_crawler-ua-sub.lst>`_
+* `badbot-ua-sub.lst <https://docs.oxl.app/_static/raw/proxy_reverse_haproxy_badbot-ua-sub.lst>`_
+* `bot-ua-sub.lst <https://docs.oxl.app/_static/raw/proxy_reverse_haproxy_bot-ua-sub.lst>`_
+* `crawler-ua-sub.lst <https://docs.oxl.app/_static/raw/proxy_reverse_haproxy_crawler-ua-sub.lst>`_
 
 ----
 
@@ -359,9 +359,9 @@ You can basically observe your logs and add blocks as needed.
 
 Example List-Files:
 
-* `script-kiddy-path-beg.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_script-kiddy-path-beg.lst>`_
-* `script-kiddy-path-sub.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_script-kiddy-path-sub.lst>`_
-* `script-kiddy-path-end.lst <https://docs.o-x-l.com/_static/raw/proxy_reverse_haproxy_script-kiddy-path-end.lst>`_
+* `script-kiddy-path-beg.lst <https://docs.oxl.app/_static/raw/proxy_reverse_haproxy_script-kiddy-path-beg.lst>`_
+* `script-kiddy-path-sub.lst <https://docs.oxl.app/_static/raw/proxy_reverse_haproxy_script-kiddy-path-sub.lst>`_
+* `script-kiddy-path-end.lst <https://docs.oxl.app/_static/raw/proxy_reverse_haproxy_script-kiddy-path-end.lst>`_
 
 ----
 

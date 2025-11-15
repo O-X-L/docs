@@ -37,7 +37,7 @@ You can use the `Windows Subsystem-Linux <https://docs.microsoft.com/en-us/windo
 Container
 =========
 
-Docker: `Example Dockerfile <https://docs.o-x-l.com/_static/raw/atm_ansible_dockerfile>`_
+Docker: `Example Dockerfile <https://docs.oxl.app/_static/raw/atm_ansible_dockerfile>`_
 
 
 ----

@@ -53,7 +53,7 @@ Note: IaC like this also requires some kind of `Version Control System (like Git
 
 .. tip::
 
-    We can `support you to implement Ansible and Infrastructure-as-Code <https://www.o-x-l.com/automation>`_!
+    We can `support you to implement Ansible and Infrastructure-as-Code <https://www.oxl.app/automation>`_!
 
 ----
 

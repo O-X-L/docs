@@ -19,7 +19,7 @@ source_suffix = {
     '.rst': 'restructuredtext',
 }
 html_theme_options = {
-    # 'banner_text': '<a href="https://www.o-x-l.com">About OXL</a> | '
+    # 'banner_text': '<a href="https://www.oxl.app">About OXL</a> | '
     #                '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a> | '
     #                '<a href="https://docs.oxl.at" title="Zur deutschsprachigen Version wechseln"><img loading="lazy" style="height: 10px; padding: 0; border-radius: 0;" src="https://files.oxl.at/img/flag_de.svg" alt="German Flag"> Deutsch</a>'
     "site_url": "https://docs.O-X-L.com",
