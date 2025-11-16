@@ -19,10 +19,7 @@ source_suffix = {
     '.rst': 'restructuredtext',
 }
 html_theme_options = {
-    # 'banner_text': '<a href="https://www.oxl.app">About OXL</a> | '
-    #                '<a href="https://github.com/O-X-L/docs/issues/new">Report errors</a> | '
-    #                '<a href="https://docs.oxl.at" title="Zur deutschsprachigen Version wechseln"><img loading="lazy" style="height: 10px; padding: 0; border-radius: 0;" src="https://files.oxl.at/img/flag_de.svg" alt="German Flag"> Deutsch</a>'
-    "site_url": "https://docs.O-X-L.com",
+    "site_url": "https://docs.OXL.app",
     "repo_url": "https://github.com/O-X-L/docs",
     "repo_name": "OXL Docs",
     "globaltoc_collapse": True,
@@ -75,26 +72,41 @@ html_theme_options = {
     "version_dropdown": True,
     "version_info": [
         {
-            "version": "https://docs.OXL.at",
-            "title": "Deutsches Handbuch",
+            "version": "https://shop.oxl.app/collections/open-source",
+            "title": "Support this Project",
             "aliases": [],
         },
         {
-            "version": "https://www.O-X-L.com",
+            "version": "https://docs.OXL.at",
+            "title": "Deutsche Dokumentation",
+            "aliases": [],
+        },
+        {
+            "version": "https://www.OXL.app",
             "title": "About OXL",
             "aliases": [],
         },
     ],
     "social": [
         {
+            "icon": "fontawesome/solid/wallet",
+            "link": "https://shop.oxl.app/collections/open-source",
+            "name": "Support this Project",
+        },
+        {
             "icon": "fontawesome/solid/globe",
-            "link": "https://www.O-X-L.com",
+            "link": "https://www.OXL.app",
             "name": "About OXL",
         },
         {
             "icon": "fontawesome/brands/github",
             "link": "https://github.com/O-X-L",
             "name": "OXL on GitHub",
+        },
+        {
+            "icon": "fontawesome/brands/git-alt",
+            "link": "https://codeberg.org/OXL",
+            "name": "OXL on Codeberg",
         },
     ],
 }

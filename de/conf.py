@@ -19,9 +19,6 @@ source_suffix = {
     '.rst': 'restructuredtext',
 }
 html_theme_options = {
-    # 'banner_text': '<a href="https://www.oxl.at">Über OXL</a> | '
-    #                '<a href="https://github.com/O-X-L/docs/issues/new">Fehler melden</a> | '
-    #                '<a href="https://docs.oxl.app" title="Switch to the english version"><img loading="lazy" style="height: 10px; padding: 0; border-radius: 0;" src="https://files.oxl.at/img/flag_gb.svg" alt="England Flag"> English</a>'
     "site_url": "https://docs.OXL.at",
     "repo_url": "https://github.com/O-X-L/docs",
     "repo_name": "OXL Docs",
@@ -75,7 +72,12 @@ html_theme_options = {
     "version_dropdown": True,
     "version_info": [
         {
-            "version": "https://docs.O-X-L.com",
+            "version": "https://shop.oxl.app/collections/open-source",
+            "title": "Projekt unterstützen",
+            "aliases": [],
+        },
+        {
+            "version": "https://docs.OXL.app",
             "title": "English Manual",
             "aliases": [],
         },
@@ -87,6 +89,11 @@ html_theme_options = {
     ],
     "social": [
         {
+            "icon": "fontawesome/solid/wallet",
+            "link": "https://shop.oxl.app/collections/open-source",
+            "name": "Projekt unterstützen",
+        },
+        {
             "icon": "fontawesome/solid/globe",
             "link": "https://www.OXL.at",
             "name": "Über OXL",
@@ -95,6 +102,11 @@ html_theme_options = {
             "icon": "fontawesome/brands/github",
             "link": "https://github.com/O-X-L",
             "name": "OXL auf GitHub",
+        },
+        {
+            "icon": "fontawesome/brands/git-alt",
+            "link": "https://codeberg.org/OXL",
+            "name": "OXL auf Codeberg",
         },
     ],
 }
