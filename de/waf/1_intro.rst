@@ -56,7 +56,7 @@ Wie kann eine WAF Sie schützen?
 
   Neben reinen Datenbanken und IP-/ASN-Listen können auch dynamische Lösungen wie `CrowdSec <https://www.crowdsec.net/>`_ integriert werden.
 
-Das Regelwerk einer WAF muss speziell auf die Anwendungen, die geschützt werden soll, abgestimmt sein. Dies kann initial etwas aufwendig sein - doch der Aufwand pendelt sich rasch ein.
+Das Regelwerk einer WAF muss speziell auf die Anwendungen, die geschützt werden soll, abgestimmt sein. Dies kann initial etwas aufwändig sein - doch der Aufwand pendelt sich rasch ein.
 
 ----
 
@@ -113,7 +113,7 @@ Hosten kann man diese auf der eigenen Infrastruktur oder in einem Rechenzentrum.
 
 * Sie müssen sicherstellen, dass Sie über genügend interne Ressourcen oder einen Dienstleister verfügen, um das Produkt zu warten
 
-* Die initiale Einrichtung kann etwas aufwendiger sein
+* Die initiale Einrichtung kann etwas aufwändiger sein
 
 * System zur Visualisierung und Analyse von Logs nötig (z.B. `Graylog <https://graylog.org/products/source-available/>`_)
 
