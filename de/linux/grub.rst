@@ -30,6 +30,19 @@ Dieses ISO-Image muss auf einem bootbaren USB-Stick aufgespielt werden.
 
 Zur Erstellung eines **bootbaren USB-Sticks** empfehlen wir das :ref:`Multi-Boot-Tool Ventoy <windows_ventoy_bootable_usb>`.
 
+Englisches Keyboard
+-------------------
+
+Standardmäßig nutzt ein Linux Live-System das englische Tastaturlayout. (*QUERTY*)
+
+Hier einige oft benötigte Key-Mappings vom deutschen: (*QUERTZ; Taste => EN Output*)
+
+* **- => /**
+* **ß => -**
+* **? => _**
+* **z => y**
+* **y => z**
+
 2. Wenn nötig: Festplatte entschlüsseln
 =======================================
 
@@ -43,14 +56,14 @@ Zur Erstellung eines **bootbaren USB-Sticks** empfehlen wir das :ref:`Multi-Boot
 
     # install cryptmount
     apt update
-    apt install cryptmount-bin
+    apt install cryptsetup
 
     # find your disk
     lsblk -o +model
 
     # decrypt the disk ('system' is just a generic name)
     # change '/dev/sdX3' to the block-device that contains your root-partition (or whatever partition is encrypted)
-    cryptmount luksOpen /dev/sdX3 system
+    cryptsetup luksOpen /dev/sdX3 system
 
     # you should be able to mount your decrypted partitions /dev/mapper/... in the next steps
 
@@ -64,7 +77,13 @@ Zur Erstellung eines **bootbaren USB-Sticks** empfehlen wir das :ref:`Multi-Boot
     # change '/dev/sdX' to your system-disk
 
     # mount root partition
+    ## default example
     mount /dev/sdX3 /mnt
+
+    ## example with multiple LVM partitions
+    mount /dev/mapper/vg0-root /mnt
+    mount /dev/mapper/vg0-var /mnt/var
+    mount /dev/mapper/vg0-home /mnt/home
 
     # mount boot partition (if you have a dedicated one)
     mount /dev/sdX2 /mnt/boot
@@ -89,7 +108,7 @@ Siehe auch: `wiki.debian.org <https://wiki.debian.org/GrubEFIReinstall>`_
 
 .. code-block:: bash
 
-    # change '/dev/sdX' to your system-disk
+    # change '/dev/sdX' to your system-disk (not a partition but the actual disk)
     grub-install /dev/sdX
 
     CTRL+D
