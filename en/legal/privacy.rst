@@ -25,6 +25,6 @@ Cookies 🍪
 Local Storage
 *************
 
-* **piccoloThemeMode**: Dark/Light Mode Switch
+* **/.__palette**: Dark/Light Mode Switch
 
 * **feedback-\***: Status of Feedback-Buttons
