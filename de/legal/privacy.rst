@@ -16,7 +16,9 @@ Siehe: `www.OXL.at/privacy <https:/www.oxl.at/privacy>`_
 Cookies 🍪
 **********
 
-Diese Webseite nutzt keine Cookies.
+* **sec_\***
+
+  Der Cookie mit dem Prefix "sec_" wird zur Erkennung von Missbrauch durch Bots genutzt
 
 ----
 
