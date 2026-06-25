@@ -131,7 +131,7 @@ Wenn Sie die volle Kontrolle haben wollen, können Sie eine interne CA einrichte
 * Sichern Sie den Server, auf dem die PKI liegt, stark ab um sicherzustellen, dass das Vertrauen nicht missbraucht wird.
 * Sichern Sie die Private-Keys Ihrer Zertifikate ab.
 
-Beispeile zur Erstellung: `EasyRSA <https://github.com/OpenVPN/easy-rsa>`_, `Ansible Role <https://github.com/ansibleguy/infra_pki>`_, `Microsoft AD Certificate Services <https://learn.microsoft.com/en-us/windows-server/networking/core-network-guide/cncg/server-certs/install-the-certification-authority>`_, `Hashicorp Vault <https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine>`_
+Beispiele zur Erstellung: `EasyRSA <https://github.com/OpenVPN/easy-rsa>`_, `Ansible Role <https://github.com/ansibleguy/infra_pki>`_, `Microsoft AD Certificate Services <https://learn.microsoft.com/en-us/windows-server/networking/core-network-guide/cncg/server-certs/install-the-certification-authority>`_, `Hashicorp Vault <https://developer.hashicorp.com/vault/tutorials/secrets-management/pki-engine>`_
 
 Best practices: `AWS <https://docs.aws.amazon.com/privateca/latest/userguide/ca-hierarchy.html>`_, `Microsoft AD Certificate Services <https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/pki-design-considerations>`_
 
