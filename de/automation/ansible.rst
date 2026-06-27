@@ -39,16 +39,6 @@ Ansible ermöglicht Ihnen `Infrastructure-as-Code <https://www.redhat.com/en/top
 
 Die Verwendung von **IaC bietet einige enorme Vorteile**:
 
-* **Simplify complex setups** by leveraging abstraction
-* **Empower non-technical staff** to perform complex IT tasks
-* **Increase the efficiency** of your IT department
-* **Reproducible installations**
-* **Versioned configuration**
-* **Implement changes quickly and safely**
-* **Ability to roll back changes**
-* **Introduce processes for approving changes**
-* **Catch errors before implementation**
-
 * **Vereinfachung komplexer Setups** durch den Einsatz von Abstraktion
 * **Befähigung von nicht-technischem Personal** zur Durchführung komplexer IT-Aufgaben
 * **Steigern Sie die Effizienz** Ihrer IT-Abteilung
