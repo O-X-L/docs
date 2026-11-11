@@ -9,7 +9,7 @@ Datenschtz
 Datenschutzerklärung
 ********************
 
-Siehe: `www.OXL.at/privacy <https:/www.oxl.at/privacy>`_
+Siehe: `www.OXL.at/privacy <https://www.oxl.at/privacy>`_
 
 ----
 
