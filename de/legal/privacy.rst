@@ -18,7 +18,12 @@ Cookies 🍪
 
 * **sec_\***
 
-  Der Cookie mit dem Prefix "sec_" wird zur Erkennung von Missbrauch durch Bots genutzt
+  Der Cookie mit dem Prefix "sec\_" wird zur Erkennung von Missbrauch durch Bots genutzt
+
+* **srv**
+
+  Ein Cookie, der dazu genutzt wird deine Sitzung immer auf den gleichen Web-Server zu leiten (*load balancing*)
+
 
 ----
 
